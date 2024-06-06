@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "library-of-life"
+version = "0.0.1"
+description = "A python client for the Global Biological Information Facility (GBIF) API"
+authors = ["Spyder Rex <billyjohnsonauthor@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/SpyderRex/library-of-life"
+repository = "https://github.com/SpyderRex/library-of-life"
+license = "MIT"
+keywords = ["API", "requests", "client", "gbif"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.26.0"
+requests-cache = "==1.2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
