@@ -37,7 +37,7 @@ class NameParser:
     # Requires authentication. User must have an account with GBIF.
     def parse_scientific_name_list(self, username, password, names):
         """
-        Parses a list of scientific names supplied as a JSON list, a form request or a plain text file with Unix (\n) line endings. In all cases the names should use UTF-8 encoding.
+        Parses a list of scientific names supplied as a JSON list, a form request or a plain text file with Unix (\\n) line endings. In all cases the names should use UTF-8 encoding.
         
         Args:
             username (str): The username.

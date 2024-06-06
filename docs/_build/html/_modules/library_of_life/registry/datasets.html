@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library_of_life.registry.datasets &mdash; library_of_life 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            library_of_life
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">library_of_life</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">library_of_life</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">library_of_life.registry.datasets</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for library_of_life.registry.datasets</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
+<span class="kn">import</span> <span class="nn">requests_cache</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
+<div class="viewcode-block" id="Datasets">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets">[docs]</a>
+<span class="k">class</span> <span class="nc">Datasets</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for interacting with the datasets section of the Registry API.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        endpoint: endpoint for this section of the API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;datasets_cache&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;dataset&quot;</span>
+          
+        <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Datasets.list_datasets">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.list_datasets">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">dataset_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">identifier_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">identifier</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">machine_tag_namespace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">machine_tag_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">machine_tag_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">modified</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of all current datasets.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            country (str): Optional. The 2-letter country code (as per ISO-3166-1) of the country publishing the dataset. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            dataset_type (str): Optional. The primary type of the dataset. Available values : OCCURRENCE, CHECKLIST, METADATA, SAMPLING_EVENT, MATERIAL_ENTITY.</span>
+<span class="sd">            identifier_type (str): Optional. An identifier type for the identifier parameter. Available values : URL, LSID, HANDLER, DOI, UUID, FTP, URI, UNKNOWN, GBIF_PORTAL, GBIF_NODE, GBIF_PARTICIPANT, GRSCICOLL_ID, GRSCICOLL_URI, IH_IRN, ROR, GRID, CITES, SYMBIOTA_UUID, WIKIDATA, NCBI_BIOCOLLECTION</span>
+<span class="sd">            identifier (str): Optional. An identifier of the type given by the identifierType parameter, for example a DOI or UUID.</span>
+<span class="sd">            machine_tag_namespace (str): Optional. Filters for entities with a machine tag in the specified namespace.</span>
+<span class="sd">            machine_tag_name (str): Optional. Filters for entities with a machine tag with the specified name (use in combination with the machineTagNamespace parameter).</span>
+<span class="sd">            machine_tag_value (str): Optional. Filters for entities with a machine tag with the specified value (use in combination with the machineTagNamespace and machineTagName parameters).</span>
+<span class="sd">            modified (dict): Optional. The modified date of the dataset. Accepts ranges and a &#39;&#39; can be used as a wildcard, e.g.:modified=2023-04-01,</span>
+<span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing list of current datasets.</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="n">country</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;identifierType&quot;</span><span class="p">,</span> <span class="n">identifier_type</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;identifier&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;machineTagNamespace&quot;</span><span class="p">,</span> <span class="n">machine_tag_namespace</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;machineTagName&quot;</span><span class="p">,</span> <span class="n">machine_tag_name</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;machineTagValue&quot;</span><span class="p">,</span> <span class="n">machine_tag_value</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;modified&quot;</span><span class="p">,</span> <span class="n">modified</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+ 
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+
+    <span class="c1"># Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="Datasets.create_new_dataset">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.create_new_dataset">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_new_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new dataset. Note contacts, endpoints, identifiers, tags, machine tags, comments and metadata descriptions must be added in subsequent requests.</span>
+<span class="sd">    </span>
+<span class="sd">        Args:</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The user&#39;s password.</span>
+<span class="sd">            dataset (dict): The dataset to be created. See this endpoint&#39;s docs for the proper format.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">dataset</span><span class="p">)</span>  </div>
+
+           
+<div class="viewcode-block" id="Datasets.search_datasets">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.search_datasets">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">subtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hosting_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">keyword</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">decade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hosting_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">license</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">project_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">record_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">modified_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">endorsing_node_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">installation_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">endpoint_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">facet_min_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns datasets matching the search parameters. Full-text search across all datasets. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_type (str): The primary type of the dataset. Available values : OCCURRENCE, CHECKLIST, METADATA, SAMPLING_EVENT, MATERIAL_ENTITY.</span>
+<span class="sd">            subtype (str): The sub-type of the dataset. Available values : TAXONOMIC_AUTHORITY, NOMENCLATOR_AUTHORITY, INVENTORY_THEMATIC, INVENTORY_REGIONAL, GLOBAL_SPECIES_DATASET, DERIVED_FROM_OCCURRENCE, SPECIMEN, OBSERVATION.</span>
+<span class="sd">            publishing_org (str): Filters datasets by their publishing organization UUID key.</span>
+<span class="sd">            hosting_org (str): Filters datasets by their hosting organization UUID key.</span>
+<span class="sd">            keyword (str): Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.</span>
+<span class="sd">            decade (int): Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, i.e. facet=DECADE&amp;limit=0.</span>
+<span class="sd">            publishing_country (str): Filters datasets by their owning organization&#39;s country given as a ISO 639-1 (2 letter) country code. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            hosting_countrg (str): Filters datasets by their hosting organization&#39;s country given as a ISO 639-1 (2 letter) country code. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            license (str): The dataset&#39;s licence. Available values : CC0_1_0, CC_BY_4_0, CC_BY_NC_4_0, UNSPECIFIED, UNSUPPORTED.</span>
+<span class="sd">            project_id (str): Filter or facet based on the project ID of a given dataset. A dataset can have a project id if it is the result of a project. multiple datasets can have the same project id. Example : AA003-AA003311F.</span>
+<span class="sd">            taxon_key (int): A taxon key from the GBIF backbone.</span>
+<span class="sd">            record_count (int): Number of records of the dataset. Accepts ranges and a &#39;*&#39; can be used as a wildcard. Example : 100,*.</span>
+<span class="sd">            modified_date (str): Date when the dataset was modified the last time. Accepts ranges and a &#39;*&#39; can be used as a wildcard. Example : 2022-05-01,*.</span>
+<span class="sd">            doi (str): A DOI identifier.</span>
+<span class="sd">            network_key (str): Network associated to a dataset.</span>
+<span class="sd">            endorsing_node_key (str): Node key that endorsed this dataset&#39;s publisher.</span>
+<span class="sd">            installation_key (str): Key (uuid) of the installation that hosts the dataset. </span>
+<span class="sd">            endpoint_type (str): Type of the endpoint of the dataset. Available values : EML, FEED, WFS, WMS, TCS_RDF, TCS_XML, DWC_ARCHIVE, DIGIR, DIGIR_MANIS, TAPIR, BIOCASE, BIOCASE_XML_ARCHIVE, OAI_PMH, COLDP, CAMTRAP_DP, OTHER. </span>
+<span class="sd">            query (str): Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            highlight (bool): Set highlight=True to highlight terms matching the query when in fulltext search fields. The highlight will be an emphasis tag of class gbifHl. </span>
+<span class="sd">            facet (list): A facet name used to retrieve the most frequent values for a field. This parameter may be repeated to request multiple facets.</span>
+<span class="sd">            facet_min_count (int): Used in combination with the facet parameter. Set facet_min_count={#} to exclude facets with a count less than {#}.</span>
+<span class="sd">            facet_multiselect (bool): Used in combination with the facet parameter. Set facet_multiselect=True to still return counts for values that are not currently filtered.</span>
+<span class="sd">            facet_limt (int): Facet parameters allow paging requests using the parameters facet_offset and facet_limit.</span>
+<span class="sd">            facet_offset (int): Facet parameters allow paging requests using the parameters facet_offset and facet_limit.</span>
+<span class="sd">            limit (int): Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the datasets matching search criteria.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;subtype&quot;</span><span class="p">,</span> <span class="n">subtype</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publishing_org</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hostingOrg&quot;</span><span class="p">,</span> <span class="n">hosting_org</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span> <span class="n">keyword</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;decade&quot;</span><span class="p">,</span> <span class="n">decade</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hostingCountry&quot;</span><span class="p">,</span> <span class="n">hosting_country</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;license&quot;</span><span class="p">,</span> <span class="n">license</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;projectId&quot;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;taxonKey&quot;</span><span class="p">,</span> <span class="n">taxon_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;recordCount&quot;</span><span class="p">,</span> <span class="n">record_count</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;modifiedDate&quot;</span><span class="p">,</span> <span class="n">modified_date</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;endorsingNodeKey&quot;</span><span class="p">,</span> <span class="n">endorsing_node_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;installationKey&quot;</span><span class="p">,</span> <span class="n">installation_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;endpointType&quot;</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_min_count</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/search&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Datasets.export_dataset_search">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.export_dataset_search">[docs]</a>
+    <span class="k">def</span> <span class="nf">export_dataset_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s2">&quot;TSV&quot;</span><span class="p">,</span>
+                        <span class="n">dataset_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">subtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hosting_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">keyword</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">decade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hosting_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">license</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">project_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">record_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">modified_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">endorsing_node_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">installation_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">endpoint_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns contents of datasets matching the search parameters, in TSV or CSV format. Full-text search across all datasets. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data_format (str): Format of the exported file. Default is TSV and other supported value is CSV.</span>
+<span class="sd">            dataset_type (str): The primary type of the dataset. Available values : OCCURRENCE, CHECKLIST, METADATA, SAMPLING_EVENT, MATERIAL_ENTITY.</span>
+<span class="sd">            subtype (str): The sub-type of the dataset. Available values : TAXONOMIC_AUTHORITY, NOMENCLATOR_AUTHORITY, INVENTORY_THEMATIC, INVENTORY_REGIONAL, GLOBAL_SPECIES_DATASET, DERIVED_FROM_OCCURRENCE, SPECIMEN, OBSERVATION.</span>
+<span class="sd">            publishing_org (str): Filters datasets by their publishing organization UUID key.</span>
+<span class="sd">            hosting_org (str): Filters datasets by their hosting organization UUID key.</span>
+<span class="sd">            keyword (str): Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.</span>
+<span class="sd">            decade (int): Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, i.e. facet=DECADE&amp;limit=0.</span>
+<span class="sd">            publishing_country (str): Filters datasets by their owning organization&#39;s country given as a ISO 639-1 (2 letter) country code. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            hosting_countrg (str): Filters datasets by their hosting organization&#39;s country given as a ISO 639-1 (2 letter) country code. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            license (str): The dataset&#39;s licence. Available values : CC0_1_0, CC_BY_4_0, CC_BY_NC_4_0, UNSPECIFIED, UNSUPPORTED.</span>
+<span class="sd">            project_id (str): Filter or facet based on the project ID of a given dataset. A dataset can have a project id if it is the result of a project. multiple datasets can have the same project id. Example : AA003-AA003311F.</span>
+<span class="sd">            taxon_key (int): A taxon key from the GBIF backbone.</span>
+<span class="sd">            record_count (int): Number of records of the dataset. Accepts ranges and a &#39;*&#39; can be used as a wildcard. Example : 100,*.</span>
+<span class="sd">            modified_date (str): Date when the dataset was modified the last time. Accepts ranges and a &#39;*&#39; can be used as a wildcard. Example : 2022-05-01,*.</span>
+<span class="sd">            doi (str): A DOI identifier.</span>
+<span class="sd">            network_key (str): Network associated to a dataset.</span>
+<span class="sd">            endorsing_node_key (str): Node key that endorsed this dataset&#39;s publisher.</span>
+<span class="sd">            installation_key (str): Key (uuid) of the installation that hosts the dataset. </span>
+<span class="sd">            endpoint_type (str): Type of the endpoint of the dataset. Available values : EML, FEED, WFS, WMS, TCS_RDF, TCS_XML, DWC_ARCHIVE, DIGIR, DIGIR_MANIS, TAPIR, BIOCASE, BIOCASE_XML_ARCHIVE, OAI_PMH, COLDP, CAMTRAP_DP, OTHER. </span>
+<span class="sd">            query (str): Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string: A TSV or CSV format text content containing the datasets matching search criteria.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_format</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;subtype&quot;</span><span class="p">,</span> <span class="n">subtype</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publishing_org</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hostingOrg&quot;</span><span class="p">,</span> <span class="n">hosting_org</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span> <span class="n">keyword</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;decade&quot;</span><span class="p">,</span> <span class="n">decade</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hostingCountry&quot;</span><span class="p">,</span> <span class="n">hosting_country</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;license&quot;</span><span class="p">,</span> <span class="n">license</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;projectId&quot;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;taxonKey&quot;</span><span class="p">,</span> <span class="n">taxon_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;recordCount&quot;</span><span class="p">,</span> <span class="n">record_count</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;modifiedDate&quot;</span><span class="p">,</span> <span class="n">modified_date</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;endorsingNodeKey&quot;</span><span class="p">,</span> <span class="n">endorsing_node_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;installationKey&quot;</span><span class="p">,</span> <span class="n">installation_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;endpointType&quot;</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span> 
+        
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>           
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/search/export&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Datasets.suggest_datasets">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.suggest_datasets">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">subtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hosting_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">keyword</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">decade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hosting_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">license</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">project_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">record_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">modified_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">endorsing_node_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">installation_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">endpoint_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns up to 20 matching datasets. Results are ordered by relevance. The response is smaller than a dataset search. </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_type (str): The primary type of the dataset. Available values : OCCURRENCE, CHECKLIST, METADATA, SAMPLING_EVENT, MATERIAL_ENTITY.</span>
+<span class="sd">            subtype (str): The sub-type of the dataset. Available values : TAXONOMIC_AUTHORITY, NOMENCLATOR_AUTHORITY, INVENTORY_THEMATIC, INVENTORY_REGIONAL, GLOBAL_SPECIES_DATASET, DERIVED_FROM_OCCURRENCE, SPECIMEN, OBSERVATION.</span>
+<span class="sd">            publishing_org (str): Filters datasets by their publishing organization UUID key.</span>
+<span class="sd">            hosting_org (str): Filters datasets by their hosting organization UUID key.</span>
+<span class="sd">            keyword (str): Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.</span>
+<span class="sd">            decade (int): Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, i.e. facet=DECADE&amp;limit=0.</span>
+<span class="sd">            publishing_country (str): Filters datasets by their owning organization&#39;s country given as a ISO 639-1 (2 letter) country code. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            hosting_countrg (str): Filters datasets by their hosting organization&#39;s country given as a ISO 639-1 (2 letter) country code. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            license (str): The dataset&#39;s licence. Available values : CC0_1_0, CC_BY_4_0, CC_BY_NC_4_0, UNSPECIFIED, UNSUPPORTED.</span>
+<span class="sd">            project_id (str): Filter or facet based on the project ID of a given dataset. A dataset can have a project id if it is the result of a project. multiple datasets can have the same project id. Example : AA003-AA003311F.</span>
+<span class="sd">            taxon_key (int): A taxon key from the GBIF backbone.</span>
+<span class="sd">            record_count (int): Number of records of the dataset. Accepts ranges and a &#39;*&#39; can be used as a wildcard. Example : 100,*.</span>
+<span class="sd">            modified_date (str): Date when the dataset was modified the last time. Accepts ranges and a &#39;*&#39; can be used as a wildcard. Example : 2022-05-01,*.</span>
+<span class="sd">            doi (str): A DOI identifier.</span>
+<span class="sd">            network_key (str): Network associated to a dataset.</span>
+<span class="sd">            endorsing_node_key (str): Node key that endorsed this dataset&#39;s publisher.</span>
+<span class="sd">            installation_key (str): Key (uuid) of the installation that hosts the dataset. </span>
+<span class="sd">            endpoint_type (str): Type of the endpoint of the dataset. Available values : EML, FEED, WFS, WMS, TCS_RDF, TCS_XML, DWC_ARCHIVE, DIGIR, DIGIR_MANIS, TAPIR, BIOCASE, BIOCASE_XML_ARCHIVE, OAI_PMH, COLDP, CAMTRAP_DP, OTHER. </span>
+<span class="sd">            query (str): Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            </span>
+<span class="sd">            Returns:</span>
+<span class="sd">                dict: A dictionary containing dataset suggestions.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;subtype&quot;</span><span class="p">,</span> <span class="n">subtype</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publishing_org</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hostingOrg&quot;</span><span class="p">,</span> <span class="n">hosting_org</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span> <span class="n">keyword</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;decade&quot;</span><span class="p">,</span> <span class="n">decade</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hostingCountry&quot;</span><span class="p">,</span> <span class="n">hosting_country</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;license&quot;</span><span class="p">,</span> <span class="n">license</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;projectId&quot;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;taxonKey&quot;</span><span class="p">,</span> <span class="n">taxon_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;recordCount&quot;</span><span class="p">,</span> <span class="n">record_count</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;modifiedDate&quot;</span><span class="p">,</span> <span class="n">modified_date</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;endorsingNodeKey&quot;</span><span class="p">,</span> <span class="n">endorsing_node_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;installationKey&quot;</span><span class="p">,</span> <span class="n">installation_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;endpointType&quot;</span><span class="p">,</span> <span class="n">endpoint_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span> 
+        
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>           
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/suggest&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+                                                                                                                                  
+<div class="viewcode-block" id="Datasets.get_dataset_by_doi">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.get_dataset_by_doi">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_dataset_by_doi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span>
+                            <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dataset matching the given doi.</span>
+<span class="sd">        </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            prefix (str): Plain DOI prefix (before the slash). Example : 10.15468.</span>
+<span class="sd">            suffix (str): Plain DOI suffix (after the slash). Example : igasai.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing a dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span><span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/doi/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Datasets.get_dataset_by_key">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.get_dataset_by_key">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_dataset_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dataset matching the given key.</span>
+<span class="sd">        </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            key (str): The key (uuid) of the entity (dataset, organization, network etc.).</span>
+<span class="sd">          </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing a dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>       
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;dataset/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
+
+            
+<div class="viewcode-block" id="Datasets.update_dataset">
+<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.datasets.Datasets.update_dataset">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+       
+              
+                     
+
+                                   
+                                                                                                         
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Spyder Rex.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

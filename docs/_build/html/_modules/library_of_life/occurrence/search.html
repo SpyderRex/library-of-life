@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library_of_life.occurrence.search &mdash; library_of_life 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            library_of_life
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">library_of_life</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">library_of_life</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">library_of_life.occurrence.search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for library_of_life.occurrence.search</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">import</span> <span class="nn">requests_cache</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
+<div class="viewcode-block" id="OccurrenceSearch">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch">[docs]</a>
+<span class="k">class</span> <span class="nc">OccurrenceSearch</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for interacting with the search section of the Occurrence API.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        endpoint: endpoint for this section of the API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;search_occurrence_cache&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;occurrence/search&quot;</span>
+          
+        <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
+                    
+<div class="viewcode-block" id="OccurrenceSearch.search_occurrences">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.search_occurrences">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_occurrences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accepted_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">associated_sequences</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">bed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">catalog_number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">class_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">collection_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">collection_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">continent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">coordinate_uncertainty_in_meters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">crawl_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">dataset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">dataset_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">decimal_latitide</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">degree_of_establishment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">decimal_longitude</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">depth</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">distance_from_centroid_in_meters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">dwca_extension</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">earliest_eon_or_lowest_eonothem</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">earliest_era_or_lowest_erathem</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">earliest_period_or_lowest_system</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">earliest_epoch_or_lowest_series</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">earliest_age_or_lowest_stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">elevation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">end_day_of_year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">establishment_means</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">event_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">event_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">family_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">field_number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">formation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gadm_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gadm_level_0_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gadm_level_1_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gadm_level_2_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gadm_level_3_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gbif_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">gbif_region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">genus_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">geo_distance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">georeferenced_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">geometry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">has_coordinate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">higher_geography</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">highest_biostratigraphic_zone</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">has_geospatial_issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">hosting_organization_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">identified_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">identified_by_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">installation_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">institution_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">institution_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">is_in_cluster</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">island</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">island_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">is_sequenced</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">iucn_red_list_category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">kingdom_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">last_interpreted</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">latest_eon_or_highest_eonothem</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">latest_era_or_highest_erathem</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">latest_period_or_highest_system</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">latest_epoch_or_highest_series</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">latest_age_or_highest_stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">license</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">life_stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">locality</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">lowest_biostratigraphic_zone</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">media_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">member</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">modified</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">month</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">occurrence_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">occurrence_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">order_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">organism_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">organism_quantity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">organism_quantity_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">other_catalog_numbers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">parent_event_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">pathway</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">phylum_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">preparations</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">previous_identifications</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">programme</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">project_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">published_by_gbif_region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">publising_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">recorded_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">recorded_by_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">record_number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">relative_organism_quantity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">repatriated</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">sample_size_unit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">sample_size_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">sampling_protocol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">sex</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">scientific_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">species_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">start_day_of_year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">state_province</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">taxon_concept_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">taxon_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">taxonomic_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">type_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">verbatim_scientific_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">water_body</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span>
+                           <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns results of full search across all occurrences.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            accepted_taxon_key (list[int]): Optional. A taxon key from the GBIF backbone. Only synonym taxa are included in the search, so a search for Aves with acceptedTaxonKey=212 (i.e. /occurrence/search?taxonKey=212) will match occurrences identified as birds, but not any known family, genus or species of bird.Example : 2476674 </span>
+<span class="sd">            associated_sequences (list[str]): Optional. Identifier (publication, global unique identifier, URI) of genetic sequence information associated with the material entity. Example : http://www.ncbi.nlm.nih.gov/nuccore/U34853.1</span>
+<span class="sd">            basis_of_record (list[str]): Optional. Basis of record, as defined in our BasisOfRecord vocabulary. Available values : PRESERVED_SPECIMEN, FOSSIL_SPECIMEN, LIVING_SPECIMEN, OBSERVATION, HUMAN_OBSERVATION, MACHINE_OBSERVATION, MATERIAL_SAMPLE, LITERATURE, MATERIAL_CITATION, OCCURRENCE, UNKNOWN. Example : PRESERVED_SPECIMEN</span>
+<span class="sd">            bed (list[str]): Optional. The full name of the lithostratigraphic bed from which the material entity was collected. Example : Harlem coal</span>
+<span class="sd">            catalog_number (list[str]): Optional. An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code. Example : K001275042</span>
+<span class="sd">            class_key (list[int]): Optional. Class classification key. Parameter may be repeated. Example : 212</span>
+<span class="sd">            collection_code (list[str]): Optional. An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution. Example : F  </span>
+<span class="sd">            collection_key (list[str]): Optional. A key (UUID) for a collection registered in the Global Registry of Scientific Collections. Example : dceb8d52-094c-4c2c-8960-75e0097c6861</span>
+<span class="sd">            continent (list[str]): Optional. Continent, as defined in our Continent vocabulary. Available values : AFRICA, ANTARCTICA, ASIA, OCEANIA, EUROPE, NORTH_AMERICA, SOUTH_AMERICA. Example : EUROPE </span>
+<span class="sd">            coordinate_uncertainty_in_meters (tuple): Optional. The horizontal distance (in metres) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Supports range queries. Example : 0,500</span>
+<span class="sd">            country (list[str]): Optional. The 2-letter country code (as per ISO-3166-1) of the country in which the occurrence was recorded. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            crawl_id (list[int]): Optional. Crawl attempt that harvested this record. Example : 1</span>
+<span class="sd">            dataset_id (list[str]): Optional. The ID of the dataset. Example : https://doi.org/10.1594/PANGAEA.315492</span>
+<span class="sd">            dataset_key (list[str]): Optional. The occurrence dataset key (a UUID). Example : 13b70480-bd69-11dd-b15f-b8a03c50a862</span>
+<span class="sd">            dataset_name (list[str]): Optional. The exact name of the dataset.</span>
+<span class="sd">            decimal_latitude (tuple): Optional. Latitude in decimal degrees between -90° and 90° based on WGS 84. Supports range queries. Example : 40.5,45</span>
+<span class="sd">            degree_of_establishment (list[str]): Optional. The degree to which an organism survives, reproduces and expands its range at the given place and time, as defined in the GBIF DegreeOfEstablishment vocabulary. Example : Invasive</span>
+<span class="sd">            decimal_longitude (tuple): Optional. Longitude in decimals between -180 and 180 based on WGS 84. Supports range queries. Example : -120,-95.5</span>
+<span class="sd">            depth (tuple): Optional. Depth in metres relative to altitude. For example 10 metres below a lake surface with given altitude. Example : 10,20</span>
+<span class="sd">            distance_from_centroid_in_meters (tuple): Optional. The horizontal distance (in metres) of the occurrence from the nearest centroid known to be used in automated georeferencing procedures, if that distance is 5000m or less. Occurrences (especially specimens) near a country centroid may have a poor-quality georeference, especially if coordinateUncertaintyInMeters is blank or large. Supports range queries. Example : 0,500</span>
+<span class="sd">            dwca_extension (list[str]): Optional. A known Darwin Core Archive extension RowType. Limits the search to occurrences which have this extension, although they will not necessarily have any useful data recorded using the extension. Example : http://rs.tdwg.org/ac/terms/Multimedia</span>
+<span class="sd">            earliest_eon_or_lowest_eonothem (list[str]): Optional. The full name of the earliest possible geochronologic era or lowest chronostratigraphic erathem attributable to the stratigraphic horizon from which the material entity was collected. Example : Mesozoic</span>
+<span class="sd">            earliest_era_or_lowest_erathem (list[str]): Optional. The full name of the latest possible geochronologic eon or highest chrono-stratigraphic eonothem or the informal name (&quot;Precambrian&quot;) attributable to the stratigraphic horizon from which the material entity was collected. Example : Proterozoic</span>
+<span class="sd">            earliest_period_or_lowest_system (list[str]): Optional. The full name of the earliest possible geochronologic period or lowest chronostratigraphic system attributable to the stratigraphic horizon from which the material entity was collected. Example : Neogene</span>
+<span class="sd">            earliest_epoch_or_lowest_series (list[str]): Optional. The full name of the earliest possible geochronologic epoch or lowest chronostratigraphic series attributable to the stratigraphic horizon from which the material entity was collected. Example : Holocene </span>
+<span class="sd">            earliest_age_or_lowest_stage (list[str]): Optional. The full name of the earliest possible geochronologic age or lowest chronostratigraphic stage attributable to the stratigraphic horizon from which the material entity was collected. Example : Skullrockian </span>
+<span class="sd">            elevation (tuple): Optional. Elevation (altitude) in metres above sea level. Example : 1000,1250 </span>
+<span class="sd">            end_day_of_year (list[int]): Optional. The latest integer day of the year on which the event occurred. Parameter may be repeated. Example : 6</span>
+<span class="sd">            establishment_means (list[int]): Optional. Whether an organism or organisms have been introduced to a given place and time through the direct or indirect activity of modern humans, as defined in the GBIF EstablishmentMeans vocabulary. Example : Native</span>
+<span class="sd">            event_date (list[str]): Optional. Occurrence date in ISO 8601 format: yyyy, yyyy-MM or yyyy-MM-dd. Example : 2000,2001-06-30   </span>
+<span class="sd">            event_id (list[str]): Optional. An identifier for the information associated with a sampling event. Example : A 123   </span>
+<span class="sd">            family_key (list[int]): Optional. Family classification key. Example : 2405    </span>
+<span class="sd">            field_number (list[str]): Optional. An identifier given to the event in the field. Often serves as a link between field notes and the event. Example : RV Sol 87-03-08    </span>
+<span class="sd">            formation (list[str]): Optional. The full name of the lithostratigraphic formation from which the material entity was collected. Example : Notch Peak Formation </span>
+<span class="sd">            gadm_gid (list[str]): Optional. A GADM geographic identifier at any level, for example AGO, AGO.1_1, AGO.1.1_1 or AGO.1.1.1_1. Example : AGO.1_1</span>
+<span class="sd">            gadm_level_0_gid (list[str]): Optional. A GADM geographic identifier at the zero level, for example AGO. Example : AGO</span>
+<span class="sd">            gadm_level_1_gid (list[str]): Optional. A GADM geographic identifier at the first level, for example AGO.1_1. Example : AGO.1_1     </span>
+<span class="sd">            gadm_level_2_gid (list[str]): Optional. A GADM geographic identifier at the second level, for example AFG.1.1_1. Example : AFG.1.1_1  </span>
+<span class="sd">            gadm_level_3_gid (list[str]): Optional. A GADM geographic identifier at the third level, for example AFG.1.1.1_1. Example : AFG.1.1.1_1       </span>
+<span class="sd">            gbif_id (int): Optional. The unique GBIF key for a single occurrence. Example : 2005380410             </span>
+<span class="sd">            gbif_region (list[str]): Optional. Gbif region based on country code. Available values : AFRICA, ASIA, EUROPE, NORTH_AMERICA, OCEANIA, LATIN_AMERICA, ANTARCTICA. Example : AFRICA                 </span>
+<span class="sd">            genus_key (list[int]): Optional. Genus classification key. Example : 2877951                           </span>
+<span class="sd">            geo_distance (str): Optional. Filters to match occurrence records with coordinate values within a specified distance of a coordinate. Distance may be specified in kilometres (km) or metres (m). Example : 90,100,5km        </span>
+<span class="sd">            georeferenced_by (list[str]): Optional. Name of a person, group, or organization who determined the georeference (spatial representation) for the location. Example : Brad Millen         </span>
+<span class="sd">            geometry (list[str]): Optional. Searches for occurrences inside a polygon described in Well Known Text (WKT) format. Only POLYGON and MULTIPOLYGON are accepted WKT types. For example, a shape written as POLYGON ((30.1 10.1, 40 40, 20 40, 10 20, 30.1 10.1)) would be queried as is. Polygons must have anticlockwise ordering of points. (A clockwise polygon represents the opposite area: the Earth&#39;s surface with a &#39;hole&#39; in it. Such queries are not supported.). Example : POLYGON ((30.1 10.1, 40 40, 20 40, 10 20, 30.1 10.1))        </span>
+<span class="sd">            group (list[str]): Optional. The full name of the lithostratigraphic group from which the material entity was collected. Example : Bathurst</span>
+<span class="sd">            has_coordinate (bool): Optional. Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. hasCoordinate=true limits to occurrence records with coordinate values and hasCoordinate=false limits to occurrence records without coordinate values). Example : True            </span>
+<span class="sd">            higher_geography (list[str]): Optional. Geographic name less specific than the information captured in the locality term. Example : Argentina</span>
+<span class="sd">            highest_biostratigraphic_zone (list[str]): Optional. The full name of the highest possible geological biostratigraphic zone of the stratigraphic horizon from which the material entity was collected. Example : Blancan                                </span>
+<span class="sd">            has_geospatial_issue (bool): Optional. Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. hasGeospatialIssue=true returns only those records with spatial issues while hasGeospatialIssue=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues. Example: True                                                               </span>
+<span class="sd">            hosting_organization_key (list[str]): Optional. The key (UUID) of the publishing organization whose installation (server) hosts the original dataset. (This is of little interest to most data user). Example : fbca90e3-8aed-48b1-84e3-369afbd000ce                                                                                                   </span>
+<span class="sd">            identified_by (list[str]): Optional. The person who provided the taxonomic identification of the occurrence. Example : Allison                                                                                                                                   </span>
+<span class="sd">            identified_by_id (list[str]): Optional. Identifier (e.g. ORCID) for the person who provided the taxonomic identification of the occurrence. Example : https://orcid.org/0000-0001-6492-4016                                                                                                                                                                  </span>
+<span class="sd">            installation_key (list[str]): Optional. The occurrence installation key (a UUID). (This is of little interest to most data users. It is the identifier for the server that provided the data to GBIF.) Example : 17a83780-3060-4851-9d6f-029d5fcb81c9                                                                                                                                                                                                      </span>
+<span class="sd">            institution_code (list[str]): Optional. An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique. Example : K                                                                                                                                                                                                                                     </span>
+<span class="sd">            institution_key (list[str]): Optional. A key (UUID) for an institution registered in the Global Registry of Scientific Collections. Example : fa252605-26f6-426c-9892-94d071c2c77f</span>
+<span class="sd">            issue (list[str]): Optional. A specific interpretation issue as defined in our OccurrenceIssue enumeration. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            is_in_cluster (bool): Optional. Experimental. Searches for records which are part of a cluster. See the documentation on clustering. Example : True                                                                                                                                                                                                                                                                 </span>
+<span class="sd">            island (list[str]): Optional. The name of the island on or near which the location occurs. Example : Zanzibar                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </span>
+<span class="sd">            island_group (list[str]): Optional. The name of the island group in which the location occurs. Example : Seychelles                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
+<span class="sd">            is_sequenced (bool): Optional. Flag occurrence when associated sequences exists. Example : true</span>
+<span class="sd">            iucn_red_list_category (list[str]): Optional. A threat status category from the IUCN Red List. The two-letter code for the status should be used. Available values : EXTINCT, EXTINCT_IN_THE_WILD, REGIONALLY_EXTINCT, CRITICALLY_ENDANGERED, ENDANGERED, VULNERABLE, NEAR_THREATENED, LEAST_CONCERN, DATA_DEFICIENT, NOT_APPLICABLE, NOT_EVALUATED. Example : EX                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </span>
+<span class="sd">            kingdom_key (list[int]): Optional. Kingdom classification key. Parameter may be repeated. Example : 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
+<span class="sd">            last_interpreted (list[str]): Optional. This date the record was last modified in GBIF, in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Note that this is the date the record was last changed in GBIF, not necessarily the date the record was first/last changed by the publisher. Data is re-interpreted when we change the taxonomic backbone, geographic data sources, or interpretation processes. Parameter may be repeated or a range. Example : 2023-02 </span>
+<span class="sd">            latest_eon_or_highest_eonothem (list[str]): Optional.The full name of the latest possible geochronologic eon or highest chrono-stratigraphic eonothem or the informal name (&quot;Precambrian&quot;) attributable to the stratigraphic horizon from which the material entity was collected. Example : Proterozoic  </span>
+<span class="sd">            latest_era_or_highest_erathem (list[str]): Optional. The full name of the latest possible geochronologic era or highest chronostratigraphic erathem attributable to the stratigraphic horizon from which the material entity was collected. Example : Cenozoic</span>
+<span class="sd">            latest_period_or_highest_system (list[str]): Optional. The full name of the latest possible geochronologic period or highest chronostratigraphic system attributable to the stratigraphic horizon from which the material entity was collected. Example : Neogene</span>
+<span class="sd">            latest_epoch_or_highest_series (list[str]): Optional. The full name of the latest possible geochronologic epoch or highest chronostratigraphic series attributable to the stratigraphic horizon from which the material entity was collected. Example : Pleistocene                                          </span>
+<span class="sd">            latest_age_or_highest_stage (list[str]): Optional. The full name of the latest possible geochronologic age or highest chronostratigraphic stage attributable to the stratigraphic horizon from which the material entity was collected. Example : Boreal</span>
+<span class="sd">            license (list[str]): Optional. The licence applied to the dataset or record by the publisher. Parameter may be repeated or a range. Available values : CC0_1_0, CC_BY_4_0, CC_BY_NC_4_0, UNSPECIFIED, UNSUPPORTED. Example : CC0_1_0 </span>
+<span class="sd">            life_stage (list[str]): Optional. The age class or life stage of an organism at the time the occurrence was recorded, as defined in the GBIF LifeStage vocabulary](https://registry.gbif.org/vocabulary/LifeStage/concepts). Example : Juvenile</span>
+<span class="sd">            locality (list[str]): Optional. The specific description of the place. Parameter may be repeated.</span>
+<span class="sd">            lowest_biostratigraphic_zone (list[str]): Optional. The full name of the lowest possible geological biostratigraphic zone of the stratigraphic horizon from which the material entity was collected. Example : Maastrichtian      </span>
+<span class="sd">            media_type (list[object]): Optional. The kind of multimedia associated with an occurrence as defined in our MediaType enumeration.</span>
+<span class="sd">            member (list[str]): Optional. The full name of the lithostratigraphic member from which the material entity was collected. Example : Lava Dam Member        </span>
+<span class="sd">            modified (list[str]): Optional. The most recent date-time on which the occurrnce was changed, according to the publisher. Example : 2023-02-20</span>
+<span class="sd">            month (list[int]): Optional. The month of the year, starting with 1 for January. Example : 5 </span>
+<span class="sd">            network_key (list[str]): Optional. The network&#39;s GBIF key (a UUID). Example : 2b7c7b4f-4d4f-40d3-94de-c28b6fa054a6</span>
+<span class="sd">            occurrence_id (list[str]): Optional. A globally unique identifier for the occurrence record as provided by the publisher. Example : URN:catalog:UWBM:Bird:126493</span>
+<span class="sd">            occurrence_status (list[str]): Optional. Either ABSENT or PRESENT; the presence or absence of the occurrence. Available values : PRESENT, ABSENT. Example : PRESENT</span>
+<span class="sd">            order_key (list[int]): Optional. Order classification key. Example : 1448</span>
+<span class="sd">            organism_id (list[str]): Optional. An identifier for the organism instance (as opposed to a particular digital record of the organism). May be a globally unique identifier or an identifier specific to the data set.</span>
+<span class="sd">            organism_quantity (list[str]): Optional. A number or enumeration value for the quantity of organisms. Parameter may be repeated. Example : 1</span>
+<span class="sd">            organism_quantity_type (list[str]): Optional. The type of quantification system used for the quantity of organisms. Note this term is not aligned to a vocabulary. Example : individuals</span>
+<span class="sd">            other_catalog_numbers (list[str]): Optional. Previous or alternate fully qualified catalog numbers.        </span>
+<span class="sd">            parent_event_id (list[str]): Optional. An identifier for the information associated with a sampling event. Example : A 123</span>
+<span class="sd">            pathway (list[str]): Optional. The process by which an organism came to be in a given place at a given time, as defined in the GBIF Pathway vocabulary. Example : Agriculture</span>
+<span class="sd">            phylum_key (list[int]): Optional. Phylum classification key. Example : 44</span>
+<span class="sd">            preparations (list[str]): Optional. Preparation or preservation method for a specimen. Example : pinned</span>
+<span class="sd">            previous_identifications (list[str]): Optional. Previous assignment of name to the organism. Example : Chalepidae</span>
+<span class="sd">            programme (list[str]): Optional. A group of activities, often associated with a specific funding stream, such as the GBIF BID programme. Example : BID</span>
+<span class="sd">            project_id (list[str]): Optional. The identifier for a project, which is often assigned by a funded programme. Example : bid-af2020-039-reg</span>
+<span class="sd">            protocol (list[str]): Optional. Protocol or mechanism used to provide the occurrence record. Available values : EML, FEED, WFS, WMS, TCS_RDF, TCS_XML, DWC_ARCHIVE, DIGIR, DIGIR_MANIS, TAPIR, BIOCASE, BIOCASE_XML_ARCHIVE, OAI_PMH, COLDP, CAMTRAP_DP, OTHER. Example : DWC_ARCHIVE</span>
+<span class="sd">            published_by_gbif_region (list[str]): Optional. GBIF region based on the owning organization&#39;s country. Available values : AFRICA, ASIA, EUROPE, NORTH_AMERICA, OCEANIA, LATIN_AMERICA, ANTARCTICA.Example : AFRICA</span>
+<span class="sd">            publishing_org (list[str]): Optional. The publishing organization&#39;s GBIF key (a UUID). Example : e2e717bf-551a-4917-bdc9-4fa0f342c530</span>
+<span class="sd">            recorded_by (list[str]): Optional. The person who recorded the occurrence. Example : MiljoStyrelsen</span>
+<span class="sd">            recorded_by_id (list[str]): Optional. Identifier (e.g. ORCID) for the person who recorded the occurrence. Example : https://orcid.org/0000-0003-0623-6682</span>
+<span class="sd">            record_number (list[int]): Optional. An identifier given to the record at the time it was recorded in the field. Example : 1</span>
+<span class="sd">            relative_organism_quantity (list[str]): Optional. The relative measurement of the quantity of the organism (i.e. without absolute units).</span>
+<span class="sd">            repatriated (bool): Optional. Searches for records whose publishing country is different to the country in which the record was recorded. Example : true</span>
+<span class="sd">            sample_size_unit (list[str]):  Optional. The unit of measurement of the size (time duration, length, area, or volume) of a sample in a sampling event..Example : hectares    </span>
+<span class="sd">            sample_size_value (list[float]): Optional. numeric value for a measurement of the size (time duration, length, area, or volume) of a sample in a sampling event. Example : 50.5</span>
+<span class="sd">            sampling_protocol (list[str]): Optional. The name of, reference to, or description of the method or protocol used during a sampling event. Example : malaise trap</span>
+<span class="sd">            sex (list[str]): Optional. The sex of the biological individual(s) represented in the occurrence. Available values : NONE, MALE, FEMALE, HERMAPHRODITE. Example : MALE</span>
+<span class="sd">            scientific_name (list[str]): Optional. A scientific name from the GBIF backbone. All included and synonym taxa are included in the search. Under the hood a call to the species match service is done first to retrieve a taxonKey. Only unique scientific names will return results, homonyms (many monomials) return nothing! Consider to use the taxonKey parameter instead and the species match service directly. Example : Quercus robur</span>
+<span class="sd">            species_key (list[int]): Optional. Species classification key. Example : 2476674</span>
+<span class="sd">            start_day_of_year (list[int]): Optional. The earliest integer day of the year on which the event occurred. Example : 5</span>
+<span class="sd">            state_province (list[str]): Optional. The name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs. This term does not have any data quality checks; see also the GADM parameters. Example : Leicestershire</span>
+<span class="sd">            taxon_concept_id (list[str]): Optional. An identifier for the taxonomic concept to which the record refers - not for the nomenclatural details of a taxon. Example : 8fa58e08-08de-4ac1-b69c-1235340b7001 </span>
+<span class="sd">            taxon_key (list[int]): Optional. A taxon key from the GBIF backbone. All included (child) and synonym taxa are included in the search, so a search for Aves with taxonKey=212 (i.e. /occurrence/search?taxonKey=212) will match all birds, no matter which species. Example : 2476674  </span>
+<span class="sd">            taxon_id (list[str]): Optional. The taxon identifier provided to GBIF by the data publisher. Example : urn:lsid:dyntaxa.se:Taxon:103026</span>
+<span class="sd">            taxonomic_status (list[str]): Optional. A taxonomic status from our TaxonomicStatus enumeration. Available values : ACCEPTED, DOUBTFUL, SYNONYM, HETEROTYPIC_SYNONYM, HOMOTYPIC_SYNONYM, PROPARTE_SYNONYM, MISAPPLIED. Example : SYNONYM</span>
+<span class="sd">            type_status (list[str]): Optional. Nomenclatural type (type status, typified scientific name, publication) applied to the subject. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            verbatim_scientific_name (list[str]): Optional. The scientific name provided to GBIF by the data publisher, before interpretation and processing by GBIF. Example : Quercus robur L.</span>
+<span class="sd">            water_body (list[str]): Optional. The name of the water body in which the Locations occurs. Example : Lake Michigan</span>
+<span class="sd">            year (list[int]): Optional. The 4 digit year. A year of 98 will be interpreted as AD 98. Example : 1998</span>
+<span class="sd">            highlight (bool): Optional. Set highlight=True to highlight terms matching the query when in full-text search fields. The highlight will be an emphasis tag of class gbifH1 e.g. /search?q=plant&amp;hl=true. Full-text search fields include: title, keyword, country, publishing country, publishing organization title, hosting organization title, and description. One additional full text field is searched which includes information from metadata documents, but the text of this field is not returned in the response. Example : true</span>
+<span class="sd">            query (str): Optional. Simple full-text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the maximum threshold, which is 300 for this service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. This service has a maximum offset of 100,000.</span>
+<span class="sd">            facet (str): Optional. A facet name used to retrieve the most frequent values for a field. Facets are allowed for all search parameters except geometry and geoDistance. Note terms not available for searching are not available for faceting.     </span>
+<span class="sd">            facet_mincount (int): Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}, e.g. [/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000](https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000].</span>
+<span class="sd">            facet_multiselect (bool): Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered, e.g. /search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=HUMAN_OBSERVATION&amp;facetMultiselect=true still shows Basis of Record values &#39;PRESERVED_SPECIMEN&#39; and so on, even though Basis of Record is being filtered.</span>
+<span class="sd">            facet_limit (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
+<span class="sd">            facet_offset (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
+<span class="sd">            publishing_country (list[str]): Optional. The 2-letter country code (as per ISO-3166-1) of the owning organization&#39;s country. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;acceptedTaxonKey&quot;</span><span class="p">,</span> <span class="n">accepted_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;associatedSequences&quot;</span><span class="p">,</span> <span class="n">associated_sequences</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;basisOfRecord&quot;</span><span class="p">,</span> <span class="n">basis_of_record</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">bed</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;catalogNumber&quot;</span><span class="p">,</span> <span class="n">catalog_number</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;classKey&quot;</span><span class="p">,</span> <span class="n">class_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;collectionCode&quot;</span><span class="p">,</span> <span class="n">collection_code</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;collectionKey&quot;</span><span class="p">,</span> <span class="n">collection_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;continent&quot;</span><span class="p">,</span> <span class="n">continent</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;coordinateUncertaintyInMeters&quot;</span><span class="p">,</span> <span class="n">coordinate_uncertainty_in_meters</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="n">country</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;crawlId&quot;</span><span class="p">,</span> <span class="n">crawl_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetId&quot;</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetName&quot;</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;decimalLatitide&quot;</span><span class="p">,</span> <span class="n">decimal_latitide</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;degreeOfEstablishment&quot;</span><span class="p">,</span> <span class="n">degree_of_establishment</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;decimalLongitude&quot;</span><span class="p">,</span> <span class="n">decimal_longitude</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;distanceFromCentroidInMeters&quot;</span><span class="p">,</span> <span class="n">distance_from_centroid_in_meters</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;dwcaExtension&quot;</span><span class="p">,</span> <span class="n">dwca_extension</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;earliestEonOrLowestEonothem&quot;</span><span class="p">,</span> <span class="n">earliest_eon_or_lowest_eonothem</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;earliestEraOrLowestErathem&quot;</span><span class="p">,</span> <span class="n">earliest_era_or_lowest_erathem</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;earliestPeriodOrLowestSystem&quot;</span><span class="p">,</span> <span class="n">earliest_period_or_lowest_system</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;earliestEpochOrLowestSeries&quot;</span><span class="p">,</span> <span class="n">earliest_epoch_or_lowest_series</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;earliestAgeOrLowestStage&quot;</span><span class="p">,</span> <span class="n">earliest_age_or_lowest_stage</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;elevation&quot;</span><span class="p">,</span> <span class="n">elevation</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;endDayOfYear&quot;</span><span class="p">,</span> <span class="n">end_day_of_year</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;establishmentMeans&quot;</span><span class="p">,</span> <span class="n">establishment_means</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;eventDate&quot;</span><span class="p">,</span> <span class="n">event_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;eventId&quot;</span><span class="p">,</span> <span class="n">event_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;familyKey&quot;</span><span class="p">,</span> <span class="n">family_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;fieldNumber&quot;</span><span class="p">,</span> <span class="n">field_number</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;formation&quot;</span><span class="p">,</span> <span class="n">formation</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmGid&quot;</span><span class="p">,</span> <span class="n">gadm_gid</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmLevel0Gid&quot;</span><span class="p">,</span> <span class="n">gadm_level_0_gid</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmLevel1Gid&quot;</span><span class="p">,</span> <span class="n">gadm_level_1_gid</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmLevel2Gid&quot;</span><span class="p">,</span> <span class="n">gadm_level_2_gid</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmLevel3Gid&quot;</span><span class="p">,</span> <span class="n">gadm_level_3_gid</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifId&quot;</span><span class="p">,</span> <span class="n">gbif_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifRegion&quot;</span><span class="p">,</span> <span class="n">gbif_region</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;genusKey&quot;</span><span class="p">,</span> <span class="n">genus_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;geoDistance&quot;</span><span class="p">,</span> <span class="n">geo_distance</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;georeferencedBy&quot;</span><span class="p">,</span> <span class="n">georeferenced_by</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;geometry&quot;</span><span class="p">,</span> <span class="n">geometry</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;hasCoordinate&quot;</span><span class="p">,</span> <span class="n">has_coordinate</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;higherGeography&quot;</span><span class="p">,</span> <span class="n">higher_geography</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;highestBiostratigraphicZone&quot;</span><span class="p">,</span> <span class="n">highest_biostratigraphic_zone</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;hasGeospatialIssue&quot;</span><span class="p">,</span> <span class="n">has_geospatial_issue</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;hostingOrganizationKey&quot;</span><span class="p">,</span> <span class="n">hosting_organization_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;identifiedBy&quot;</span><span class="p">,</span> <span class="n">identified_by</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;identifiedById&quot;</span><span class="p">,</span> <span class="n">identified_by_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;installationKey&quot;</span><span class="p">,</span> <span class="n">installation_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;institutionCode&quot;</span><span class="p">,</span> <span class="n">institution_code</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;institutionKey&quot;</span><span class="p">,</span> <span class="n">institution_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;isInCluster&quot;</span><span class="p">,</span> <span class="n">is_in_cluster</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;island&quot;</span><span class="p">,</span> <span class="n">island</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;islandGroup&quot;</span><span class="p">,</span> <span class="n">island_group</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;isSequenced&quot;</span><span class="p">,</span> <span class="n">is_sequenced</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;iucnRedListCategory&quot;</span><span class="p">,</span> <span class="n">iucn_red_list_category</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;kingdomKey&quot;</span><span class="p">,</span> <span class="n">kingdom_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;lastInterpreted&quot;</span><span class="p">,</span> <span class="n">last_interpreted</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;latestEonOrHighestEonothem&quot;</span><span class="p">,</span> <span class="n">latest_eon_or_highest_eonothem</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;latestEraOrHighestErathem&quot;</span><span class="p">,</span> <span class="n">latest_era_or_highest_erathem</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;latestPeriodOrHighestSystem&quot;</span><span class="p">,</span> <span class="n">latest_period_or_highest_system</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;latestEpochOrHighestSeries&quot;</span><span class="p">,</span> <span class="n">latest_epoch_or_highest_series</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;latestAgeOrHighestStage&quot;</span><span class="p">,</span> <span class="n">latest_age_or_highest_stage</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;license&quot;</span><span class="p">,</span> <span class="n">license</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;lifeStage&quot;</span><span class="p">,</span> <span class="n">life_stage</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;locality&quot;</span><span class="p">,</span> <span class="n">locality</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;lowestBiostratigraphicZone&quot;</span><span class="p">,</span> <span class="n">lowest_biostratigraphic_zone</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;mediaType&quot;</span><span class="p">,</span> <span class="n">media_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;member&quot;</span><span class="p">,</span> <span class="n">member</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;modified&quot;</span><span class="p">,</span> <span class="n">modified</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="n">month</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;occurrenceId&quot;</span><span class="p">,</span> <span class="n">occurrence_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;occurrenceStatus&quot;</span><span class="p">,</span> <span class="n">occurrence_status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;orderKey&quot;</span><span class="p">,</span> <span class="n">order_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;organismId&quot;</span><span class="p">,</span> <span class="n">organism_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;organismQuantity&quot;</span><span class="p">,</span> <span class="n">organism_quantity</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;organismQuantityType&quot;</span><span class="p">,</span> <span class="n">organism_quantity_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;otherCatalogNumbers&quot;</span><span class="p">,</span> <span class="n">other_catalog_numbers</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;parentEventId&quot;</span><span class="p">,</span> <span class="n">parent_event_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;pathway&quot;</span><span class="p">,</span> <span class="n">pathway</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;phylumKey&quot;</span><span class="p">,</span> <span class="n">phylum_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;preparations&quot;</span><span class="p">,</span> <span class="n">preparations</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;previousIdentifications&quot;</span><span class="p">,</span> <span class="n">previous_identifications</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;programme&quot;</span><span class="p">,</span> <span class="n">programme</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;projectId&quot;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;protocol&quot;</span><span class="p">,</span> <span class="n">protocol</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishedByGbifRegion&quot;</span><span class="p">,</span> <span class="n">published_by_gbif_region</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publising_org</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;recordedBy&quot;</span><span class="p">,</span> <span class="n">recorded_by</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;recordedById&quot;</span><span class="p">,</span> <span class="n">recorded_by_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;recordNumber&quot;</span><span class="p">,</span> <span class="n">record_number</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;relativeOrganismQuantity&quot;</span><span class="p">,</span> <span class="n">relative_organism_quantity</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;repatriated&quot;</span><span class="p">,</span> <span class="n">repatriated</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;sampleSizeUnit&quot;</span><span class="p">,</span> <span class="n">sample_size_unit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;sampleSizeValue&quot;</span><span class="p">,</span> <span class="n">sample_size_value</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;samplingProtocol&quot;</span><span class="p">,</span> <span class="n">sampling_protocol</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="n">sex</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;scientificName&quot;</span><span class="p">,</span> <span class="n">scientific_name</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;speciesKey&quot;</span><span class="p">,</span> <span class="n">species_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;startDayOfYear&quot;</span><span class="p">,</span> <span class="n">start_day_of_year</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;stateProvince&quot;</span><span class="p">,</span> <span class="n">state_province</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;taxonConceptId&quot;</span><span class="p">,</span> <span class="n">taxon_concept_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;taxonKey&quot;</span><span class="p">,</span> <span class="n">taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;taxonId&quot;</span><span class="p">,</span> <span class="n">taxon_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;taxonomicStatus&quot;</span><span class="p">,</span> <span class="n">taxonomic_status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;typeStatus&quot;</span><span class="p">,</span> <span class="n">type_status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;verbatimScientificName&quot;</span><span class="p">,</span> <span class="n">verbatim_scientific_name</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;waterBody&quot;</span><span class="p">,</span> <span class="n">water_body</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">year</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+
+    <span class="c1"># Requires authentication. User must have an account with GBIF.  </span>
+<div class="viewcode-block" id="OccurrenceSearch.search_occurrences_using_predicates">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.search_occurrences_using_predicates">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_occurrences_using_predicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span>
+                                            <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Full search across all occurrences specified using predicates (as used for the download API).</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            username (str): Required. One&#39;s GBIF username.</span>
+<span class="sd">            password (str): Required. One&#39;s GBIF password.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the maximum threshold, which is 300 for this service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. This service has a maximum offset of 100,000.</span>
+<span class="sd">            facet (str): Optional. A facet name used to retrieve the most frequent values for a field. Facets are allowed for all search parameters except geometry and geoDistance. This parameter may by repeated to request multiple facets, as in this example. Note terms not available for searching are not available for faceting.</span>
+<span class="sd">            facet_mincount (int): Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}, e.g. [/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000](https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000].</span>
+<span class="sd">            facet_multiselect (bool): Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered, e.g. /search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=HUMAN_OBSERVATION&amp;facetMultiselect=true still shows Basis of Record values &#39;PRESERVED_SPECIMEN&#39; and so on, even though Basis of Record is being filtered.</span>
+<span class="sd">            facet_limit (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
+<span class="sd">            facet_offset (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
+<span class="sd">                </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Dictionary containing the search results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/predicate&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceSearch.suggest_catalogue_numbers">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_catalogue_numbers">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_catalogue_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching catalogue numbers. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested catalogue numbers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/catalogNumber?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceSearch.suggest_collection_codes">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_collection_codes">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_collection_codes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching collection codes. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested collection codes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/collectionCode?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_dataset_names">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_dataset_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_dataset_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching dataset names. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested dataset names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/datasetName?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_event_ids">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_event_ids">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_event_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching event ids. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested event ids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/eventId?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_identified_by_values">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_identified_by_values">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_identified_by_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching identified by values. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested identified by values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/identifiedBy?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_institution_codes">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_institution_codes">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_institution_codes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching institution codes. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested institution codes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/institutionCode?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_localities">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_localities">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_localities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching localities. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested localities.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/locality?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceSearch.suggest_occurrence_ids">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_occurrence_ids">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_occurrence_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching occurrence ids. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested occurrence ids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/occurrenceId?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceSearch.suggest_organism_ids">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_organism_ids">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_organism_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching organism ids. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested organism ids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/organismId?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceSearch.suggest_other_catalogue_numbers">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_other_catalogue_numbers">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_other_catalogue_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching other catalogue numbers. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested other catalogue numbers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/otherCatalogNumbers?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_parent_event_ids">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_parent_event_ids">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_parent_event_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching parent event ids. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested parent event ids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/parentEventId?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_record_numbers">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_record_numbers">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_record_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching record numbers. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested record numbers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/recordNumber?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_recorded_by_values">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_recorded_by_values">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_recorded_by_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching recorded by values. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested recorded by values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/recordedBy?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_sampling_protocols">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_sampling_protocols">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_sampling_protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching sampling protocols. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested sampling protocols.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/samplingProtocol?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_state_provinces">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_state_provinces">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_state_provinces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching state provinces. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested state provinces.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/stateProvince?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OccurrenceSearch.suggest_water_bodies">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.search.OccurrenceSearch.suggest_water_bodies">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_water_bodies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns matching water bodies. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="sd">            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing suggested water bodies.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/waterBody?q=</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+</div>
+
+                    
+<span class="c1">### NOT WORKING </span>
+<span class="c1">#        def suggest_supported_terms_values(self, term, query, limit):</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        Search that returns values for supported terms. Results are ordered by relevance.</span>
+<span class="c1">#        </span>
+<span class="c1">#        Args:</span>
+<span class="c1">#            term (str): Required. A supported term. Available values : PRESERVED_SPECIMEN, FOSSIL_SPECIMEN, LIVING_SPECIMEN, OBSERVATION, HUMAN_OBSERVATION, MACHINE_OBSERVATION, MATERIAL_SAMPLE, LITERATURE, MATERIAL_CITATION, OCCURRENCE, UNKNOWN</span>
+<span class="c1">#            query (str): Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</span>
+<span class="c1">#            limit (int): Required. Controls the number of suggestions. Example : 5</span>
+<span class="c1">#</span>
+<span class="c1">#        Returns:</span>
+<span class="c1">#            list: A list containing suggested values for supported terms.</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        endpoint = f&quot;occurrence/search/experimental/term/{{term}}?term={term}&amp;q={query}&amp;limit={limit}&quot;</span>
+<span class="c1">#        print(endpoint)</span>
+<span class="c1">#        return mr.make_request(self.base_url+endpoint)</span>
+  
+ 
+ 
+ 
+ 
+ 
+     
+ 
+         
+
+                 
+                                                   
+                                 
+
+                 
+                                  
+                                                                    
+                                             
+ 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Spyder Rex.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

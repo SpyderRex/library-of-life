@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library_of_life.species.name_search &mdash; library_of_life 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            library_of_life
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">library_of_life</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">library_of_life</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">library_of_life.species.name_search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for library_of_life.species.name_search</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
+<span class="kn">import</span> <span class="nn">requests_cache</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
+<div class="viewcode-block" id="NameSearch">
+<a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch">[docs]</a>
+<span class="k">class</span> <span class="nc">NameSearch</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for interacting with the name search section of the Species API.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        endpoint: The endpoint for this section of the API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;name_search_cache&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;species&quot;</span>
+          
+        <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
+                   
+<div class="viewcode-block" id="NameSearch.autocomplete_species">
+<a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.autocomplete_species">[docs]</a>
+    <span class="k">def</span> <span class="nf">autocomplete_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">constituent_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">is_extinct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">habitat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">threat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">name_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">nomenclaturual_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns up to 20 name usages by doing prefix matching against the scientific name. Results are ordered by relevance.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_key (str): Optional. A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c.</span>
+<span class="sd">            constituent_key (str): Optional. The (sub)dataset constituent key as a UUID. Useful to query larger assembled datasets such as the GBIF Backbone or the Catalogue of Life.</span>
+<span class="sd">            rank (str): Optional. Filters by taxonomic rank as given in our https://api.gbif.org/v1/enumeration/basic/Rank[Rank enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            higher_taxon_key (str): Optional. Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching NUB keys across all checklists.</span>
+<span class="sd">            status (str): Optional. Filters by the taxonomic status as given in our https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus[TaxonomicStatus enum]. Available values : ACCEPTED, DOUBTFUL, SYNONYM, HETEROTYPIC_SYNONYM, HOMOTYPIC_SYNONYM, PROPARTE_SYNONYM, MISAPPLIED.</span>
+<span class="sd">            is_extinct (bool): Optional. Filters by extinction status.</span>
+<span class="sd">            habitat (str): Optional. Filters by the habitat. Currently only 3 major biomes are accepted in our https://api.gbif.org/v1/enumeration/basic/Habitat[Habitat enum]. Available values : MARINE, FRESHWATER, TERRESTRIAL.</span>
+<span class="sd">            threat (str): Optional. Filters by the taxonomic threat status as given in our https://api.gbif.org/v1/enumeration/basic/ThreatStatus[ThreatStatus enum]. Available values : EXTINCT, EXTINCT_IN_THE_WILD, REGIONALLY_EXTINCT, CRITICALLY_ENDANGERED, ENDANGERED, VULNERABLE, NEAR_THREATENED, LEAST_CONCERN, DATA_DEFICIENT, NOT_APPLICABLE, NOT_EVALUATED.</span>
+<span class="sd">            name_type (str): Optional. Filters by the name type as given in our https://api.gbif.org/v1/enumeration/basic/NameType[NameType enum]. Available values : SCIENTIFIC, VIRUS, HYBRID, INFORMAL, CULTIVAR, CANDIDATUS, OTU, DOUBTFUL, PLACEHOLDER, NO_NAME, BLACKLISTED.</span>
+<span class="sd">            nomenclatural_status (str): Optional. Filters by the nomenclatural status as given in our https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus[Nomenclatural Status enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            origin (str): Optional. Filters for name usages with a specific origin. Available values : SOURCE, DENORMED_CLASSIFICATION, VERBATIM_PARENT, VERBATIM_ACCEPTED, VERBATIM_BASIONYM, PROPARTE, AUTONYM, IMPLICIT_NAME, MISSING_ACCEPTED, BASIONYM_PLACEHOLDER, EX_AUTHOR_SYNONYM, OTHER.</span>
+<span class="sd">            issue (str): Optional. A specific indexing issue as defined in our https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing up to 20 name usages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;constituentKey&quot;</span><span class="p">,</span> <span class="n">constituent_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;higherTaxonKey&quot;</span><span class="p">,</span> <span class="n">higher_taxon_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;isExtinct&quot;</span><span class="p">,</span> <span class="n">is_extinct</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">,</span> <span class="n">habitat</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;threat&quot;</span><span class="p">,</span> <span class="n">threat</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;nameType&quot;</span><span class="p">,</span> <span class="n">name_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;nomenclaturalStatus&quot;</span><span class="p">,</span> <span class="n">nomenclaturual_status</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/suggest&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="NameSearch.search_species">
+<a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.search_species">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">constituent_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">is_extinct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">habitat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">threat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">name_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">nomenclaturual_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns results of a full-text search of name usages covering the scientific and vernacular names, the species description, distribution and the entire classification across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_key (str): Optional. A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c.</span>
+<span class="sd">            constituent_key (str): Optional. The (sub)dataset constituent key as a UUID. Useful to query larger assembled datasets such as the GBIF Backbone or the Catalogue of Life.</span>
+<span class="sd">            rank (str): Optional. Filters by taxonomic rank as given in our https://api.gbif.org/v1/enumeration/basic/Rank[Rank enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            higher_taxon_key (str): Optional. Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching NUB keys across all checklists.</span>
+<span class="sd">            status (str): Optional. Filters by the taxonomic status as given in our https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus[TaxonomicStatus enum]. Available values : ACCEPTED, DOUBTFUL, SYNONYM, HETEROTYPIC_SYNONYM, HOMOTYPIC_SYNONYM, PROPARTE_SYNONYM, MISAPPLIED.</span>
+<span class="sd">            is_extinct (bool): Optional. Filters by extinction status.</span>
+<span class="sd">            habitat (str): Optional. Filters by the habitat. Currently only 3 major biomes are accepted in our https://api.gbif.org/v1/enumeration/basic/Habitat[Habitat enum]. Available values : MARINE, FRESHWATER, TERRESTRIAL.</span>
+<span class="sd">            threat (str): Optional. Filters by the taxonomic threat status as given in our https://api.gbif.org/v1/enumeration/basic/ThreatStatus[ThreatStatus enum]. Available values : EXTINCT, EXTINCT_IN_THE_WILD, REGIONALLY_EXTINCT, CRITICALLY_ENDANGERED, ENDANGERED, VULNERABLE, NEAR_THREATENED, LEAST_CONCERN, DATA_DEFICIENT, NOT_APPLICABLE, NOT_EVALUATED.</span>
+<span class="sd">            name_type (str): Optional. Filters by the name type as given in our https://api.gbif.org/v1/enumeration/basic/NameType[NameType enum]. Available values : SCIENTIFIC, VIRUS, HYBRID, INFORMAL, CULTIVAR, CANDIDATUS, OTU, DOUBTFUL, PLACEHOLDER, NO_NAME, BLACKLISTED.</span>
+<span class="sd">            nomenclatural_status (str): Optional. Filters by the nomenclatural status as given in our https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus[Nomenclatural Status enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            origin (str): Optional. Filters for name usages with a specific origin. Available values : SOURCE, DENORMED_CLASSIFICATION, VERBATIM_PARENT, VERBATIM_ACCEPTED, VERBATIM_BASIONYM, PROPARTE, AUTONYM, IMPLICIT_NAME, MISSING_ACCEPTED, BASIONYM_PLACEHOLDER, EX_AUTHOR_SYNONYM, OTHER.</span>
+<span class="sd">            issue (str): Optional. A specific indexing issue as defined in our https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            highlight (bool): Optional. Set hl=true to highlight terms matching the query when in fulltext search fields. The highlight will be an emphasis tag of class gbifHl.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            facet (list): Optional. A facet name used to retrieve the most frequent values for a field. This parameter may be repeated to request multiple facets.</span>
+<span class="sd">            facet_mincount (int): Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}.</span>
+<span class="sd">            facet_multiselect (bool): Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered.</span>
+<span class="sd">            facet_limit (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
+<span class="sd">            facet_offset (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing species data from search.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;constituentKey&quot;</span><span class="p">,</span> <span class="n">constituent_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;higherTaxonKey&quot;</span><span class="p">,</span> <span class="n">higher_taxon_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;isExtinct&quot;</span><span class="p">,</span> <span class="n">is_extinct</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">,</span> <span class="n">habitat</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;threat&quot;</span><span class="p">,</span> <span class="n">threat</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;nameType&quot;</span><span class="p">,</span> <span class="n">name_type</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;nomenclaturalStatus&quot;</span><span class="p">,</span> <span class="n">nomenclaturual_status</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/search&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="NameSearch.list_all_name_usages">
+<a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.list_all_name_usages">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_name_usages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span>
+                            <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">source_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of all name usages across all checklists.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            limit (int): Required. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Required. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            language (str): Required. Language for vernacular names, given as an ISO 639-1 two-letter code from our vocabulary. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            dataset_key (list): Optional. A UUID of a checklist dataset.</span>
+<span class="sd">            source_id (str): Optional. Filters by the source identifier.</span>
+<span class="sd">            name (str): Optional. A name without authorship, to match exactly.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing a list name usages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> 
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;sourceId&quot;</span><span class="p">,</span> <span class="n">source_id</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="NameSearch.fuzzy_name_match">
+<a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.fuzzy_name_match">[docs]</a>
+    <span class="k">def</span> <span class="nf">fuzzy_name_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">authorship</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">generic_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">generic_epithet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">infraspecific_epithet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">strict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">verbose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">kingdom</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">phylum</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="bp">cls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">family</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">genus</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns fuzzy matches of scientific names against the GBIF Backbone Taxonomy with the optional classification provided. If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            usage_key (int): Optional. The usage key to look up. When provided, all other fields are ignored.</span>
+<span class="sd">            name (str): Optional. The scientific name to fuzzy match against. May include the authorship and year.</span>
+<span class="sd">            authorship (str): Optional. The scientific name authorship to fuzzy match against.</span>
+<span class="sd">            rank (str): Optional. Filters by taxonomic rank as given in our https://api.gbif.org/v1/enumeration/basic/Rank[Rank enum]. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            generic_name (str): Optional. Generic part of the name to match when given as atomised parts instead of the full name parameter.</span>
+<span class="sd">            generic_epithet (str): Optional. Specific epithet to match.</span>
+<span class="sd">            infraspecific_epithet (str): Optional. Infraspecific epithet to match.</span>
+<span class="sd">            strict (bool): Optional. If true it fuzzy matches only the given name, but never a taxon in the upper classification.</span>
+<span class="sd">            verbose (bool): Optional. If true it shows alternative matches which were considered but then rejected.</span>
+<span class="sd">            kingdom (str): Optional. Kingdom to match.</span>
+<span class="sd">            phylum (str): Optional. Phylum to match.</span>
+<span class="sd">            order (str): Optional. Order to match.</span>
+<span class="sd">            cls (str): Optional. Class to match.</span>
+<span class="sd">            family (str): Optional. Family to match.</span>
+<span class="sd">            genus (str): Optional. Genus to match.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing fuzzy matches of scientific names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;usageKey&quot;</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;authorship&quot;</span><span class="p">,</span> <span class="n">authorship</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;genericName&quot;</span><span class="p">,</span> <span class="n">generic_name</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;genericEpithet&quot;</span><span class="p">,</span> <span class="n">generic_epithet</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;infraspecificEpithet&quot;</span><span class="p">,</span> <span class="n">infraspecific_epithet</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;kingdom&quot;</span><span class="p">,</span> <span class="n">kingdom</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;phylum&quot;</span><span class="p">,</span> <span class="n">phylum</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;family&quot;</span><span class="p">,</span> <span class="n">family</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;genus&quot;</span><span class="p">,</span> <span class="n">genus</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/match&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+</div>
+
+ 
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Spyder Rex.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library_of_life.occurrence package &mdash; library_of_life 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="library_of_life.registry package" href="library_of_life.registry.html" />
+    <link rel="prev" title="library_of_life.maps package" href="library_of_life.maps.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            library_of_life
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">library_of_life</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="library_of_life.html">library_of_life package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="library_of_life.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.literature.html">library_of_life.literature package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.maps.html">library_of_life.maps package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">library_of_life.occurrence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.registry.html">library_of_life.registry package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.species.html">library_of_life.species package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.utils.html">library_of_life.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.validator.html">library_of_life.validator package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.vocabulary.html">library_of_life.vocabulary package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_of_life.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library_of_life.html#module-library_of_life.gbif_root">library_of_life.gbif_root module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library_of_life.html#module-library_of_life">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">library_of_life</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">library_of_life</a></li>
+          <li class="breadcrumb-item"><a href="library_of_life.html">library_of_life package</a></li>
+      <li class="breadcrumb-item active">library_of_life.occurrence package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/library_of_life.occurrence.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="library-of-life-occurrence-package">
+<h1>library_of_life.occurrence package<a class="headerlink" href="#library-of-life-occurrence-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.country_usages">
+<span id="library-of-life-occurrence-country-usages-module"></span><h2>library_of_life.occurrence.country_usages module<a class="headerlink" href="#module-library_of_life.occurrence.country_usages" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.download_format">
+<span id="library-of-life-occurrence-download-format-module"></span><h2>library_of_life.occurrence.download_format module<a class="headerlink" href="#module-library_of_life.occurrence.download_format" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.download_stats">
+<span id="library-of-life-occurrence-download-stats-module"></span><h2>library_of_life.occurrence.download_stats module<a class="headerlink" href="#module-library_of_life.occurrence.download_stats" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.downloads">
+<span id="library-of-life-occurrence-downloads-module"></span><h2>library_of_life.occurrence.downloads module<a class="headerlink" href="#module-library_of_life.occurrence.downloads" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.downloads.</span></span><span class="sig-name descname"><span class="pre">OccurrenceDownload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'occurrence_download_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the download section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.request_download">
+<span class="sig-name descname"><span class="pre">request_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.request_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.request_download" title="Link to this definition"></a></dt>
+<dd><p>Starts the process of creating a download file. See the predicates section to consult the requests accepted by this service and the limits section to refer for information of how this service is limited per user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>request_body</strong> (<em>dict</em>) – The JSON request body. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A download key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.retrieve_download">
+<span class="sig-name descname"><span class="pre">retrieve_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.retrieve_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.retrieve_download" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the download file if it is available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>download_key</strong> (<em>str</em>) – An identifier for a download. Example : 0001005-130906152512535</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A zip file of the downloaded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>binary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.occurrence.gadm_regions">
+<span id="library-of-life-occurrence-gadm-regions-module"></span><h2>library_of_life.occurrence.gadm_regions module<a class="headerlink" href="#module-library_of_life.occurrence.gadm_regions" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.inventories">
+<span id="library-of-life-occurrence-inventories-module"></span><h2>library_of_life.occurrence.inventories module<a class="headerlink" href="#module-library_of_life.occurrence.inventories" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.metrics">
+<span id="library-of-life-occurrence-metrics-module"></span><h2>library_of_life.occurrence.metrics module<a class="headerlink" href="#module-library_of_life.occurrence.metrics" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.organization_usages">
+<span id="library-of-life-occurrence-organization-usages-module"></span><h2>library_of_life.occurrence.organization_usages module<a class="headerlink" href="#module-library_of_life.occurrence.organization_usages" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.occurrence.search">
+<span id="library-of-life-occurrence-search-module"></span><h2>library_of_life.occurrence.search module<a class="headerlink" href="#module-library_of_life.occurrence.search" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.search.</span></span><span class="sig-name descname"><span class="pre">OccurrenceSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'search_occurrence_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the search section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.search_occurrences">
+<span class="sig-name descname"><span class="pre">search_occurrences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accepted_taxon_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis_of_record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinate_uncertainty_in_meters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crawl_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_latitide</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree_of_establishment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_from_centroid_in_meters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dwca_extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">earliest_eon_or_lowest_eonothem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">earliest_era_or_lowest_erathem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">earliest_period_or_lowest_system</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">earliest_epoch_or_lowest_series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">earliest_age_or_lowest_stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_day_of_year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">establishment_means</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">family_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_level_0_gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_level_1_gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_level_2_gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_level_3_gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gbif_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gbif_region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genus_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">georeferenced_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_coordinate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">higher_geography</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highest_biostratigraphic_zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_geospatial_issue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hosting_organization_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identified_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identified_by_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">installation_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">institution_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">institution_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_in_cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">island</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">island_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_sequenced</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iucn_red_list_category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kingdom_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_interpreted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_eon_or_highest_eonothem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_era_or_highest_erathem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_period_or_highest_system</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_epoch_or_highest_series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latest_age_or_highest_stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">license</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">life_stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locality</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lowest_biostratigraphic_zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">media_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occurrence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occurrence_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organism_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organism_quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organism_quantity_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_catalog_numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_event_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pathway</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phylum_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preparations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_identifications</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">programme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">published_by_gbif_region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publising_org</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recorded_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recorded_by_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_organism_quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repatriated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size_unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_protocol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scientific_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">species_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_day_of_year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_province</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxon_concept_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxon_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxon_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxonomic_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbatim_scientific_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_mincount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_multiselect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.search_occurrences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.search_occurrences" title="Link to this definition"></a></dt>
+<dd><p>Returns results of full search across all occurrences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>accepted_taxon_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. A taxon key from the GBIF backbone. Only synonym taxa are included in the search, so a search for Aves with acceptedTaxonKey=212 (i.e. /occurrence/search?taxonKey=212) will match occurrences identified as birds, but not any known family, genus or species of bird.Example : 2476674</p></li>
+<li><p><strong>associated_sequences</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Identifier (publication, global unique identifier, URI) of genetic sequence information associated with the material entity. Example : <a class="reference external" href="http://www.ncbi.nlm.nih.gov/nuccore/U34853.1">http://www.ncbi.nlm.nih.gov/nuccore/U34853.1</a></p></li>
+<li><p><strong>basis_of_record</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Basis of record, as defined in our BasisOfRecord vocabulary. Available values : PRESERVED_SPECIMEN, FOSSIL_SPECIMEN, LIVING_SPECIMEN, OBSERVATION, HUMAN_OBSERVATION, MACHINE_OBSERVATION, MATERIAL_SAMPLE, LITERATURE, MATERIAL_CITATION, OCCURRENCE, UNKNOWN. Example : PRESERVED_SPECIMEN</p></li>
+<li><p><strong>bed</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the lithostratigraphic bed from which the material entity was collected. Example : Harlem coal</p></li>
+<li><p><strong>catalog_number</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code. Example : K001275042</p></li>
+<li><p><strong>class_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Class classification key. Parameter may be repeated. Example : 212</p></li>
+<li><p><strong>collection_code</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution. Example : F</p></li>
+<li><p><strong>collection_key</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A key (UUID) for a collection registered in the Global Registry of Scientific Collections. Example : dceb8d52-094c-4c2c-8960-75e0097c6861</p></li>
+<li><p><strong>continent</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Continent, as defined in our Continent vocabulary. Available values : AFRICA, ANTARCTICA, ASIA, OCEANIA, EUROPE, NORTH_AMERICA, SOUTH_AMERICA. Example : EUROPE</p></li>
+<li><p><strong>coordinate_uncertainty_in_meters</strong> (<em>tuple</em>) – Optional. The horizontal distance (in metres) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Supports range queries. Example : 0,500</p></li>
+<li><p><strong>country</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The 2-letter country code (as per ISO-3166-1) of the country in which the occurrence was recorded. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>crawl_id</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Crawl attempt that harvested this record. Example : 1</p></li>
+<li><p><strong>dataset_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The ID of the dataset. Example : <a class="reference external" href="https://doi.org/10.1594/PANGAEA.315492">https://doi.org/10.1594/PANGAEA.315492</a></p></li>
+<li><p><strong>dataset_key</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The occurrence dataset key (a UUID). Example : 13b70480-bd69-11dd-b15f-b8a03c50a862</p></li>
+<li><p><strong>dataset_name</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The exact name of the dataset.</p></li>
+<li><p><strong>decimal_latitude</strong> (<em>tuple</em>) – Optional. Latitude in decimal degrees between -90° and 90° based on WGS 84. Supports range queries. Example : 40.5,45</p></li>
+<li><p><strong>degree_of_establishment</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The degree to which an organism survives, reproduces and expands its range at the given place and time, as defined in the GBIF DegreeOfEstablishment vocabulary. Example : Invasive</p></li>
+<li><p><strong>decimal_longitude</strong> (<em>tuple</em>) – Optional. Longitude in decimals between -180 and 180 based on WGS 84. Supports range queries. Example : -120,-95.5</p></li>
+<li><p><strong>depth</strong> (<em>tuple</em>) – Optional. Depth in metres relative to altitude. For example 10 metres below a lake surface with given altitude. Example : 10,20</p></li>
+<li><p><strong>distance_from_centroid_in_meters</strong> (<em>tuple</em>) – Optional. The horizontal distance (in metres) of the occurrence from the nearest centroid known to be used in automated georeferencing procedures, if that distance is 5000m or less. Occurrences (especially specimens) near a country centroid may have a poor-quality georeference, especially if coordinateUncertaintyInMeters is blank or large. Supports range queries. Example : 0,500</p></li>
+<li><p><strong>dwca_extension</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A known Darwin Core Archive extension RowType. Limits the search to occurrences which have this extension, although they will not necessarily have any useful data recorded using the extension. Example : <a class="reference external" href="http://rs.tdwg.org/ac/terms/Multimedia">http://rs.tdwg.org/ac/terms/Multimedia</a></p></li>
+<li><p><strong>earliest_eon_or_lowest_eonothem</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the earliest possible geochronologic era or lowest chronostratigraphic erathem attributable to the stratigraphic horizon from which the material entity was collected. Example : Mesozoic</p></li>
+<li><p><strong>earliest_era_or_lowest_erathem</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the latest possible geochronologic eon or highest chrono-stratigraphic eonothem or the informal name (“Precambrian”) attributable to the stratigraphic horizon from which the material entity was collected. Example : Proterozoic</p></li>
+<li><p><strong>earliest_period_or_lowest_system</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the earliest possible geochronologic period or lowest chronostratigraphic system attributable to the stratigraphic horizon from which the material entity was collected. Example : Neogene</p></li>
+<li><p><strong>earliest_epoch_or_lowest_series</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the earliest possible geochronologic epoch or lowest chronostratigraphic series attributable to the stratigraphic horizon from which the material entity was collected. Example : Holocene</p></li>
+<li><p><strong>earliest_age_or_lowest_stage</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the earliest possible geochronologic age or lowest chronostratigraphic stage attributable to the stratigraphic horizon from which the material entity was collected. Example : Skullrockian</p></li>
+<li><p><strong>elevation</strong> (<em>tuple</em>) – Optional. Elevation (altitude) in metres above sea level. Example : 1000,1250</p></li>
+<li><p><strong>end_day_of_year</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. The latest integer day of the year on which the event occurred. Parameter may be repeated. Example : 6</p></li>
+<li><p><strong>establishment_means</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Whether an organism or organisms have been introduced to a given place and time through the direct or indirect activity of modern humans, as defined in the GBIF EstablishmentMeans vocabulary. Example : Native</p></li>
+<li><p><strong>event_date</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Occurrence date in ISO 8601 format: yyyy, yyyy-MM or yyyy-MM-dd. Example : 2000,2001-06-30</p></li>
+<li><p><strong>event_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier for the information associated with a sampling event. Example : A 123</p></li>
+<li><p><strong>family_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Family classification key. Example : 2405</p></li>
+<li><p><strong>field_number</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier given to the event in the field. Often serves as a link between field notes and the event. Example : RV Sol 87-03-08</p></li>
+<li><p><strong>formation</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the lithostratigraphic formation from which the material entity was collected. Example : Notch Peak Formation</p></li>
+<li><p><strong>gadm_gid</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A GADM geographic identifier at any level, for example AGO, AGO.1_1, AGO.1.1_1 or AGO.1.1.1_1. Example : AGO.1_1</p></li>
+<li><p><strong>gadm_level_0_gid</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A GADM geographic identifier at the zero level, for example AGO. Example : AGO</p></li>
+<li><p><strong>gadm_level_1_gid</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A GADM geographic identifier at the first level, for example AGO.1_1. Example : AGO.1_1</p></li>
+<li><p><strong>gadm_level_2_gid</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A GADM geographic identifier at the second level, for example AFG.1.1_1. Example : AFG.1.1_1</p></li>
+<li><p><strong>gadm_level_3_gid</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A GADM geographic identifier at the third level, for example AFG.1.1.1_1. Example : AFG.1.1.1_1</p></li>
+<li><p><strong>gbif_id</strong> (<em>int</em>) – Optional. The unique GBIF key for a single occurrence. Example : 2005380410</p></li>
+<li><p><strong>gbif_region</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Gbif region based on country code. Available values : AFRICA, ASIA, EUROPE, NORTH_AMERICA, OCEANIA, LATIN_AMERICA, ANTARCTICA. Example : AFRICA</p></li>
+<li><p><strong>genus_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Genus classification key. Example : 2877951</p></li>
+<li><p><strong>geo_distance</strong> (<em>str</em>) – Optional. Filters to match occurrence records with coordinate values within a specified distance of a coordinate. Distance may be specified in kilometres (km) or metres (m). Example : 90,100,5km</p></li>
+<li><p><strong>georeferenced_by</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Name of a person, group, or organization who determined the georeference (spatial representation) for the location. Example : Brad Millen</p></li>
+<li><p><strong>geometry</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Searches for occurrences inside a polygon described in Well Known Text (WKT) format. Only POLYGON and MULTIPOLYGON are accepted WKT types. For example, a shape written as POLYGON ((30.1 10.1, 40 40, 20 40, 10 20, 30.1 10.1)) would be queried as is. Polygons must have anticlockwise ordering of points. (A clockwise polygon represents the opposite area: the Earth’s surface with a ‘hole’ in it. Such queries are not supported.). Example : POLYGON ((30.1 10.1, 40 40, 20 40, 10 20, 30.1 10.1))</p></li>
+<li><p><strong>group</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the lithostratigraphic group from which the material entity was collected. Example : Bathurst</p></li>
+<li><p><strong>has_coordinate</strong> (<em>bool</em>) – Optional. Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. hasCoordinate=true limits to occurrence records with coordinate values and hasCoordinate=false limits to occurrence records without coordinate values). Example : True</p></li>
+<li><p><strong>higher_geography</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Geographic name less specific than the information captured in the locality term. Example : Argentina</p></li>
+<li><p><strong>highest_biostratigraphic_zone</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the highest possible geological biostratigraphic zone of the stratigraphic horizon from which the material entity was collected. Example : Blancan</p></li>
+<li><p><strong>has_geospatial_issue</strong> (<em>bool</em>) – Optional. Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. hasGeospatialIssue=true returns only those records with spatial issues while hasGeospatialIssue=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues. Example: True</p></li>
+<li><p><strong>hosting_organization_key</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The key (UUID) of the publishing organization whose installation (server) hosts the original dataset. (This is of little interest to most data user). Example : fbca90e3-8aed-48b1-84e3-369afbd000ce</p></li>
+<li><p><strong>identified_by</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The person who provided the taxonomic identification of the occurrence. Example : Allison</p></li>
+<li><p><strong>identified_by_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Identifier (e.g. ORCID) for the person who provided the taxonomic identification of the occurrence. Example : <a class="reference external" href="https://orcid.org/0000-0001-6492-4016">https://orcid.org/0000-0001-6492-4016</a></p></li>
+<li><p><strong>installation_key</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The occurrence installation key (a UUID). (This is of little interest to most data users. It is the identifier for the server that provided the data to GBIF.) Example : 17a83780-3060-4851-9d6f-029d5fcb81c9</p></li>
+<li><p><strong>institution_code</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique. Example : K</p></li>
+<li><p><strong>institution_key</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A key (UUID) for an institution registered in the Global Registry of Scientific Collections. Example : fa252605-26f6-426c-9892-94d071c2c77f</p></li>
+<li><p><strong>issue</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A specific interpretation issue as defined in our OccurrenceIssue enumeration. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>is_in_cluster</strong> (<em>bool</em>) – Optional. Experimental. Searches for records which are part of a cluster. See the documentation on clustering. Example : True</p></li>
+<li><p><strong>island</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The name of the island on or near which the location occurs. Example : Zanzibar</p></li>
+<li><p><strong>island_group</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The name of the island group in which the location occurs. Example : Seychelles</p></li>
+<li><p><strong>is_sequenced</strong> (<em>bool</em>) – Optional. Flag occurrence when associated sequences exists. Example : true</p></li>
+<li><p><strong>iucn_red_list_category</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A threat status category from the IUCN Red List. The two-letter code for the status should be used. Available values : EXTINCT, EXTINCT_IN_THE_WILD, REGIONALLY_EXTINCT, CRITICALLY_ENDANGERED, ENDANGERED, VULNERABLE, NEAR_THREATENED, LEAST_CONCERN, DATA_DEFICIENT, NOT_APPLICABLE, NOT_EVALUATED. Example : EX</p></li>
+<li><p><strong>kingdom_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Kingdom classification key. Parameter may be repeated. Example : 5</p></li>
+<li><p><strong>last_interpreted</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. This date the record was last modified in GBIF, in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Note that this is the date the record was last changed in GBIF, not necessarily the date the record was first/last changed by the publisher. Data is re-interpreted when we change the taxonomic backbone, geographic data sources, or interpretation processes. Parameter may be repeated or a range. Example : 2023-02</p></li>
+<li><p><strong>latest_eon_or_highest_eonothem</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional.The full name of the latest possible geochronologic eon or highest chrono-stratigraphic eonothem or the informal name (“Precambrian”) attributable to the stratigraphic horizon from which the material entity was collected. Example : Proterozoic</p></li>
+<li><p><strong>latest_era_or_highest_erathem</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the latest possible geochronologic era or highest chronostratigraphic erathem attributable to the stratigraphic horizon from which the material entity was collected. Example : Cenozoic</p></li>
+<li><p><strong>latest_period_or_highest_system</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the latest possible geochronologic period or highest chronostratigraphic system attributable to the stratigraphic horizon from which the material entity was collected. Example : Neogene</p></li>
+<li><p><strong>latest_epoch_or_highest_series</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the latest possible geochronologic epoch or highest chronostratigraphic series attributable to the stratigraphic horizon from which the material entity was collected. Example : Pleistocene</p></li>
+<li><p><strong>latest_age_or_highest_stage</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the latest possible geochronologic age or highest chronostratigraphic stage attributable to the stratigraphic horizon from which the material entity was collected. Example : Boreal</p></li>
+<li><p><strong>license</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The licence applied to the dataset or record by the publisher. Parameter may be repeated or a range. Available values : CC0_1_0, CC_BY_4_0, CC_BY_NC_4_0, UNSPECIFIED, UNSUPPORTED. Example : CC0_1_0</p></li>
+<li><p><strong>life_stage</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The age class or life stage of an organism at the time the occurrence was recorded, as defined in the GBIF LifeStage vocabulary](<a class="reference external" href="https://registry.gbif.org/vocabulary/LifeStage/concepts">https://registry.gbif.org/vocabulary/LifeStage/concepts</a>). Example : Juvenile</p></li>
+<li><p><strong>locality</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The specific description of the place. Parameter may be repeated.</p></li>
+<li><p><strong>lowest_biostratigraphic_zone</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the lowest possible geological biostratigraphic zone of the stratigraphic horizon from which the material entity was collected. Example : Maastrichtian</p></li>
+<li><p><strong>media_type</strong> (<em>list</em><em>[</em><em>object</em><em>]</em>) – Optional. The kind of multimedia associated with an occurrence as defined in our MediaType enumeration.</p></li>
+<li><p><strong>member</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The full name of the lithostratigraphic member from which the material entity was collected. Example : Lava Dam Member</p></li>
+<li><p><strong>modified</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The most recent date-time on which the occurrnce was changed, according to the publisher. Example : 2023-02-20</p></li>
+<li><p><strong>month</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. The month of the year, starting with 1 for January. Example : 5</p></li>
+<li><p><strong>network_key</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The network’s GBIF key (a UUID). Example : 2b7c7b4f-4d4f-40d3-94de-c28b6fa054a6</p></li>
+<li><p><strong>occurrence_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A globally unique identifier for the occurrence record as provided by the publisher. Example : <a class="reference external" href="URN:catalog:UWBM:Bird:126493">URN:catalog:UWBM:Bird:126493</a></p></li>
+<li><p><strong>occurrence_status</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Either ABSENT or PRESENT; the presence or absence of the occurrence. Available values : PRESENT, ABSENT. Example : PRESENT</p></li>
+<li><p><strong>order_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Order classification key. Example : 1448</p></li>
+<li><p><strong>organism_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier for the organism instance (as opposed to a particular digital record of the organism). May be a globally unique identifier or an identifier specific to the data set.</p></li>
+<li><p><strong>organism_quantity</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A number or enumeration value for the quantity of organisms. Parameter may be repeated. Example : 1</p></li>
+<li><p><strong>organism_quantity_type</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The type of quantification system used for the quantity of organisms. Note this term is not aligned to a vocabulary. Example : individuals</p></li>
+<li><p><strong>other_catalog_numbers</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Previous or alternate fully qualified catalog numbers.</p></li>
+<li><p><strong>parent_event_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier for the information associated with a sampling event. Example : A 123</p></li>
+<li><p><strong>pathway</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The process by which an organism came to be in a given place at a given time, as defined in the GBIF Pathway vocabulary. Example : Agriculture</p></li>
+<li><p><strong>phylum_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Phylum classification key. Example : 44</p></li>
+<li><p><strong>preparations</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Preparation or preservation method for a specimen. Example : pinned</p></li>
+<li><p><strong>previous_identifications</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Previous assignment of name to the organism. Example : Chalepidae</p></li>
+<li><p><strong>programme</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A group of activities, often associated with a specific funding stream, such as the GBIF BID programme. Example : BID</p></li>
+<li><p><strong>project_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The identifier for a project, which is often assigned by a funded programme. Example : bid-af2020-039-reg</p></li>
+<li><p><strong>protocol</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Protocol or mechanism used to provide the occurrence record. Available values : EML, FEED, WFS, WMS, TCS_RDF, TCS_XML, DWC_ARCHIVE, DIGIR, DIGIR_MANIS, TAPIR, BIOCASE, BIOCASE_XML_ARCHIVE, OAI_PMH, COLDP, CAMTRAP_DP, OTHER. Example : DWC_ARCHIVE</p></li>
+<li><p><strong>published_by_gbif_region</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. GBIF region based on the owning organization’s country. Available values : AFRICA, ASIA, EUROPE, NORTH_AMERICA, OCEANIA, LATIN_AMERICA, ANTARCTICA.Example : AFRICA</p></li>
+<li><p><strong>publishing_org</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The publishing organization’s GBIF key (a UUID). Example : e2e717bf-551a-4917-bdc9-4fa0f342c530</p></li>
+<li><p><strong>recorded_by</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The person who recorded the occurrence. Example : MiljoStyrelsen</p></li>
+<li><p><strong>recorded_by_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Identifier (e.g. ORCID) for the person who recorded the occurrence. Example : <a class="reference external" href="https://orcid.org/0000-0003-0623-6682">https://orcid.org/0000-0003-0623-6682</a></p></li>
+<li><p><strong>record_number</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. An identifier given to the record at the time it was recorded in the field. Example : 1</p></li>
+<li><p><strong>relative_organism_quantity</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The relative measurement of the quantity of the organism (i.e. without absolute units).</p></li>
+<li><p><strong>repatriated</strong> (<em>bool</em>) – Optional. Searches for records whose publishing country is different to the country in which the record was recorded. Example : true</p></li>
+<li><p><strong>sample_size_unit</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The unit of measurement of the size (time duration, length, area, or volume) of a sample in a sampling event..Example : hectares</p></li>
+<li><p><strong>sample_size_value</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Optional. numeric value for a measurement of the size (time duration, length, area, or volume) of a sample in a sampling event. Example : 50.5</p></li>
+<li><p><strong>sampling_protocol</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The name of, reference to, or description of the method or protocol used during a sampling event. Example : malaise trap</p></li>
+<li><p><strong>sex</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The sex of the biological individual(s) represented in the occurrence. Available values : NONE, MALE, FEMALE, HERMAPHRODITE. Example : MALE</p></li>
+<li><p><strong>scientific_name</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A scientific name from the GBIF backbone. All included and synonym taxa are included in the search. Under the hood a call to the species match service is done first to retrieve a taxonKey. Only unique scientific names will return results, homonyms (many monomials) return nothing! Consider to use the taxonKey parameter instead and the species match service directly. Example : Quercus robur</p></li>
+<li><p><strong>species_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. Species classification key. Example : 2476674</p></li>
+<li><p><strong>start_day_of_year</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. The earliest integer day of the year on which the event occurred. Example : 5</p></li>
+<li><p><strong>state_province</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs. This term does not have any data quality checks; see also the GADM parameters. Example : Leicestershire</p></li>
+<li><p><strong>taxon_concept_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. An identifier for the taxonomic concept to which the record refers - not for the nomenclatural details of a taxon. Example : 8fa58e08-08de-4ac1-b69c-1235340b7001</p></li>
+<li><p><strong>taxon_key</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. A taxon key from the GBIF backbone. All included (child) and synonym taxa are included in the search, so a search for Aves with taxonKey=212 (i.e. /occurrence/search?taxonKey=212) will match all birds, no matter which species. Example : 2476674</p></li>
+<li><p><strong>taxon_id</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The taxon identifier provided to GBIF by the data publisher. Example : <a class="reference external" href="urn:lsid:dyntaxa.se:Taxon:103026">urn:lsid:dyntaxa.se:Taxon:103026</a></p></li>
+<li><p><strong>taxonomic_status</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. A taxonomic status from our TaxonomicStatus enumeration. Available values : ACCEPTED, DOUBTFUL, SYNONYM, HETEROTYPIC_SYNONYM, HOMOTYPIC_SYNONYM, PROPARTE_SYNONYM, MISAPPLIED. Example : SYNONYM</p></li>
+<li><p><strong>type_status</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. Nomenclatural type (type status, typified scientific name, publication) applied to the subject. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>verbatim_scientific_name</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The scientific name provided to GBIF by the data publisher, before interpretation and processing by GBIF. Example : Quercus robur L.</p></li>
+<li><p><strong>water_body</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The name of the water body in which the Locations occurs. Example : Lake Michigan</p></li>
+<li><p><strong>year</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Optional. The 4 digit year. A year of 98 will be interpreted as AD 98. Example : 1998</p></li>
+<li><p><strong>highlight</strong> (<em>bool</em>) – Optional. Set highlight=True to highlight terms matching the query when in full-text search fields. The highlight will be an emphasis tag of class gbifH1 e.g. /search?q=plant&amp;hl=true. Full-text search fields include: title, keyword, country, publishing country, publishing organization title, hosting organization title, and description. One additional full text field is searched which includes information from metadata documents, but the text of this field is not returned in the response. Example : true</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Simple full-text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the maximum threshold, which is 300 for this service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. This service has a maximum offset of 100,000.</p></li>
+<li><p><strong>facet</strong> (<em>str</em>) – Optional. A facet name used to retrieve the most frequent values for a field. Facets are allowed for all search parameters except geometry and geoDistance. Note terms not available for searching are not available for faceting.</p></li>
+<li><p><strong>facet_mincount</strong> (<em>int</em>) – Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}, e.g. [/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000](<a class="reference external" href="https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000">https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000</a>].</p></li>
+<li><p><strong>facet_multiselect</strong> (<em>bool</em>) – Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered, e.g. /search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=HUMAN_OBSERVATION&amp;facetMultiselect=true still shows Basis of Record values ‘PRESERVED_SPECIMEN’ and so on, even though Basis of Record is being filtered.</p></li>
+<li><p><strong>facet_limit</strong> (<em>int</em>) – Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</p></li>
+<li><p><strong>facet_offset</strong> (<em>int</em>) – Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</p></li>
+<li><p><strong>publishing_country</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Optional. The 2-letter country code (as per ISO-3166-1) of the owning organization’s country. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.search_occurrences_using_predicates">
+<span class="sig-name descname"><span class="pre">search_occurrences_using_predicates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_mincount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_multiselect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.search_occurrences_using_predicates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.search_occurrences_using_predicates" title="Link to this definition"></a></dt>
+<dd><p>Full search across all occurrences specified using predicates (as used for the download API).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Required. One’s GBIF username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Required. One’s GBIF password.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the maximum threshold, which is 300 for this service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. This service has a maximum offset of 100,000.</p></li>
+<li><p><strong>facet</strong> (<em>str</em>) – Optional. A facet name used to retrieve the most frequent values for a field. Facets are allowed for all search parameters except geometry and geoDistance. This parameter may by repeated to request multiple facets, as in this example. Note terms not available for searching are not available for faceting.</p></li>
+<li><p><strong>facet_mincount</strong> (<em>int</em>) – Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}, e.g. [/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000](<a class="reference external" href="https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000">https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000</a>].</p></li>
+<li><p><strong>facet_multiselect</strong> (<em>bool</em>) – Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered, e.g. /search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=HUMAN_OBSERVATION&amp;facetMultiselect=true still shows Basis of Record values ‘PRESERVED_SPECIMEN’ and so on, even though Basis of Record is being filtered.</p></li>
+<li><p><strong>facet_limit</strong> (<em>int</em>) – Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</p></li>
+<li><p><strong>facet_offset</strong> (<em>int</em>) – Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the search results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_catalogue_numbers">
+<span class="sig-name descname"><span class="pre">suggest_catalogue_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_catalogue_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_catalogue_numbers" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching catalogue numbers. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested catalogue numbers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_collection_codes">
+<span class="sig-name descname"><span class="pre">suggest_collection_codes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_collection_codes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_collection_codes" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching collection codes. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested collection codes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_dataset_names">
+<span class="sig-name descname"><span class="pre">suggest_dataset_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_dataset_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_dataset_names" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching dataset names. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested dataset names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_event_ids">
+<span class="sig-name descname"><span class="pre">suggest_event_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_event_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_event_ids" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching event ids. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested event ids.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_identified_by_values">
+<span class="sig-name descname"><span class="pre">suggest_identified_by_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_identified_by_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_identified_by_values" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching identified by values. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested identified by values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_institution_codes">
+<span class="sig-name descname"><span class="pre">suggest_institution_codes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_institution_codes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_institution_codes" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching institution codes. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested institution codes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_localities">
+<span class="sig-name descname"><span class="pre">suggest_localities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_localities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_localities" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching localities. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested localities.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_occurrence_ids">
+<span class="sig-name descname"><span class="pre">suggest_occurrence_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_occurrence_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_occurrence_ids" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching occurrence ids. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested occurrence ids.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_organism_ids">
+<span class="sig-name descname"><span class="pre">suggest_organism_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_organism_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_organism_ids" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching organism ids. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested organism ids.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_other_catalogue_numbers">
+<span class="sig-name descname"><span class="pre">suggest_other_catalogue_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_other_catalogue_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_other_catalogue_numbers" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching other catalogue numbers. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested other catalogue numbers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_parent_event_ids">
+<span class="sig-name descname"><span class="pre">suggest_parent_event_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_parent_event_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_parent_event_ids" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching parent event ids. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested parent event ids.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_record_numbers">
+<span class="sig-name descname"><span class="pre">suggest_record_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_record_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_record_numbers" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching record numbers. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested record numbers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_recorded_by_values">
+<span class="sig-name descname"><span class="pre">suggest_recorded_by_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_recorded_by_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_recorded_by_values" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching recorded by values. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested recorded by values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_sampling_protocols">
+<span class="sig-name descname"><span class="pre">suggest_sampling_protocols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_sampling_protocols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_sampling_protocols" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching sampling protocols. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested sampling protocols.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_state_provinces">
+<span class="sig-name descname"><span class="pre">suggest_state_provinces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_state_provinces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_state_provinces" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching state provinces. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested state provinces.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.search.OccurrenceSearch.suggest_water_bodies">
+<span class="sig-name descname"><span class="pre">suggest_water_bodies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/search.html#OccurrenceSearch.suggest_water_bodies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.search.OccurrenceSearch.suggest_water_bodies" title="Link to this definition"></a></dt>
+<dd><p>Search that returns matching water bodies. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Required. Simple search suggestion parameter. Wildcards are not supported. Example : A</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of suggestions. Example : 5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing suggested water bodies.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.occurrence.single_occurrence">
+<span id="library-of-life-occurrence-single-occurrence-module"></span><h2>library_of_life.occurrence.single_occurrence module<a class="headerlink" href="#module-library_of_life.occurrence.single_occurrence" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.single_occurrence.</span></span><span class="sig-name descname"><span class="pre">SingleOccurrence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'single_occurrence_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the single occurrences section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_by_dataset_key_and_occurrence_id">
+<span class="sig-name descname"><span class="pre">get_occurrence_by_dataset_key_and_occurrence_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occurrence_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_occurrence_by_dataset_key_and_occurrence_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_by_dataset_key_and_occurrence_id" title="Link to this definition"></a></dt>
+<dd><p>Returns details for a single, interpreted occurrence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_key</strong> (<em>str</em>) – UUID key for the dataset. Example : e053ff53-c156-4e2e-b9b5-4462e9625424.</p></li>
+<li><p><strong>occurrence_id</strong> (<em>str</em>) – Occurrence ID from the dataset. Example : <a class="reference external" href="urn:catalog:MO:Tropicos:100889255">urn:catalog:MO:Tropicos:100889255</a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing details for a single occurrence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_by_id">
+<span class="sig-name descname"><span class="pre">get_occurrence_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gbif_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_occurrence_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_by_id" title="Link to this definition"></a></dt>
+<dd><p>Returns details for a single, interpreted occurrence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gbif_id</strong> (<em>int</em>) – Integer gbifId for the occurrence. Example : 1258202889.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing details for a single occurrence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_fragment_by_dataset_key_and_occurrence_id">
+<span class="sig-name descname"><span class="pre">get_occurrence_fragment_by_dataset_key_and_occurrence_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occurrence_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_occurrence_fragment_by_dataset_key_and_occurrence_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_fragment_by_dataset_key_and_occurrence_id" title="Link to this definition"></a></dt>
+<dd><p>Returns a single occurrence fragment in its raw form (JSON or XML) by its dataset key and occurrenceId in that dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_key</strong> (<em>str</em>) – UUID key for the dataset. Example : e053ff53-c156-4e2e-b9b5-4462e9625424.</p></li>
+<li><p><strong>occurrence_id</strong> (<em>str</em>) – Occurrence ID from the dataset. Example : <a class="reference external" href="urn:catalog:MO:Tropicos:100889255">urn:catalog:MO:Tropicos:100889255</a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing details for a single occurrence fragment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_fragment_by_id">
+<span class="sig-name descname"><span class="pre">get_occurrence_fragment_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gbif_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_occurrence_fragment_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_fragment_by_id" title="Link to this definition"></a></dt>
+<dd><p>Returns a single occurrence fragment in its raw form (JSON or XML).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gbif_id</strong> (<em>int</em>) – Integer gbifId for the occurrence. Example : 1258202889.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing details for a single occurrence fragment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_terms">
+<span class="sig-name descname"><span class="pre">get_occurrence_terms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_occurrence_terms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_occurrence_terms" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of the definitions of the terms (JSON properties, field names) of occurrences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing a list of definitions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_related_occurrences_by_id">
+<span class="sig-name descname"><span class="pre">get_related_occurrences_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gbif_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_related_occurrences_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_related_occurrences_by_id" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of related occurrences. (Experimental)</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Args:</dt><dd><p>gbif_id (int): Integer gbifId for the occurrence. Example : 1258202889.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: A dictionary containing details for occurrences.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_verbatim_occurrence_by_dataset_key_and_occurrence_id">
+<span class="sig-name descname"><span class="pre">get_verbatim_occurrence_by_dataset_key_and_occurrence_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occurrence_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_verbatim_occurrence_by_dataset_key_and_occurrence_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_verbatim_occurrence_by_dataset_key_and_occurrence_id" title="Link to this definition"></a></dt>
+<dd><p>Returns a single, verbatim occurrence without any interpretation by its dataset key and occurrenceId.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_key</strong> (<em>str</em>) – UUID key for the dataset. Example : e053ff53-c156-4e2e-b9b5-4462e9625424.</p></li>
+<li><p><strong>occurrence_id</strong> (<em>str</em>) – Occurrence ID from the dataset. Example : <a class="reference external" href="urn:catalog:MO:Tropicos:100889255">urn:catalog:MO:Tropicos:100889255</a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing details for a single occurrence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.single_occurrence.SingleOccurrence.get_verbatim_occurrence_by_id">
+<span class="sig-name descname"><span class="pre">get_verbatim_occurrence_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gbif_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/single_occurrence.html#SingleOccurrence.get_verbatim_occurrence_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.single_occurrence.SingleOccurrence.get_verbatim_occurrence_by_id" title="Link to this definition"></a></dt>
+<dd><p>Returns a single, verbatim occurrence without any interpretation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gbif_id</strong> (<em>int</em>) – Integer gbifId for the occurrence. Example : 1258202889.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing details for a single occurrence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.occurrence">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-library_of_life.occurrence" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="library_of_life.maps.html" class="btn btn-neutral float-left" title="library_of_life.maps package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="library_of_life.registry.html" class="btn btn-neutral float-right" title="library_of_life.registry package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Spyder Rex.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

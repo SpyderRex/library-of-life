@@ -7,7 +7,7 @@ readme = "README.md"
 homepage = "https://github.com/SpyderRex/library-of-life"
 repository = "https://github.com/SpyderRex/library-of-life"
 license = "MIT"
-keywords = ["API", "requests", "client", "gbif"]
+keywords = ["API", "requests", "client", "gbif", "biodata", "biology", "life", "species"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

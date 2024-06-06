@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library_of_life.species package &mdash; library_of_life 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="library_of_life.utils package" href="library_of_life.utils.html" />
+    <link rel="prev" title="library_of_life.registry package" href="library_of_life.registry.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            library_of_life
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">library_of_life</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="library_of_life.html">library_of_life package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="library_of_life.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.literature.html">library_of_life.literature package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.maps.html">library_of_life.maps package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.occurrence.html">library_of_life.occurrence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.registry.html">library_of_life.registry package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">library_of_life.species package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.utils.html">library_of_life.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.validator.html">library_of_life.validator package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library_of_life.vocabulary.html">library_of_life.vocabulary package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library_of_life.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library_of_life.html#module-library_of_life.gbif_root">library_of_life.gbif_root module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library_of_life.html#module-library_of_life">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">library_of_life</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">library_of_life</a></li>
+          <li class="breadcrumb-item"><a href="library_of_life.html">library_of_life package</a></li>
+      <li class="breadcrumb-item active">library_of_life.species package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/library_of_life.species.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="library-of-life-species-package">
+<h1>library_of_life.species package<a class="headerlink" href="#library-of-life-species-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.species.name_parser">
+<span id="library-of-life-species-name-parser-module"></span><h2>library_of_life.species.name_parser module<a class="headerlink" href="#module-library_of_life.species.name_parser" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.species.name_parser.NameParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.species.name_parser.</span></span><span class="sig-name descname"><span class="pre">NameParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name_parser_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_parser.html#NameParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_parser.NameParser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the name parser section of the Species API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.species.name_parser.NameParser.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.species.name_parser.NameParser.endpoint" title="Link to this definition"></a></dt>
+<dd><p>The endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_parser.NameParser.parse_scientific_name">
+<span class="sig-name descname"><span class="pre">parse_scientific_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_parser.html#NameParser.parse_scientific_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_parser.NameParser.parse_scientific_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the ParsedName version of a scientific name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>array</em>) – A scientific name to parse. Repeat to parse several names.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing a parsed scientific name information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_parser.NameParser.parse_scientific_name_list">
+<span class="sig-name descname"><span class="pre">parse_scientific_name_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_parser.html#NameParser.parse_scientific_name_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_parser.NameParser.parse_scientific_name_list" title="Link to this definition"></a></dt>
+<dd><p>Parses a list of scientific names supplied as a JSON list, a form request or a plain text file with Unix (n) line endings. In all cases the names should use UTF-8 encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>name_data</strong> (<em>list</em>) – A list of the scientific names to parse, either as a string or a list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the parsed names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.species.name_search">
+<span id="library-of-life-species-name-search-module"></span><h2>library_of_life.species.name_search module<a class="headerlink" href="#module-library_of_life.species.name_search" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.species.name_search.NameSearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.species.name_search.</span></span><span class="sig-name descname"><span class="pre">NameSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name_search_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_search.html#NameSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_search.NameSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the name search section of the Species API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.species.name_search.NameSearch.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.species.name_search.NameSearch.endpoint" title="Link to this definition"></a></dt>
+<dd><p>The endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_search.NameSearch.autocomplete_species">
+<span class="sig-name descname"><span class="pre">autocomplete_species</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constituent_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">higher_taxon_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_extinct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">habitat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nomenclaturual_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_search.html#NameSearch.autocomplete_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_search.NameSearch.autocomplete_species" title="Link to this definition"></a></dt>
+<dd><p>Returns up to 20 name usages by doing prefix matching against the scientific name. Results are ordered by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_key</strong> (<em>str</em>) – Optional. A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c.</p></li>
+<li><p><strong>constituent_key</strong> (<em>str</em>) – Optional. The (sub)dataset constituent key as a UUID. Useful to query larger assembled datasets such as the GBIF Backbone or the Catalogue of Life.</p></li>
+<li><p><strong>rank</strong> (<em>str</em>) – Optional. Filters by taxonomic rank as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/Rank[Rank">https://api.gbif.org/v1/enumeration/basic/Rank[Rank</a> enum]. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>higher_taxon_key</strong> (<em>str</em>) – Optional. Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching NUB keys across all checklists.</p></li>
+<li><p><strong>status</strong> (<em>str</em>) – Optional. Filters by the taxonomic status as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus[TaxonomicStatus">https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus[TaxonomicStatus</a> enum]. Available values : ACCEPTED, DOUBTFUL, SYNONYM, HETEROTYPIC_SYNONYM, HOMOTYPIC_SYNONYM, PROPARTE_SYNONYM, MISAPPLIED.</p></li>
+<li><p><strong>is_extinct</strong> (<em>bool</em>) – Optional. Filters by extinction status.</p></li>
+<li><p><strong>habitat</strong> (<em>str</em>) – Optional. Filters by the habitat. Currently only 3 major biomes are accepted in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/Habitat[Habitat">https://api.gbif.org/v1/enumeration/basic/Habitat[Habitat</a> enum]. Available values : MARINE, FRESHWATER, TERRESTRIAL.</p></li>
+<li><p><strong>threat</strong> (<em>str</em>) – Optional. Filters by the taxonomic threat status as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/ThreatStatus[ThreatStatus">https://api.gbif.org/v1/enumeration/basic/ThreatStatus[ThreatStatus</a> enum]. Available values : EXTINCT, EXTINCT_IN_THE_WILD, REGIONALLY_EXTINCT, CRITICALLY_ENDANGERED, ENDANGERED, VULNERABLE, NEAR_THREATENED, LEAST_CONCERN, DATA_DEFICIENT, NOT_APPLICABLE, NOT_EVALUATED.</p></li>
+<li><p><strong>name_type</strong> (<em>str</em>) – Optional. Filters by the name type as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/NameType[NameType">https://api.gbif.org/v1/enumeration/basic/NameType[NameType</a> enum]. Available values : SCIENTIFIC, VIRUS, HYBRID, INFORMAL, CULTIVAR, CANDIDATUS, OTU, DOUBTFUL, PLACEHOLDER, NO_NAME, BLACKLISTED.</p></li>
+<li><p><strong>nomenclatural_status</strong> (<em>str</em>) – Optional. Filters by the nomenclatural status as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus[Nomenclatural">https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus[Nomenclatural</a> Status enum]. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>origin</strong> (<em>str</em>) – Optional. Filters for name usages with a specific origin. Available values : SOURCE, DENORMED_CLASSIFICATION, VERBATIM_PARENT, VERBATIM_ACCEPTED, VERBATIM_BASIONYM, PROPARTE, AUTONYM, IMPLICIT_NAME, MISSING_ACCEPTED, BASIONYM_PLACEHOLDER, EX_AUTHOR_SYNONYM, OTHER.</p></li>
+<li><p><strong>issue</strong> (<em>str</em>) – Optional. A specific indexing issue as defined in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue">https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue</a> enum]. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing up to 20 name usages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_search.NameSearch.fuzzy_name_match">
+<span class="sig-name descname"><span class="pre">fuzzy_name_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authorship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generic_epithet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infraspecific_epithet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kingdom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phylum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">family</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_search.html#NameSearch.fuzzy_name_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_search.NameSearch.fuzzy_name_match" title="Link to this definition"></a></dt>
+<dd><p>Returns fuzzy matches of scientific names against the GBIF Backbone Taxonomy with the optional classification provided. If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Optional. The usage key to look up. When provided, all other fields are ignored.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Optional. The scientific name to fuzzy match against. May include the authorship and year.</p></li>
+<li><p><strong>authorship</strong> (<em>str</em>) – Optional. The scientific name authorship to fuzzy match against.</p></li>
+<li><p><strong>rank</strong> (<em>str</em>) – Optional. Filters by taxonomic rank as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/Rank[Rank">https://api.gbif.org/v1/enumeration/basic/Rank[Rank</a> enum]. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>generic_name</strong> (<em>str</em>) – Optional. Generic part of the name to match when given as atomised parts instead of the full name parameter.</p></li>
+<li><p><strong>generic_epithet</strong> (<em>str</em>) – Optional. Specific epithet to match.</p></li>
+<li><p><strong>infraspecific_epithet</strong> (<em>str</em>) – Optional. Infraspecific epithet to match.</p></li>
+<li><p><strong>strict</strong> (<em>bool</em>) – Optional. If true it fuzzy matches only the given name, but never a taxon in the upper classification.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Optional. If true it shows alternative matches which were considered but then rejected.</p></li>
+<li><p><strong>kingdom</strong> (<em>str</em>) – Optional. Kingdom to match.</p></li>
+<li><p><strong>phylum</strong> (<em>str</em>) – Optional. Phylum to match.</p></li>
+<li><p><strong>order</strong> (<em>str</em>) – Optional. Order to match.</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Optional. Class to match.</p></li>
+<li><p><strong>family</strong> (<em>str</em>) – Optional. Family to match.</p></li>
+<li><p><strong>genus</strong> (<em>str</em>) – Optional. Genus to match.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing fuzzy matches of scientific names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_search.NameSearch.list_all_name_usages">
+<span class="sig-name descname"><span class="pre">list_all_name_usages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_search.html#NameSearch.list_all_name_usages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_search.NameSearch.list_all_name_usages" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of all name usages across all checklists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<em>int</em>) – Required. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Required. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Required. Language for vernacular names, given as an ISO 639-1 two-letter code from our vocabulary. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>dataset_key</strong> (<em>list</em>) – Optional. A UUID of a checklist dataset.</p></li>
+<li><p><strong>source_id</strong> (<em>str</em>) – Optional. Filters by the source identifier.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Optional. A name without authorship, to match exactly.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a list name usages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_search.NameSearch.search_species">
+<span class="sig-name descname"><span class="pre">search_species</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constituent_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">higher_taxon_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_extinct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">habitat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nomenclaturual_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_mincount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_multiselect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_search.html#NameSearch.search_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_search.NameSearch.search_species" title="Link to this definition"></a></dt>
+<dd><p>Returns results of a full-text search of name usages covering the scientific and vernacular names, the species description, distribution and the entire classification across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.
+:param dataset_key: Optional. A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c.
+:type dataset_key: str
+:param constituent_key: Optional. The (sub)dataset constituent key as a UUID. Useful to query larger assembled datasets such as the GBIF Backbone or the Catalogue of Life.
+:type constituent_key: str
+:param rank: Optional. Filters by taxonomic rank as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/Rank[Rank">https://api.gbif.org/v1/enumeration/basic/Rank[Rank</a> enum]. See this endpoint’s docs for available values.
+:type rank: str
+:param higher_taxon_key: Optional. Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching NUB keys across all checklists.
+:type higher_taxon_key: str
+:param status: Optional. Filters by the taxonomic status as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus[TaxonomicStatus">https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus[TaxonomicStatus</a> enum]. Available values : ACCEPTED, DOUBTFUL, SYNONYM, HETEROTYPIC_SYNONYM, HOMOTYPIC_SYNONYM, PROPARTE_SYNONYM, MISAPPLIED.
+:type status: str
+:param is_extinct: Optional. Filters by extinction status.
+:type is_extinct: bool
+:param habitat: Optional. Filters by the habitat. Currently only 3 major biomes are accepted in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/Habitat[Habitat">https://api.gbif.org/v1/enumeration/basic/Habitat[Habitat</a> enum]. Available values : MARINE, FRESHWATER, TERRESTRIAL.
+:type habitat: str
+:param threat: Optional. Filters by the taxonomic threat status as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/ThreatStatus[ThreatStatus">https://api.gbif.org/v1/enumeration/basic/ThreatStatus[ThreatStatus</a> enum]. Available values : EXTINCT, EXTINCT_IN_THE_WILD, REGIONALLY_EXTINCT, CRITICALLY_ENDANGERED, ENDANGERED, VULNERABLE, NEAR_THREATENED, LEAST_CONCERN, DATA_DEFICIENT, NOT_APPLICABLE, NOT_EVALUATED.
+:type threat: str
+:param name_type: Optional. Filters by the name type as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/NameType[NameType">https://api.gbif.org/v1/enumeration/basic/NameType[NameType</a> enum]. Available values : SCIENTIFIC, VIRUS, HYBRID, INFORMAL, CULTIVAR, CANDIDATUS, OTU, DOUBTFUL, PLACEHOLDER, NO_NAME, BLACKLISTED.
+:type name_type: str
+:param nomenclatural_status: Optional. Filters by the nomenclatural status as given in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus[Nomenclatural">https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus[Nomenclatural</a> Status enum]. See this endpoint’s docs for available values.
+:type nomenclatural_status: str
+:param origin: Optional. Filters for name usages with a specific origin. Available values : SOURCE, DENORMED_CLASSIFICATION, VERBATIM_PARENT, VERBATIM_ACCEPTED, VERBATIM_BASIONYM, PROPARTE, AUTONYM, IMPLICIT_NAME, MISSING_ACCEPTED, BASIONYM_PLACEHOLDER, EX_AUTHOR_SYNONYM, OTHER.
+:type origin: str
+:param issue: Optional. A specific indexing issue as defined in our <a class="reference external" href="https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue">https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue</a> enum]. See this endpoint’s docs for available values.
+:type issue: str
+:param query: Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.
+:type query: str
+:param highlight: Optional. Set hl=true to highlight terms matching the query when in fulltext search fields. The highlight will be an emphasis tag of class gbifHl.
+:type highlight: bool
+:param limit: Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.
+:type limit: int
+:param offset: Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.
+:type offset: int
+:param facet: Optional. A facet name used to retrieve the most frequent values for a field. This parameter may be repeated to request multiple facets.
+:type facet: list
+:param facet_mincount: Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}.
+:type facet_mincount: int
+:param facet_multiselect: Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered.
+:type facet_multiselect: bool
+:param facet_limit: Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.
+:type facet_limit: int
+:param facet_offset: Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.
+:type facet_offset: int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing species data from search.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.species.name_usage">
+<span id="library-of-life-species-name-usage-module"></span><h2>library_of_life.species.name_usage module<a class="headerlink" href="#module-library_of_life.species.name_usage" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.species.name_usage.</span></span><span class="sig-name descname"><span class="pre">NameUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name_usage_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the name usages section of the Species API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.endpoint" title="Link to this definition"></a></dt>
+<dd><p>The endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_all_name_usage_children_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_all_name_usage_children_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_all_name_usage_children_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_all_name_usage_children_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns a brief list of all child Name Usages for a parent Name Usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of child name usagea</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_identifiers_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_identifiers_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_identifiers_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_identifiers_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all identifiers for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing identifiers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_iucn_red_list_category_for_usage_key">
+<span class="sig-name descname"><span class="pre">get_iucn_red_list_category_for_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_iucn_red_list_category_for_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_iucn_red_list_category_for_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns the IUCN Red List Category for a name usage. If the matching IUCN usage does not contain a category, Not Evaluated (NE) is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary an IUCN Red List Category.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_children_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_children_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_children_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_children_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of child Name Usages for a parent Name Usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language for vernacular names, given as an ISO 639-1 two-letter code from api’s vocabulary. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing child name usages for a name usage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_descriptions_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_descriptions_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_descriptions_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_descriptions_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all descriptions for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_distributions_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_distributions_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_distributions_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_distributions_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all distributions for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing distributions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_media_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_media_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_media_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_media_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all media for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing media.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_metrics_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_metrics_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_metrics_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_metrics_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns metrics for a single name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing metrics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_recombinations_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_recombinations_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_recombinations_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_recombinations_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of all (re)combinations of a given basionym, excluding the basionym itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language for vernacular names, given as an ISO 639-1 two-letter code from api’s vocabulary. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing name usage recombinations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_name_usage_species_profiles_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_name_usage_species_profiles_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_name_usage_species_profiles_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_name_usage_species_profiles_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all species profiles for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing species profiles.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_parent_name_usages_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_parent_name_usages_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_parent_name_usages_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_parent_name_usages_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all parent name usages for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language for vernacular names, given as an ISO 639-1 two-letter code from api’s vocabulary. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing parent name usages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_parsed_name_usage_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_parsed_name_usage_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_parsed_name_usage_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_parsed_name_usage_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns the parsed name for a single name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing parsed name usage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_references_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_references_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_references_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_references_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all references for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing references.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_related_name_usages_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_related_name_usages_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_related_name_usages_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_related_name_usages_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all related name usages for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing related name usages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_root_name_usage_for_dataset">
+<span class="sig-name descname"><span class="pre">get_root_name_usage_for_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_root_name_usage_for_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_root_name_usage_for_dataset" title="Link to this definition"></a></dt>
+<dd><p>Returns root name usages for a checklist dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_key</strong> (<em>int</em>) – A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language for vernacular names, given as an ISO 639-1 two-letter code from api’s vocabulary. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing root name usages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_single_name_usage_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_single_name_usage_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_single_name_usage_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_single_name_usage_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a single name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language for vernacular names, given as an ISO 639-1 two-letter code from api’s vocabulary. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a single name usage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_synonyms_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_synonyms_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_synonyms_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_synonyms_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all vernacular names for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language for vernacular names, given as an ISO 639-1 two-letter code from api’s vocabulary. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing all vernacular names for a name usage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_usage_descriptions_tocs">
+<span class="sig-name descname"><span class="pre">get_usage_descriptions_tocs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_usage_descriptions_tocs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_usage_descriptions_tocs" title="Link to this definition"></a></dt>
+<dd><p>Returns a table of contents for all descriptions of a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a table of contents.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_usage_vernacular_names_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_usage_vernacular_names_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_usage_vernacular_names_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_usage_vernacular_names_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns all vernacular names for a name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing all vernacular names for a name usage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.species.name_usage.NameUsage.get_verbatim_name_usage_by_usage_key">
+<span class="sig-name descname"><span class="pre">get_verbatim_name_usage_by_usage_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usage_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/species/name_usage.html#NameUsage.get_verbatim_name_usage_by_usage_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.species.name_usage.NameUsage.get_verbatim_name_usage_by_usage_key" title="Link to this definition"></a></dt>
+<dd><p>Returns a verbatim name usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>usage_key</strong> (<em>int</em>) – Name usage key. Example : 5231190.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a verbatim name usage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.species">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-library_of_life.species" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="library_of_life.registry.html" class="btn btn-neutral float-left" title="library_of_life.registry package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="library_of_life.utils.html" class="btn btn-neutral float-right" title="library_of_life.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Spyder Rex.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
