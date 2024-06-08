@@ -15,8 +15,24 @@ class Datasets:
     Attributes:
         endpoint: endpoint for this section of the API.
     """
-    def __init__(self, use_caching=False, cache_name="datasets_cache", backend="sqlite", expire_after=3600):
+    def __init__(self, use_caching=False, 
+                cache_name="datasets_cache", 
+                backend="sqlite", 
+                expire_after=3600,
+                auth_type="basic",
+                client_id=None,
+                client_secret=None,
+                token_url=None):
         self.endpoint = "dataset"
+        self.auth_type = auth_type
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.token_url = token_url
+        
+        if auth_type == 'OAuth':
+            if not all([client_id, client_secret, token_url]):
+                raise ValueError("Client ID, client secret, and token URL must be provided for OAuth authentication.")
+            self.auth_headers = hc.get_oauth_headers(client_id, client_secret, token_url)
           
         if use_caching:
             requests_cache.install_cache(cache_name, backend=backend, expire_after=expire_after)
@@ -69,7 +85,7 @@ class Datasets:
         return hc.get_with_params(base_url+self.endpoint, params=params)
 
     # Requires authentication. User must have an account with GBIF.
-    def create_new_dataset(self, username, password, dataset):
+    def create_new_dataset(self, username=None, password=None, dataset=None):
         """
         Creates a new dataset. Note contacts, endpoints, identifiers, tags, machine tags, comments and metadata descriptions must be added in subsequent requests.
     
@@ -81,8 +97,13 @@ class Datasets:
         Returns:
             None
         """
-        return hc.post_with_auth_and_json(base_url+self.endpoint, auth=(username, password), json=dataset)  
-           
+        if self.auth_type == "basic":
+            auth = (username, password)
+            return hc.post_with_auth_and_json(base_url+self.endpoint, auth=auth, json=dataset)  
+        else: #OAuth
+            headers = self.auth_headers
+            return hc.post_with_auth_and_json(base_url+self.endpoint, headers=headers, json=dataset)
+             
     def search_datasets(self, dataset_type: Optional[str]=None,
                         subtype: Optional[str]=None,
                         publishing_org: Optional[str]=None,

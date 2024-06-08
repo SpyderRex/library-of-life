@@ -14,8 +14,24 @@ class OccurrenceSearch:
     Attributes:
         endpoint: endpoint for this section of the API.
     """
-    def __init__(self, use_caching=False, cache_name="search_occurrence_cache", backend="sqlite", expire_after=3600):
+    def __init__(self, use_caching=False, 
+                cache_name="search_occurrence_cache", 
+                backend="sqlite", 
+                expire_after=3600,
+                auth_type="basic",
+                client_id=None,
+                client_secret=None,
+                token_url=None):
         self.endpoint = "occurrence/search"
+        self.auth_type = auth_type
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.token_url = token_url
+        
+        if auth_type == 'OAuth':
+            if not all([client_id, client_secret, token_url]):
+                raise ValueError("Client ID, client secret, and token URL must be provided for OAuth authentication.")
+            self.auth_headers = hc.get_oauth_headers(client_id, client_secret, token_url)
           
         if use_caching:
             requests_cache.install_cache(cache_name, backend=backend, expire_after=expire_after)
@@ -414,7 +430,7 @@ class OccurrenceSearch:
         return hc.get_with_params(base_url+self.endpoint, params=params)
 
     # Requires authentication. User must have an account with GBIF.  
-    def search_occurrences_using_predicates(self, username, password,
+    def search_occurrences_using_predicates(self, username=None, password=None,
                                             limit: Optional[int]=None,
                                             offset: Optional[int]=None,
                                             facet: Optional[str]=None,
@@ -451,8 +467,13 @@ class OccurrenceSearch:
         ]
         hc.add_params(params, params_list)
         resource = "/predicate"
-        return hc.post_with_auth_and_json(base_url+self.endpoint+resource, auth=(username, password), json=params)
-        
+        if self.auth_type == "basic":
+            auth = (username, password)
+            return hc.post_with_auth_and_json(base_url+self.endpoint+resource, auth=auth, json=params)  
+        else: #OAuth
+            headers = self.auth_headers
+            return hc.post_with_auth_and_json(base_url+self.endpoint+resource, headers=headers, json=params)
+         
     def suggest_catalogue_numbers(self, query, limit):
         """
         Search that returns matching catalogue numbers. Results are ordered by relevance.

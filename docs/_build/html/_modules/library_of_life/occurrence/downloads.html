@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.occurrence.downloads &mdash; library_of_life 0.0.1 documentation</title>
+  <title>library_of_life.occurrence.downloads &mdash; library_of_life 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -73,6 +73,7 @@
   <h1>Source code for library_of_life.occurrence.downloads</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
 
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
@@ -89,8 +90,24 @@
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;occurrence_download_cache&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;occurrence_download_cache&quot;</span><span class="p">,</span> 
+                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
+                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;occurrence/download&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
+        
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
           
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
             <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
@@ -110,10 +127,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            string: A download key.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/request&quot;</span>        
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">request_body</span><span class="p">)</span></div>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/request&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_body</span><span class="p">)</span>  
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_body</span><span class="p">)</span></div>
 
-
+   
 <div class="viewcode-block" id="OccurrenceDownload.retrieve_download">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.retrieve_download">[docs]</a>
     <span class="k">def</span> <span class="nf">retrieve_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_key</span><span class="p">):</span>
@@ -132,8 +154,102 @@
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">.zip successfully downloaded&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">.zip&quot;</span></div>
+
+
+    <span class="c1">#Requires authentication. User must have an account with GBIF.      </span>
+<div class="viewcode-block" id="OccurrenceDownload.cancel_running_download">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.cancel_running_download">[docs]</a>
+    <span class="k">def</span> <span class="nf">cancel_running_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">download_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cancel a running download.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            download_key (str): An identifier for a download. Example : 0001005-130906152512535</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string: Success or failure message for download deletion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/request/</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">response</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+                <span class="k">return</span><span class="p">(</span><span class="s2">&quot;Occurrence download canceled&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">response</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                <span class="k">return</span><span class="p">(</span><span class="s2">&quot;Invalid occurrence download key&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">response</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Occurrence download canceled&quot;</span>
+            <span class="k">elif</span> <span class="n">response</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Invalid occurrence download key&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+
+    <span class="c1"># Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="OccurrenceDownload.validate_sql">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.validate_sql">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate_sql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">request_body</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validates the SQL in an SQL download request. See the SQL section for information on what queries are accepted.  </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The user&#39;s password.</span>
+<span class="sd">            request_body (dict): The JSON request body. See this endpoint&#39;s docs for schema.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string: A message indicating if the SQL is valid or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/request/validate&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_body</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;404&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Invalid query, see other documentation.&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_body</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;404&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Invalid query, see other documentation.&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="OccurrenceDownload.convert_query_into_download_predicate">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.convert_query_into_download_predicate">[docs]</a>
+    <span class="k">def</span> <span class="nf">convert_query_into_download_predicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_format</span><span class="p">,</span> 
+                                <span class="n">notification_address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">verbatim_extensions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a search query used for the ordinary search API and returns a predicate suitable for the download API. In many cases, a query from the website can be converted using this method.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            download_format (str): The download format (Note: I haven&#39;t been able to find from the API documentation what the possible values are here.)</span>
+<span class="sd">            notification_address (str): Email notification address.</span>
+<span class="sd">            verbatim_extensions (str): Verbatim extensions to include in a Darwin Core Archive download.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;notification_address&quot;</span><span class="p">,</span> <span class="n">notification_address</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="n">download_format</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;verbatimExtensions&quot;</span><span class="p">,</span> <span class="n">verbatim_extensions</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;request/predicate&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 </div>
 
+        
 </pre></div>
 
            </div>

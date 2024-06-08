@@ -1,5 +1,7 @@
 import requests
 from requests.exceptions import HTTPError, Timeout, RequestException, JSONDecodeError
+from requests.auth import HTTPBasicAuth
+from typing import Dict
 from time import sleep
 from functools import wraps
 
@@ -201,12 +203,13 @@ def post_with_json(url, json):
         return {"error": f"An unexpected error occurred: {err}"}
 
 @retry()
-def post_with_auth_and_json(url, auth, json):
+def post_with_auth_and_json(url, headers=None, auth=None, json=None):
     """
     Make a request to an API using the POST method that requires authentication and passes data with the json parameter.
     
     Args:
         url (str): The URL of the API.
+        headers (dict): The headers.
         auth (tuple): A tuple containing the username and password for APIs with endpoints that require authentication.
         json (dict): The data to be included in the request.
     
@@ -214,9 +217,14 @@ def post_with_auth_and_json(url, auth, json):
         dict: A dictionary containing either the response data or an error message.
     """
     try:
-        response = requests.post(url, auth=auth, json=json)
-        response.raise_for_status()
-        return response.json()
+        if auth is not None:
+            response = requests.post(url, auth=auth, json=json)
+            response.raise_for_status()
+            return response.json()
+        else:
+            response = requests.post(url, headers=headers, json=json)
+            response.raise_for_status()
+            return response.json()
     except HTTPError as http_err:
         if response.status_code == 401:
             return {"error": "Unauthorized: Check your API credentials."}
@@ -232,12 +240,13 @@ def post_with_auth_and_json(url, auth, json):
         return {"error": f"An unexpected error occurred: {err}"}
 
 @retry()
-def put_with_auth_and_json(url, auth, json):
+def put_with_auth_and_json(url, headers=None, auth=None, json=None):
     """
     Make a request to an API using the POST method that requires authentication and passes data with the json parameter.
     
     Args:
         url (str): The URL of the API.
+        headers (dict): The headers.
         auth (tuple): A tuple containing the username and password for APIs with endpoints that require authentication.
         json (dict): The data to be included in the request.
     
@@ -245,9 +254,14 @@ def put_with_auth_and_json(url, auth, json):
         dict: A dictionary containing either the response data or an error message.
     """
     try:
-        response = requests.put(url, auth=auth, json=json)
-        response.raise_for_status()
-        return response.json()
+        if auth is not None:
+            response = requests.put(url, auth=auth, json=json)
+            response.raise_for_status()
+            return response.json()
+        else:
+            response = requests.put(url, headers=headers, json=json)
+            response.raise_for_status()
+            return response.json()
     except HTTPError as http_err:
         if response.status_code == 401:
             return {"error": "Unauthorized: Check your API credentials."}
@@ -280,6 +294,80 @@ def try_get_except_json_decode_err(base_url, endpoint, resource):
         response = get_for_content(base_url+endpoint+resource)
         decoded_response = response.decode("utf-8")
         return {"Error": f"{decoded_response}"}
+
+@retry()
+def delete_with_auth(url, headers=None, auth=None):
+    """
+    Make a request to an API using the DELETE method that requires authentication.
+    
+    Args:
+        url (str): The URL of the API.
+        auth (tuple): A tuple containing the username and password for APIs with endpoints that require authentication.
+         
+    Returns:
+        dict: A dictionary containing either the response data or an error message.
+    """
+    try:
+        if auth is not None:
+            response = requests.delete(url, auth=auth)
+            status = response.status_code
+            return status
+            
+        else:
+            response = requests.delete(url, headers=headers)
+            status = response.status_code
+            return status
+            
+    except HTTPError as http_err:
+        if response.status_code == 401:
+            return {"error": "Unauthorized: Check your API credentials."}
+        elif response.status_code == 403:
+            return {"error": "Forbidden: You do not have permission to access this resource."}
+        else:
+            return handle_error(response, f"HTTP error occurred: {http_err}")
+    except Timeout:
+        return {"error": "Request timed out."}
+    except RequestException as req_err:
+        return {"error": f"Request exception occurred: {req_err}"}
+    except Exception as err:
+        return {"error": f"An unexpected error occurred: {err}"}
+        
+def get_oauth_headers(client_id: str, client_secret: str, token_url: str) -> Dict[str, str]:
+    """
+    Retrieves OAuth 2.0 access token and returns headers for authenticated requests.
+    
+    Args:
+        client_id (str): The client ID provided by the OAuth provider.
+        client_secret (str): The client secret provided by the OAuth provider.
+        token_url (str): The URL to obtain the OAuth token.
+    
+    Returns:
+        Dict[str, str]: Headers including the OAuth 2.0 access token.
+    """
+    try:
+        # Request for the access token
+        response = requests.post(
+            token_url,
+            auth=HTTPBasicAuth(client_id, client_secret),
+            data={'grant_type': 'client_credentials'}
+        )
+        response.raise_for_status()
+        tokens = response.json()
+        access_token = tokens.get('access_token')
+        
+        if not access_token:
+            raise Exception("Failed to obtain access token.")
+        
+        # Return the headers with the access token
+        return {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        }
+    except requests.exceptions.HTTPError as http_err:
+        raise Exception(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        raise Exception(f"An error occurred: {err}")
+
   
 def add_params(params, params_list):
     """

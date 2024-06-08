@@ -16,14 +16,30 @@ class DerivedDatasets:
     Attributes:
         endpoint: The endpoint for this section of the API.
     """
-    def __init__(self, use_caching=False, cache_name="derived_datasets_cache", backend="sqlite", expire_after=3600):
+    def __init__(self, use_caching=False, 
+                cache_name="derived_datasets_cache", 
+                backend="sqlite", 
+                expire_after=3600,
+                auth_type="basic",
+                client_id=None,
+                client_secret=None,
+                token_url=None):
         self.endpoint = "derivedDataset"
+        self.auth_type = auth_type
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.token_url = token_url
+        
+        if auth_type == 'OAuth':
+            if not all([client_id, client_secret, token_url]):
+                raise ValueError("Client ID, client secret, and token URL must be provided for OAuth authentication.")
+            self.auth_headers = hc.get_oauth_headers(client_id, client_secret, token_url)
           
         if use_caching:
             requests_cache.install_cache(cache_name, backend=backend, expire_after=expire_after)
     
     # Requires authentication. User must create an account with GBIF.    
-    def create_new_derived_dataset(self, username, password, derived_dataset):
+    def create_new_derived_dataset(self, username=None, password=None, derived_dataset=None):
         """
         Creates a new derived dataset with the specified source dataset and records of what subset should be cited.
         
@@ -35,8 +51,13 @@ class DerivedDatasets:
         Returns:
             None
         """
-        return hc.post_with_auth_and_json(base_url+self.endpoint, auth=(username, password), json=derived_dataset)
-    
+        if self.auth_type == "basic":
+            auth = (username, password)
+            return hc.post_with_auth_and_json(base_url+self.endpoint, auth=auth, json=derived_dataset)  
+        else: #OAuth
+            headers = self.auth_headers
+            return hc.post_with_auth_and_json(base_url+self.endpoint, headers=headers, json=derived_dataset)
+   
     def get_derived_dataset_record(self, doi_prefix, doi_suffix):
         """
         Returns a derived dataset record.
@@ -57,23 +78,28 @@ class DerivedDatasets:
             return {"Error": f"{decoded_response}"}
     
     # Requires authentication and is restricted to administrators.     
-    def update_derived_dataset(self, username, password, doi_prefix, doi_suffix, data):
+    def update_derived_dataset(self, doi_prefix, doi_suffix, username=None, password=None, data=None):
         """
         Updates the values of a derived dataset. This is restricted to administrators.
         
         Args:
-            username (str): The username.
-            password (str): The user's password.
             doi_prefix (str): The doi prefix.
             doi_suffix (str): The doi suffix.
+            username (str): The username.
+            password (str): The user's password.
             data (dict): The data with which to update the derived dataset.
-        
+                          
         Returns:
             None
         """
         resource = f"/{doi_prefix}/{doi_suffix}"
-        return hc.put_with_auth_and_json(base_url+self.endpoint+resource, auth=HTTPBasicAuth(username, password), json=data)
-            
+        if self.auth_type == "basic":
+            auth = (username, password)
+            return hc.post_with_auth_and_json(base_url+self.endpoint+resource, auth=auth, json=data)  
+        else: #OAuth
+            headers = self.auth_headers
+            return hc.post_with_auth_and_json(base_url+self.endpoint+resource, headers=headers, json=data)
+         
     def get_derived_datasets_by_key(self, key,
                                    limit: Optional[int]=None,
                                    offset: Optional[int]=None):

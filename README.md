@@ -14,8 +14,10 @@
   - [Validator](#validator)
   - [Vocabulary](#vocabulary)
 - [Caching](#caching)
+- [Authentication](#authentication)
 - [Contributing](#contributing)
 - [License](#license)
+- [Documentation](#documentation)
 
 ## Installation
 
@@ -101,6 +103,10 @@ For now the registry module only contains the principal methods, but it will be 
 
 Each class contains an optional caching feature using requests_cache. Simply set use_caching to True when initializing the respective class.
 
+## Authentication
+
+As some features of the GBIF API require authentication (POST, PUT, DETETE methods), this package handles both basic authentication (username and password) and OAuth2 authentication. This is dealt with at the class level. The default is for basic authentication, but if OAuth is desired, simply pass auth_type="OAuth" when initializing the class, as wellas the necessary credentials. Future versions may handle this with a config file.
+
 ## Contributing
 
 Contributions are welcome! If you would like to contribute to the development of `library_of_life`, please follow these steps:
@@ -113,4 +119,7 @@ Contributions are welcome! If you would like to contribute to the development of
 
 ## License
 
-This project is licensed under the MIT License. See the [LCENSE](LICENSE) file for more details.I
+This project is licensed under the MIT License. See the [LCENSE](LICENSE) file for more details.
+
+## Documentation
+For more information, read the [docs](#https://library-of-life.readthedocs.io/en/latest/modules.html)
