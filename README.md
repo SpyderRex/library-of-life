@@ -16,6 +16,7 @@
 - [Caching](#caching)
 - [Authentication](#authentication)
 - [Contributing](#contributing)
+- [Donating$$$](#donating)
 - [License](#license)
 - [Documentation](#documentation)
 
@@ -116,6 +117,12 @@ Contributions are welcome! If you would like to contribute to the development of
 3. Commit your changes (`git commit -am 'Add new feature'`).
 4. Push to the branch (`git push origin feature/your-feature`).
 5. Create a new Pull Request.
+
+## Donating$$$
+
+If you find this project helpful and would like to support its development, consider making a donation.
+
+[Donate via Paypal](https://www.paypal.com/donate/?hosted_button_id=N8HR4SN2J6FPG)
 
 ## License
 
