@@ -83,16 +83,16 @@ For now the registry module only contains the principal methods, but it will be 
 
 - `single_occurrence`
 - `search`
-- `downloads`: (In development)
-- `download_format`: (Pre-dev)
-- `download_stats`: (Pre-dev)
-- `metrics`: (Pre-dev)
-- `inventories`: (Pre-dev)
-- `gadm_regions`: (Pre-dev)
-- `country_usages`: (Pre-dev)
-- `organization_usages`: (Pre-dev)
+- `downloads`
+- `download_format`
+- `download_stats`
+- `metrics`
+- `inventories`
+- `gadm_regions`
+- `country_usages`
+- `organization_usages`
 
-### Maps (pre-dev)
+### Maps (in development)
 
 ### Literature (pre-dev)
 

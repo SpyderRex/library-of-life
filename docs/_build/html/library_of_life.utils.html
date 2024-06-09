@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.utils package &mdash; library_of_life 0.1.0 documentation</title>
+  <title>library_of_life.utils package &mdash; library_of_life 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -207,6 +207,28 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="library_of_life.utils.http_client.get_with_auth_and_params">
+<span class="sig-prename descclassname"><span class="pre">library_of_life.utils.http_client.</span></span><span class="sig-name descname"><span class="pre">get_with_auth_and_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/utils/http_client.html#get_with_auth_and_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.utils.http_client.get_with_auth_and_params" title="Link to this definition"></a></dt>
+<dd><p>Make a request to an API using the GET method that requires authentication and passes args with the params parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL of the API.</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – The headers.</p></li>
+<li><p><strong>auth</strong> (<em>tuple</em>) – A tuple containing the username and password for APIs with endpoints that require authentication.</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) – The parameters to be included in the request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing either the response data or an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>

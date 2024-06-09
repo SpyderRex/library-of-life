@@ -1,6 +1,5 @@
 from typing import Optional, Dict, Any
 
-import requests
 import requests_cache
 
 from .. gbif_root import GBIF
@@ -159,3 +158,252 @@ class OccurrenceDownload:
         resource = "request/predicate"
         return hc.get_with_params(base_url+self.endpoint+resource, params=params)
         
+    def get_occurrence_download_info_by_key(self, download_key, 
+                                statistics: Optional[bool]=None):
+        """
+        Retrieves the status (in-progress, complete, etc), definition and location of an occurrence download. Authorized users see additional details on their own downloads
+        
+        Args:
+            download_key (str): The key for the download.
+            statistics (bool): Optional. If true it also shows number of organizations and countries.
+            
+        Returns:
+            dict: A dictionary containing occurrence download information.
+        """
+        params: Dict[str, Any] = {}
+        params_list = [("statistics", statistics)]
+        hc.add_params(params, params_list)
+        resource = f"/{download_key}"
+        return hc.get_with_params(base_url+self.endpoint+resource, params=params)
+        
+    def get_occurrence_download_info_by_doi(self, doi_prefix, doi_suffix):
+        """
+        Retrieves the status (in-progress, complete, etc), definition and location of an occurrence download. Authorized users see additional details on their own downloads.
+        
+        Args:
+            doi_prefix (str): The DOI prefix of the download, 10.15468 for GBIF downloads
+            doi_suffix (str): The DOI suffix of the download, begins 'dl.' for GBIF downloads
+            
+        Returns:
+            dict: A dictionary containing occurrence download information.
+        """
+        resource = f"/{doi_prefix}/{doi_suffix}"
+        return hc.get(base_url+self.endpoint+resource)
+    
+    #Requires authentication. User must have an account with GBIF.
+    def get_user_download_info(self, user, username, password,
+                        status: Optional[str]=None,
+                        from_date: Optional[str]=None,
+                        statistics: Optional[bool]=None,
+                        limit: Optional[int]=None,
+                        offset: Optional[int]=None):
+        """
+        Retrieves the status, definitions and locations of all occurrence download by your own user.
+        
+        Args:
+            user (str): Required. Username (administrator account required to see other users).
+            username (str): Your username.
+            password (str): Your password.
+            status (str): Optional. List of statuses to filter by. Available values : PREPARING, RUNNING, SUCCEEDED, CANCELLED, KILLED, FAILED, SUSPENDED, FILE_ERASED
+            from_date (str[datetime]): Optional. Date time in ISO format to filter downloads by its creation date.
+            statistics (bool): Optional. If true it returns the counts of datasets, organizations and countries. By default it's true to maintain backwards compatibility. Default value : true
+            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.
+            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.
+            
+        Returns:
+            dict: A dictionary containing the download information for the user.
+        """
+        params: Dict[str, Any] = {}
+        params_list = [
+                ("status", status),
+                ("from", from_date),
+                ("statistics", statistics),
+                ("limit", limit),
+                ("offset", offset)]
+        hc.add_params(params, params_list)
+        resource = f"/user/{user}"
+        if self.auth_type == "basic":
+            auth = (username, password)
+            return hc.get_with_auth_and_params(base_url+self.endpoint+resource, auth=auth, params=params)  
+        else: #OAuth
+            headers = self.auth_headers
+            return hc.get_with_auth_and_params(base_url+self.endpoint+resource, headers=headers, params=params)
+            
+    #Requires authentication. User must have an account with GBIF.
+    def get_user_download_count(self, user, username, password,
+                        status: Optional[str]=None,
+                        from_date: Optional[str]=None,
+                        limit: Optional[int]=None,
+                        offset: Optional[int]=None):
+        """
+        Retrieves the counts of occurrence downloads done by the user.  
+        
+        Args:
+            user (str): Required. Username (administrator account required to see other users).
+            username (str): Your username.
+            password (str): Your password.
+            status (str): Optional. List of statuses to filter by. Available values : PREPARING, RUNNING, SUCCEEDED, CANCELLED, KILLED, FAILED, SUSPENDED, FILE_ERASED
+            from_date (str[datetime]): Optional. Date time in ISO format to filter downloads by its creation date.
+            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.
+            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.
+            
+        Returns:
+            int: The download count for the user.
+        """
+        params: Dict[str, Any] = {}
+        params_list = [
+                ("status", status),
+                ("from", from_date),
+                ("limit", limit),
+                ("offset", offset)]
+        hc.add_params(params, params_list)
+        resource = f"/user/{user}/count"
+        if self.auth_type == "basic":
+            auth = (username, password)
+            return hc.get_with_auth_and_params(base_url+self.endpoint+resource, auth=auth, params=params)  
+        else: #OAuth
+            headers = self.auth_headers
+            return hc.get_with_auth_and_params(base_url+self.endpoint+resource, headers=headers, params=params)
+            
+    def list_datasets_in_occurrence_download_by_doi(self, doi_prefix, doi_suffix,
+                                            limit: Optional[int]=None, 
+                                            offset: Optional[int]=None):
+        """
+        Shows the datasets with occurrences present in the given occurrence download.  
+        
+        Args:
+            doi_prefix (str): The DOI prefix of the download, 10.15468 for GBIF downloads
+            doi_suffix (str): The DOI suffix of the download, begins 'dl.' for GBIF downloads
+            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.
+            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.
+            
+        Returns:
+            dict: A dictionary containing dataset usage within an occurrence download information.
+        """
+        params: Dict[str, Any] = {}
+        params_list = [
+                ("limit", limit),
+                ("offset", offset)]
+        hc.add_params(params, params_list)
+   
+        resource = f"/{doi_prefix}/{doi_suffix}/datasets"
+        return hc.get_with_params(base_url+self.endpoint+resource, params=params)
+        
+    def list_datasets_in_occurrence_download_by_key(self, download_key,
+                                            dataset_title: Optional[str]=None,
+                                            sort_by: Optional[str]=None,
+                                            sort_order: Optional[str]=None,
+                                            limit: Optional[int]=None, 
+                                            offset: Optional[int]=None):
+        """
+        Shows the datasets with occurrences present in the given occurrence download.  
+        
+        Args:
+            download_key (str): Required. The download key.
+            dataset_title (str): Optional. Title of the dataset to filter by.
+            sort_by (str): Optional. Field to sort the results by..Available values : DATASET_TITLE, COUNTRY_CODE, RECORD_COUNT
+            sort_order (str): Optional. Sort order. Only taken into account when sortBy is used. Available values : ASC, DESC
+            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.
+            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.
+            
+        Returns:
+            dict: A dictionary containing dataset usage within an occurrence download information.
+        """
+        params: Dict[str, Any] = {}
+        params_list = [
+                ("datasetTitle", dataset_title),
+                ("sortBy", sort_by),
+                ("sortOrder", sort_order),
+                ("limit", limit),
+                ("offset", offset)]
+        hc.add_params(params, params_list)
+   
+        resource = f"/{download_key}/datasets"
+        return hc.get_with_params(base_url+self.endpoint+resource, params=params)
+        
+    def export_datasets_listed_in_occurrence_download(self, download_key, export_format="TSV"):
+        """
+        Shows the datasets with occurrences present in the given occurrence download in TSV or CSV format.
+        
+        Args:
+            download_key (str): The key of the download.
+            export_format (str): The export format. Available values : CSV, TSV. Default is TSV.
+            
+        Returns:
+            dict: A dictionary containing dataset usage within an occurrence download information.
+        """
+        resource = f"/{download_key}/datasets/export?format={export_format.upper()}"
+        return hc.get_for_content(base_url+self.endpoint+resource)
+        
+    def get_citation_for_download_by_key(self, download_key):
+        """
+        Shows the citation for the download.
+        
+        Args:
+            download_key (str): The key for the download.
+            
+        Returns:
+            dict: A dictionary containing the citation.
+        """
+        resource = f"/{download_key}/citation"
+        try:
+            return hc.get_for_content(base_url+self.endpoint+resource).decode("utf-8")
+        except AttributeError:
+            return hc.get(base_url+self.endpoint+resource)
+            
+    def get_citation_for_download_by_doi(self, doi_prefix, doi_suffix):
+        """
+        Shows the citation for the download.
+        
+        Args:
+            doi_prefix (str): The DOI prefix of the download, 10.15468 for GBIF downloads
+            doi_suffix (str): The DOI suffix of the download, begins 'dl.' for GBIF downloads
+          
+        Returns:
+            dict: A dictionary containing the citation.
+        """
+        resource = f"/{doi_prefix}/{doi_suffix}/citation"
+        try:
+            return hc.get_for_content(base_url+self.endpoint+resource).decode("utf-8")
+        except AttributeError:
+            return hc.get(base_url+self.endpoint+resource)
+            
+    def list_download_activity_for_dataset(self, dataset_key,
+                                show_download_details: Optional[bool]=None,
+                                limit: Optional[int]=None,
+                                offset: Optional[int]=None):
+        """
+        Lists the downloads in which data from a dataset has been included. The limit is set to a maximum of 100 results unless you set the showDownloadDetails parameter to false.
+        
+        Args:
+            dataset_key (str): The key of the dataset 
+            show_download_details (bool): Flag to indicate if we want the download details in the response. It defaults to true to keep backwards compatibility. Default value : true
+            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.
+            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.
+       
+        Returns:
+            dict: A dictionary containing the download information.
+        """
+        params: Dict[str, Any] = {}
+        params_list = [
+                ("showDownloadDetails", show_download_details),
+                ("limit", limit),
+                ("offset", offset)]
+        hc.add_params(params, params_list)
+        resource = f"/dataset/{dataset_key}"
+        return hc.get_with_params(base_url+self.endpoint+resource, params=params)
+        
+ 
+ 
+    
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            

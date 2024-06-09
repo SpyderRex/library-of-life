@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "library-of-life"
-version = "0.1.0"
+version = "0.2.0"
 description = "A python client for the Global Biological Information Facility (GBIF) API"
 authors = ["Spyder Rex <billyjohnsonauthor@gmail.com>"]
 readme = "README.md"

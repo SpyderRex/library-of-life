@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.occurrence.downloads &mdash; library_of_life 0.1.0 documentation</title>
+  <title>library_of_life.occurrence.downloads &mdash; library_of_life 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -73,7 +73,6 @@
   <h1>Source code for library_of_life.occurrence.downloads</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
 
-<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
@@ -247,9 +246,288 @@
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;request/predicate&quot;</span>
         <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceDownload.get_occurrence_download_info_by_key">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.get_occurrence_download_info_by_key">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_occurrence_download_info_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_key</span><span class="p">,</span> 
+                                <span class="n">statistics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the status (in-progress, complete, etc), definition and location of an occurrence download. Authorized users see additional details on their own downloads</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            download_key (str): The key for the download.</span>
+<span class="sd">            statistics (bool): Optional. If true it also shows number of organizations and countries.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing occurrence download information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;statistics&quot;</span><span class="p">,</span> <span class="n">statistics</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceDownload.get_occurrence_download_info_by_doi">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.get_occurrence_download_info_by_doi">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_occurrence_download_info_by_doi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doi_prefix</span><span class="p">,</span> <span class="n">doi_suffix</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the status (in-progress, complete, etc), definition and location of an occurrence download. Authorized users see additional details on their own downloads.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            doi_prefix (str): The DOI prefix of the download, 10.15468 for GBIF downloads</span>
+<span class="sd">            doi_suffix (str): The DOI suffix of the download, begins &#39;dl.&#39; for GBIF downloads</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing occurrence download information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">doi_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">doi_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+    
+    <span class="c1">#Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="OccurrenceDownload.get_user_download_info">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.get_user_download_info">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_user_download_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span>
+                        <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">statistics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the status, definitions and locations of all occurrence download by your own user.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            user (str): Required. Username (administrator account required to see other users).</span>
+<span class="sd">            username (str): Your username.</span>
+<span class="sd">            password (str): Your password.</span>
+<span class="sd">            status (str): Optional. List of statuses to filter by. Available values : PREPARING, RUNNING, SUCCEEDED, CANCELLED, KILLED, FAILED, SUSPENDED, FILE_ERASED</span>
+<span class="sd">            from_date (str[datetime]): Optional. Date time in ISO format to filter downloads by its creation date.</span>
+<span class="sd">            statistics (bool): Optional. If true it returns the counts of datasets, organizations and countries. By default it&#39;s true to maintain backwards compatibility. Default value : true</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the download information for the user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;statistics&quot;</span><span class="p">,</span> <span class="n">statistics</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/user/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_auth_and_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>  
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_auth_and_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+            
+    <span class="c1">#Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="OccurrenceDownload.get_user_download_count">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.get_user_download_count">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_user_download_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span>
+                        <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the counts of occurrence downloads done by the user.  </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            user (str): Required. Username (administrator account required to see other users).</span>
+<span class="sd">            username (str): Your username.</span>
+<span class="sd">            password (str): Your password.</span>
+<span class="sd">            status (str): Optional. List of statuses to filter by. Available values : PREPARING, RUNNING, SUCCEEDED, CANCELLED, KILLED, FAILED, SUSPENDED, FILE_ERASED</span>
+<span class="sd">            from_date (str[datetime]): Optional. Date time in ISO format to filter downloads by its creation date.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The download count for the user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/user/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/count&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_auth_and_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>  
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_auth_and_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="OccurrenceDownload.list_datasets_in_occurrence_download_by_doi">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.list_datasets_in_occurrence_download_by_doi">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_datasets_in_occurrence_download_by_doi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doi_prefix</span><span class="p">,</span> <span class="n">doi_suffix</span><span class="p">,</span>
+                                            <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                            <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows the datasets with occurrences present in the given occurrence download.  </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            doi_prefix (str): The DOI prefix of the download, 10.15468 for GBIF downloads</span>
+<span class="sd">            doi_suffix (str): The DOI suffix of the download, begins &#39;dl.&#39; for GBIF downloads</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing dataset usage within an occurrence download information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+   
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">doi_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">doi_suffix</span><span class="si">}</span><span class="s2">/datasets&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceDownload.list_datasets_in_occurrence_download_by_key">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.list_datasets_in_occurrence_download_by_key">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_datasets_in_occurrence_download_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_key</span><span class="p">,</span>
+                                            <span class="n">dataset_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">sort_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">sort_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                            <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                            <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows the datasets with occurrences present in the given occurrence download.  </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            download_key (str): Required. The download key.</span>
+<span class="sd">            dataset_title (str): Optional. Title of the dataset to filter by.</span>
+<span class="sd">            sort_by (str): Optional. Field to sort the results by..Available values : DATASET_TITLE, COUNTRY_CODE, RECORD_COUNT</span>
+<span class="sd">            sort_order (str): Optional. Sort order. Only taken into account when sortBy is used. Available values : ASC, DESC</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing dataset usage within an occurrence download information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;datasetTitle&quot;</span><span class="p">,</span> <span class="n">dataset_title</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;sortBy&quot;</span><span class="p">,</span> <span class="n">sort_by</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;sortOrder&quot;</span><span class="p">,</span> <span class="n">sort_order</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+   
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">/datasets&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceDownload.export_datasets_listed_in_occurrence_download">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.export_datasets_listed_in_occurrence_download">[docs]</a>
+    <span class="k">def</span> <span class="nf">export_datasets_listed_in_occurrence_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_key</span><span class="p">,</span> <span class="n">export_format</span><span class="o">=</span><span class="s2">&quot;TSV&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows the datasets with occurrences present in the given occurrence download in TSV or CSV format.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            download_key (str): The key of the download.</span>
+<span class="sd">            export_format (str): The export format. Available values : CSV, TSV. Default is TSV.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing dataset usage within an occurrence download information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">/datasets/export?format=</span><span class="si">{</span><span class="n">export_format</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="OccurrenceDownload.get_citation_for_download_by_key">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.get_citation_for_download_by_key">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_citation_for_download_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows the citation for the download.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            download_key (str): The key for the download.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the citation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">/citation&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="OccurrenceDownload.get_citation_for_download_by_doi">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.get_citation_for_download_by_doi">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_citation_for_download_by_doi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doi_prefix</span><span class="p">,</span> <span class="n">doi_suffix</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows the citation for the download.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            doi_prefix (str): The DOI prefix of the download, 10.15468 for GBIF downloads</span>
+<span class="sd">            doi_suffix (str): The DOI suffix of the download, begins &#39;dl.&#39; for GBIF downloads</span>
+<span class="sd">          </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the citation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">doi_prefix</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">doi_suffix</span><span class="si">}</span><span class="s2">/citation&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="OccurrenceDownload.list_download_activity_for_dataset">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.downloads.OccurrenceDownload.list_download_activity_for_dataset">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_download_activity_for_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">,</span>
+                                <span class="n">show_download_details</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists the downloads in which data from a dataset has been included. The limit is set to a maximum of 100 results unless you set the showDownloadDetails parameter to false.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_key (str): The key of the dataset </span>
+<span class="sd">            show_download_details (bool): Flag to indicate if we want the download details in the response. It defaults to true to keep backwards compatibility. Default value : true</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">       </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the download information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;showDownloadDetails&quot;</span><span class="p">,</span> <span class="n">show_download_details</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/dataset/</span><span class="si">{</span><span class="n">dataset_key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 </div>
 
         
+ 
+ 
+    
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 </pre></div>
 
            </div>

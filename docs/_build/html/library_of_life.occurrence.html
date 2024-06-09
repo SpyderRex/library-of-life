@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.occurrence package &mdash; library_of_life 0.1.0 documentation</title>
+  <title>library_of_life.occurrence package &mdash; library_of_life 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -101,12 +101,289 @@
 </section>
 <section id="module-library_of_life.occurrence.country_usages">
 <span id="library-of-life-occurrence-country-usages-module"></span><h2>library_of_life.occurrence.country_usages module<a class="headerlink" href="#module-library_of_life.occurrence.country_usages" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.country_usages.CountryUsage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.country_usages.</span></span><span class="sig-name descname"><span class="pre">CountryUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'country_usage_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/country_usages.html#CountryUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.country_usages.CountryUsage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the country usage section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.country_usages.CountryUsage.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.country_usages.CountryUsage.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.country_usages.CountryUsage.list_countries_in_download">
+<span class="sig-name descname"><span class="pre">list_countries_in_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/country_usages.html#CountryUsage.list_countries_in_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.country_usages.CountryUsage.list_countries_in_download" title="Link to this definition"></a></dt>
+<dd><p>Shows the countries with occurrences present in the given occurrence download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>download_key</strong> (<em>str</em>) – Required. The key of the download.</p></li>
+<li><p><strong>sort_by</strong> (<em>str</em>) – Optional. Field to sort the results by. Available values : COUNTRY_CODE, RECORD_COUNT</p></li>
+<li><p><strong>sort_order</strong> (<em>str</em>) – Optional. Sort order. Only taken into account when sortBy is used. Available values : ASC, DESC</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing country usage within an occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-library_of_life.occurrence.download_format">
-<span id="library-of-life-occurrence-download-format-module"></span><h2>library_of_life.occurrence.download_format module<a class="headerlink" href="#module-library_of_life.occurrence.download_format" title="Link to this heading"></a></h2>
+<section id="module-library_of_life.occurrence.download_formats">
+<span id="library-of-life-occurrence-download-formats-module"></span><h2>library_of_life.occurrence.download_formats module<a class="headerlink" href="#module-library_of_life.occurrence.download_formats" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.download_formats.</span></span><span class="sig-name descname"><span class="pre">DownloadFormats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'download_formats_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the download formats section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.describe_dwca_fields">
+<span class="sig-name descname"><span class="pre">describe_dwca_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats.describe_dwca_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.describe_dwca_fields" title="Link to this definition"></a></dt>
+<dd><p><strong>Experimental.</strong> Describes the fields present in a Darwin Core Archive format download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the field descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.describe_simple_avro_fields">
+<span class="sig-name descname"><span class="pre">describe_simple_avro_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats.describe_simple_avro_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.describe_simple_avro_fields" title="Link to this definition"></a></dt>
+<dd><p><strong>Experimental.</strong> Describes the fields present in a Simple Avro format download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the field descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.describe_simple_csv_fields">
+<span class="sig-name descname"><span class="pre">describe_simple_csv_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats.describe_simple_csv_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.describe_simple_csv_fields" title="Link to this definition"></a></dt>
+<dd><p><strong>Experimental.</strong> Describes the fields present in a Simple CSV format download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the field descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.describe_simple_parquet_fields">
+<span class="sig-name descname"><span class="pre">describe_simple_parquet_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats.describe_simple_parquet_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.describe_simple_parquet_fields" title="Link to this definition"></a></dt>
+<dd><p><strong>Experimental.</strong> Describes the fields present in a Simple Parquet format download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the field descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.describe_species_list_fields">
+<span class="sig-name descname"><span class="pre">describe_species_list_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats.describe_species_list_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.describe_species_list_fields" title="Link to this definition"></a></dt>
+<dd><p><strong>Experimental.</strong> Describes the fields present in a Species List format download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the field descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_formats.DownloadFormats.describe_sql_fields">
+<span class="sig-name descname"><span class="pre">describe_sql_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_formats.html#DownloadFormats.describe_sql_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_formats.DownloadFormats.describe_sql_fields" title="Link to this definition"></a></dt>
+<dd><p><strong>Very experimental.</strong> Describes the fields available for searching or download when using an SQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the field descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-library_of_life.occurrence.download_stats">
 <span id="library-of-life-occurrence-download-stats-module"></span><h2>library_of_life.occurrence.download_stats module<a class="headerlink" href="#module-library_of_life.occurrence.download_stats" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.download_stats.</span></span><span class="sig-name descname"><span class="pre">DownloadStats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'download_stats_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_stats.html#DownloadStats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the download statistics section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats.export_summarized_download_stats">
+<span class="sig-name descname"><span class="pre">export_summarized_download_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_org_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_stats.html#DownloadStats.export_summarized_download_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats.export_summarized_download_stats" title="Link to this definition"></a></dt>
+<dd><p>Filters for downloads matching the provided criteria, then provide counts by year, month and dataset of the total number of downloads, and the total number of records included in those downloads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Required. The year and month (YYYY-MM) to start from.</p></li>
+<li><p><strong>to_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Required. The year and month (YYYY-MM) to end at.</p></li>
+<li><p><strong>publishing_country</strong> (<em>str</em>) – Required. The ISO 3166-2 code for the publishing organization’s country, territory or island. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>dataset_key</strong> (<em>str</em>) – Optional. The uuid for a dataset.</p></li>
+<li><p><strong>publishing_org_key</strong> (<em>str</em>) – Optional. The uuid for a publishing organization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing download statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats">
+<span class="sig-name descname"><span class="pre">get_summarized_download_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_org_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_stats.html#DownloadStats.get_summarized_download_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats" title="Link to this definition"></a></dt>
+<dd><p>Filters for downloads matching the provided criteria, then provide counts by year, month and dataset of the total number of downloads, and the total number of records included in those downloads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to start from.</p></li>
+<li><p><strong>to_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to end at.</p></li>
+<li><p><strong>publishing_country</strong> (<em>str</em>) – Optional. The ISO 3166-2 code for the publishing organization’s country, territory or island. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>dataset_key</strong> (<em>str</em>) – Optional. The uuid for a dataset.</p></li>
+<li><p><strong>publishing_org_key</strong> (<em>str</em>) – Optional. The uuid for a publishing organization.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing download statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_by_dataset">
+<span class="sig-name descname"><span class="pre">get_summarized_download_stats_by_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_org_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_stats.html#DownloadStats.get_summarized_download_stats_by_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_by_dataset" title="Link to this definition"></a></dt>
+<dd><p>Summarizes downloads by month, filtered by a publishing organization’s country, territory or island and/or a single dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to start from.</p></li>
+<li><p><strong>to_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to end at.</p></li>
+<li><p><strong>publishing_country</strong> (<em>str</em>) – Optional. The ISO 3166-2 code for the publishing organization’s country, territory or island. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>dataset_key</strong> (<em>str</em>) – Optional. The uuid for a dataset.</p></li>
+<li><p><strong>publishing_org_key</strong> (<em>str</em>) – Optional. The uuid for a publishing organization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing download statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_by_source">
+<span class="sig-name descname"><span class="pre">get_summarized_download_stats_by_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_stats.html#DownloadStats.get_summarized_download_stats_by_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_by_source" title="Link to this definition"></a></dt>
+<dd><p>Summarizes downloaded record totals by source, e.g. www.gbif.org or APIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to start from.</p></li>
+<li><p><strong>to_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to end at.</p></li>
+<li><p><strong>source</strong> (<em>str</em>) – Optional. Restrict to a particular source.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing download statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_for_user_country">
+<span class="sig-name descname"><span class="pre">get_summarized_download_stats_for_user_country</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/download_stats.html#DownloadStats.get_summarized_download_stats_for_user_country"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_for_user_country" title="Link to this definition"></a></dt>
+<dd><p>Provides counts of user downloads by month, grouped by the user’s ISO 3166-2 country, territory or island.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to start from.</p></li>
+<li><p><strong>to_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. The year and month (YYYY-MM) to end at.</p></li>
+<li><p><strong>user_country</strong> (<em>str</em>) – Optional. The ISO 3166-2 code for the user’s country, territory or island. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing download statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-library_of_life.occurrence.downloads">
 <span id="library-of-life-occurrence-downloads-module"></span><h2>library_of_life.occurrence.downloads module<a class="headerlink" href="#module-library_of_life.occurrence.downloads" title="Link to this heading"></a></h2>
@@ -152,6 +429,222 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary containing the response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.export_datasets_listed_in_occurrence_download">
+<span class="sig-name descname"><span class="pre">export_datasets_listed_in_occurrence_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TSV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.export_datasets_listed_in_occurrence_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.export_datasets_listed_in_occurrence_download" title="Link to this definition"></a></dt>
+<dd><p>Shows the datasets with occurrences present in the given occurrence download in TSV or CSV format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>download_key</strong> (<em>str</em>) – The key of the download.</p></li>
+<li><p><strong>export_format</strong> (<em>str</em>) – The export format. Available values : CSV, TSV. Default is TSV.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing dataset usage within an occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.get_citation_for_download_by_doi">
+<span class="sig-name descname"><span class="pre">get_citation_for_download_by_doi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doi_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi_suffix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.get_citation_for_download_by_doi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.get_citation_for_download_by_doi" title="Link to this definition"></a></dt>
+<dd><p>Shows the citation for the download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doi_prefix</strong> (<em>str</em>) – The DOI prefix of the download, 10.15468 for GBIF downloads</p></li>
+<li><p><strong>doi_suffix</strong> (<em>str</em>) – The DOI suffix of the download, begins ‘dl.’ for GBIF downloads</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the citation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.get_citation_for_download_by_key">
+<span class="sig-name descname"><span class="pre">get_citation_for_download_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.get_citation_for_download_by_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.get_citation_for_download_by_key" title="Link to this definition"></a></dt>
+<dd><p>Shows the citation for the download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>download_key</strong> (<em>str</em>) – The key for the download.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the citation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.get_occurrence_download_info_by_doi">
+<span class="sig-name descname"><span class="pre">get_occurrence_download_info_by_doi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doi_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi_suffix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.get_occurrence_download_info_by_doi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.get_occurrence_download_info_by_doi" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the status (in-progress, complete, etc), definition and location of an occurrence download. Authorized users see additional details on their own downloads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doi_prefix</strong> (<em>str</em>) – The DOI prefix of the download, 10.15468 for GBIF downloads</p></li>
+<li><p><strong>doi_suffix</strong> (<em>str</em>) – The DOI suffix of the download, begins ‘dl.’ for GBIF downloads</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.get_occurrence_download_info_by_key">
+<span class="sig-name descname"><span class="pre">get_occurrence_download_info_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.get_occurrence_download_info_by_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.get_occurrence_download_info_by_key" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the status (in-progress, complete, etc), definition and location of an occurrence download. Authorized users see additional details on their own downloads</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>download_key</strong> (<em>str</em>) – The key for the download.</p></li>
+<li><p><strong>statistics</strong> (<em>bool</em>) – Optional. If true it also shows number of organizations and countries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.get_user_download_count">
+<span class="sig-name descname"><span class="pre">get_user_download_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.get_user_download_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.get_user_download_count" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the counts of occurrence downloads done by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em>) – Required. Username (administrator account required to see other users).</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Your username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Your password.</p></li>
+<li><p><strong>status</strong> (<em>str</em>) – Optional. List of statuses to filter by. Available values : PREPARING, RUNNING, SUCCEEDED, CANCELLED, KILLED, FAILED, SUSPENDED, FILE_ERASED</p></li>
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. Date time in ISO format to filter downloads by its creation date.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The download count for the user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.get_user_download_info">
+<span class="sig-name descname"><span class="pre">get_user_download_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.get_user_download_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.get_user_download_info" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the status, definitions and locations of all occurrence download by your own user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em>) – Required. Username (administrator account required to see other users).</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Your username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Your password.</p></li>
+<li><p><strong>status</strong> (<em>str</em>) – Optional. List of statuses to filter by. Available values : PREPARING, RUNNING, SUCCEEDED, CANCELLED, KILLED, FAILED, SUSPENDED, FILE_ERASED</p></li>
+<li><p><strong>from_date</strong> (<em>str</em><em>[</em><em>datetime</em><em>]</em>) – Optional. Date time in ISO format to filter downloads by its creation date.</p></li>
+<li><p><strong>statistics</strong> (<em>bool</em>) – Optional. If true it returns the counts of datasets, organizations and countries. By default it’s true to maintain backwards compatibility. Default value : true</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the download information for the user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.list_datasets_in_occurrence_download_by_doi">
+<span class="sig-name descname"><span class="pre">list_datasets_in_occurrence_download_by_doi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doi_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi_suffix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.list_datasets_in_occurrence_download_by_doi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.list_datasets_in_occurrence_download_by_doi" title="Link to this definition"></a></dt>
+<dd><p>Shows the datasets with occurrences present in the given occurrence download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doi_prefix</strong> (<em>str</em>) – The DOI prefix of the download, 10.15468 for GBIF downloads</p></li>
+<li><p><strong>doi_suffix</strong> (<em>str</em>) – The DOI suffix of the download, begins ‘dl.’ for GBIF downloads</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing dataset usage within an occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.list_datasets_in_occurrence_download_by_key">
+<span class="sig-name descname"><span class="pre">list_datasets_in_occurrence_download_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.list_datasets_in_occurrence_download_by_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.list_datasets_in_occurrence_download_by_key" title="Link to this definition"></a></dt>
+<dd><p>Shows the datasets with occurrences present in the given occurrence download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>download_key</strong> (<em>str</em>) – Required. The download key.</p></li>
+<li><p><strong>dataset_title</strong> (<em>str</em>) – Optional. Title of the dataset to filter by.</p></li>
+<li><p><strong>sort_by</strong> (<em>str</em>) – Optional. Field to sort the results by..Available values : DATASET_TITLE, COUNTRY_CODE, RECORD_COUNT</p></li>
+<li><p><strong>sort_order</strong> (<em>str</em>) – Optional. Sort order. Only taken into account when sortBy is used. Available values : ASC, DESC</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing dataset usage within an occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.downloads.OccurrenceDownload.list_download_activity_for_dataset">
+<span class="sig-name descname"><span class="pre">list_download_activity_for_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_download_details</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/downloads.html#OccurrenceDownload.list_download_activity_for_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.downloads.OccurrenceDownload.list_download_activity_for_dataset" title="Link to this definition"></a></dt>
+<dd><p>Lists the downloads in which data from a dataset has been included. The limit is set to a maximum of 100 results unless you set the showDownloadDetails parameter to false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_key</strong> (<em>str</em>) – The key of the dataset</p></li>
+<li><p><strong>show_download_details</strong> (<em>bool</em>) – Flag to indicate if we want the download details in the response. It defaults to true to keep backwards compatibility. Default value : true</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the download information.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -223,15 +716,364 @@
 </section>
 <section id="module-library_of_life.occurrence.gadm_regions">
 <span id="library-of-life-occurrence-gadm-regions-module"></span><h2>library_of_life.occurrence.gadm_regions module<a class="headerlink" href="#module-library_of_life.occurrence.gadm_regions" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.gadm_regions.</span></span><span class="sig-name descname"><span class="pre">GADMRegions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gadm_regions_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the GADM regions section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.get_1st_level_gadm_subdivisions">
+<span class="sig-name descname"><span class="pre">get_1st_level_gadm_subdivisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.get_1st_level_gadm_subdivisions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.get_1st_level_gadm_subdivisions" title="Link to this definition"></a></dt>
+<dd><p>Lists first-level subdivisions of a top-level GADM region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level0</strong> (<em>str</em>) – Required. Top-level GADM region. Example : DNK</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Query for (sub)divisions matching a wildcard.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing listed GADM regions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.get_2nd_level_gadm_subdivisions">
+<span class="sig-name descname"><span class="pre">get_2nd_level_gadm_subdivisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.get_2nd_level_gadm_subdivisions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.get_2nd_level_gadm_subdivisions" title="Link to this definition"></a></dt>
+<dd><p>Lists second-level subdivisions of a first-level GADM subdivision.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level0</strong> (<em>str</em>) – Required. Top-level GADM region. Example : DNK</p></li>
+<li><p><strong>level1</strong> (<em>str</em>) – Required. Level 1 GADM region. Example : DNK.1_1</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Query for (sub)divisions matching a wildcard.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing listed GADM regions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.get_3rd_level_gadm_subdivisions">
+<span class="sig-name descname"><span class="pre">get_3rd_level_gadm_subdivisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.get_3rd_level_gadm_subdivisions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.get_3rd_level_gadm_subdivisions" title="Link to this definition"></a></dt>
+<dd><p>Lists third-level subdivisions of a second-level GADM subdivision.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level0</strong> (<em>str</em>) – Required. Top-level GADM region. Example : DNK</p></li>
+<li><p><strong>level1</strong> (<em>str</em>) – Required. Level 1 GADM region. Example : DNK.1_1</p></li>
+<li><p><strong>level2</strong> (<em>str</em>) – Required. Level 2 GADM region. Example : DNK.1.1_1</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Query for (sub)divisions matching a wildcard.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing listed GADM regions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.get_details_for_gadm_region">
+<span class="sig-name descname"><span class="pre">get_details_for_gadm_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.get_details_for_gadm_region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.get_details_for_gadm_region" title="Link to this definition"></a></dt>
+<dd><p>Details for a single GADM region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gid</strong> (<em>str</em>) – Required. GADM region.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing GADM region details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.get_subregions">
+<span class="sig-name descname"><span class="pre">get_subregions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.get_subregions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.get_subregions" title="Link to this definition"></a></dt>
+<dd><p>Lists sub-regions or divisions of a region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>str</em>) – Required. GADM region.</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Query for (sub)divisions matching a wildcard.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing listed subregions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.get_top_level_gadm_subdivisions">
+<span class="sig-name descname"><span class="pre">get_top_level_gadm_subdivisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.get_top_level_gadm_subdivisions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.get_top_level_gadm_subdivisions" title="Link to this definition"></a></dt>
+<dd><p>Lists GADM regions at the highest level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em>) – Optional. Query for (sub)divisions matching a wildcard.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing listed GADM regions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.gadm_regions.GADMRegions.search_gadm_regions">
+<span class="sig-name descname"><span class="pre">search_gadm_regions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gadm_gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/gadm_regions.html#GADMRegions.search_gadm_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.gadm_regions.GADMRegions.search_gadm_regions" title="Link to this definition"></a></dt>
+<dd><p>Search for GADM regions. When parameters are used the results are narrowed to results that are subdivisions of gadmGid at level gadmLevel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Query for (sub)divisions matching a wildcard.</p></li>
+<li><p><strong>gadm_level</strong> (<em>str</em>) – Optional. Limit to subdivisions at this level. Example : 2</p></li>
+<li><p><strong>gadm_gid</strong> (<em>str</em>) – Optional. Limit to subdivisions of this GADM region. Example : SLV.4_1</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Number of items to return.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Offset parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing listed subregions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-library_of_life.occurrence.inventories">
 <span id="library-of-life-occurrence-inventories-module"></span><h2>library_of_life.occurrence.inventories module<a class="headerlink" href="#module-library_of_life.occurrence.inventories" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.inventories.</span></span><span class="sig-name descname"><span class="pre">Inventories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inventories_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/inventories.html#Inventories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the inventories section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories.get_inventory_by_basis_of_record">
+<span class="sig-name descname"><span class="pre">get_inventory_by_basis_of_record</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/inventories.html#Inventories.get_inventory_by_basis_of_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories.get_inventory_by_basis_of_record" title="Link to this definition"></a></dt>
+<dd><p>Lists occurrence counts by basis of record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the inventory counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories.get_inventory_by_country">
+<span class="sig-name descname"><span class="pre">get_inventory_by_country</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/inventories.html#Inventories.get_inventory_by_country"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories.get_inventory_by_country" title="Link to this definition"></a></dt>
+<dd><p>Lists occurrence counts for all countries that publish data about the given country.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>country</strong> (<em>str</em>) – Optional. Count only occurrences from a country or area.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the inventory counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories.get_inventory_by_dataset">
+<span class="sig-name descname"><span class="pre">get_inventory_by_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxon_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/inventories.html#Inventories.get_inventory_by_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories.get_inventory_by_dataset" title="Link to this definition"></a></dt>
+<dd><p>Lists occurrence counts for datasets that cover a given taxon or country.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country</strong> (<em>str</em>) – Optional. Limit to occurrences in an ISO 3166 country or area.</p></li>
+<li><p><strong>taxon_key</strong> (<em>int</em>) – Optional. Limit to occurrences of a particular taxon.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the inventory counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories.get_inventory_by_publishing_country">
+<span class="sig-name descname"><span class="pre">get_inventory_by_publishing_country</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">publishing_country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/inventories.html#Inventories.get_inventory_by_publishing_country"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories.get_inventory_by_publishing_country" title="Link to this definition"></a></dt>
+<dd><p>Lists occurrence counts by publishing country.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>publishing_country</strong> (<em>str</em>) – Optional. Limit to data published by a particular country.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the inventory counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.inventories.Inventories.get_inventory_by_year">
+<span class="sig-name descname"><span class="pre">get_inventory_by_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/inventories.html#Inventories.get_inventory_by_year"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.inventories.Inventories.get_inventory_by_year" title="Link to this definition"></a></dt>
+<dd><p>Lists occurrence counts by year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>year</strong> (<em>str</em>) – Optional. Limit to occurrences from a particular year or range of years. Example : 1981,1991</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the inventory counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-library_of_life.occurrence.metrics">
 <span id="library-of-life-occurrence-metrics-module"></span><h2>library_of_life.occurrence.metrics module<a class="headerlink" href="#module-library_of_life.occurrence.metrics" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.metrics.Metrics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.metrics.</span></span><span class="sig-name descname"><span class="pre">Metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'metrics_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/metrics.html#Metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.metrics.Metrics" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the metrics section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.metrics.Metrics.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.metrics.Metrics.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.metrics.Metrics.get_occurrence_counts">
+<span class="sig-name descname"><span class="pre">get_occurrence_counts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basis_of_record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_georeferenced</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publishing_country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxon_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/metrics.html#Metrics.get_occurrence_counts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.metrics.Metrics.get_occurrence_counts" title="Link to this definition"></a></dt>
+<dd><p>Returns occurrence counts for a predefined set of dimensions. The supported dimensions are enumerated in the /occurrence/count/schema service. The keys should be supplied as query parameters. An example for the count of georeferenced observations from Canada: /occurrence/count?country=CA&amp;isGeoreferenced=true&amp;basisOfRecord=OBSERVATION</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>basis_of_record</strong> (<em>str</em>) – Optional. Count records with a particular basisOfRecord.</p></li>
+<li><p><strong>country</strong> (<em>str</em>) – Optional. Count records in the given country.</p></li>
+<li><p><strong>dataset_key</strong> (<em>str</em>) – Optional. Count records in a dataset.</p></li>
+<li><p><strong>is_georeferenced</strong> (<em>bool</em>) – Optional. Count only georeferenced (or not) records.</p></li>
+<li><p><strong>issue</strong> (<em>str</em>) – Optional. Count only records with this issue.</p></li>
+<li><p><strong>protocol</strong> (<em>str</em>) – Optional. Count records retrieved using the chosen protocol.</p></li>
+<li><p><strong>publishing_country</strong> (<em>str</em>) – Optional. Count records published by the given country.</p></li>
+<li><p><strong>taxon_key</strong> (<em>int</em>) – Optional. Count records of a particular taxon.</p></li>
+<li><p><strong>type_status</strong> (<em>str</em>) – Optional. Count records with this type status.</p></li>
+<li><p><strong>year</strong> (<em>int</em>) – Optional. Count records from this year.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.metrics.Metrics.get_supported_occurrence_count_metrics">
+<span class="sig-name descname"><span class="pre">get_supported_occurrence_count_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/metrics.html#Metrics.get_supported_occurrence_count_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.metrics.Metrics.get_supported_occurrence_count_metrics" title="Link to this definition"></a></dt>
+<dd><p>List the metrics supported by the service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the supported metrics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-library_of_life.occurrence.organization_usages">
 <span id="library-of-life-occurrence-organization-usages-module"></span><h2>library_of_life.occurrence.organization_usages module<a class="headerlink" href="#module-library_of_life.occurrence.organization_usages" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.occurrence.organization_usages.OrganizationUsage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.occurrence.organization_usages.</span></span><span class="sig-name descname"><span class="pre">OrganizationUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'organization_usage_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/organization_usages.html#OrganizationUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.organization_usages.OrganizationUsage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the organization usage section of the Occurrence API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.occurrence.organization_usages.OrganizationUsage.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.occurrence.organization_usages.OrganizationUsage.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.occurrence.organization_usages.OrganizationUsage.list_organizations_in_download">
+<span class="sig-name descname"><span class="pre">list_organizations_in_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">download_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organization_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/occurrence/organization_usages.html#OrganizationUsage.list_organizations_in_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.occurrence.organization_usages.OrganizationUsage.list_organizations_in_download" title="Link to this definition"></a></dt>
+<dd><p>Shows the countries with occurrences present in the given occurrence download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>download_key</strong> (<em>str</em>) – Required. The key of the download.</p></li>
+<li><p><strong>organization_title</strong> (<em>str</em>) – Optional. Title of the organization to filter by.</p></li>
+<li><p><strong>sort_by</strong> (<em>str</em>) – Optional. Field to sort the results by. Available values : ORGANIZATION_TITLE, COUNTRY_CODE, RECORD_COUNT</p></li>
+<li><p><strong>sort_order</strong> (<em>str</em>) – Optional. Sort order. Only taken into account when sortBy is used. Available values : ASC, DESC</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing country usage within an occurrence download information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-library_of_life.occurrence.search">
 <span id="library-of-life-occurrence-search-module"></span><h2>library_of_life.occurrence.search module<a class="headerlink" href="#module-library_of_life.occurrence.search" title="Link to this heading"></a></h2>

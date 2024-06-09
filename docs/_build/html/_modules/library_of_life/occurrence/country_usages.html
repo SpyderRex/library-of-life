@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.registry.institutions_and_collections &mdash; library_of_life 0.2.0 documentation</title>
+  <title>library_of_life.occurrence.country_usages &mdash; library_of_life 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -61,7 +61,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">library_of_life.registry.institutions_and_collections</li>
+      <li class="breadcrumb-item active">library_of_life.occurrence.country_usages</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -70,10 +70,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for library_of_life.registry.institutions_and_collections</h1><div class="highlight"><pre>
+  <h1>Source code for library_of_life.occurrence.country_usages</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
 
-<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
@@ -81,24 +80,24 @@
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
 
-<div class="viewcode-block" id="InstitutionsAndCollections">
-<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.institutions_and_collections.InstitutionsAndCollections">[docs]</a>
-<span class="k">class</span> <span class="nc">InstitutionsAndCollections</span><span class="p">:</span>
+<div class="viewcode-block" id="CountryUsage">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.country_usages.CountryUsage">[docs]</a>
+<span class="k">class</span> <span class="nc">CountryUsage</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class for interacting with the institutions and collections section of the Registry API.</span>
+<span class="sd">    A class for interacting with the country usage section of the Occurrence API.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
-<span class="sd">        endpoint: The endpoint for this section of the API.</span>
+<span class="sd">        endpoint: endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;institutions_and_collections_cache&quot;</span><span class="p">,</span> 
+                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;country_usage_cache&quot;</span><span class="p">,</span> 
                 <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
                 <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
                 <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
                 <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;grscicoll/search&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;occurrence/download&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
@@ -111,42 +110,39 @@
           
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
             <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-       
-<div class="viewcode-block" id="InstitutionsAndCollections.search_institutions_and_collections">
-<a class="viewcode-back" href="../../../library_of_life.registry.html#library_of_life.registry.institutions_and_collections.InstitutionsAndCollections.search_institutions_and_collections">[docs]</a>
-    <span class="k">def</span> <span class="nf">search_institutions_and_collections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">country</span><span class="p">,</span>
-                                   <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">entity_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            
+<div class="viewcode-block" id="CountryUsage.list_countries_in_download">
+<a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.country_usages.CountryUsage.list_countries_in_download">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_countries_in_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_key</span><span class="p">,</span>
+                            <span class="n">sort_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">sort_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns data on collections and institutions matching the search parameters.</span>
+<span class="sd">        Shows the countries with occurrences present in the given occurrence download.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            country (str): Required. The 2-letter country code (as per ISO-3166-1) of the country. See this endpoint&#39;s docs for available values.</span>
-<span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
-<span class="sd">            highlight (bool): Optional. Set hl=true to highlight terms matching the query when in fulltext search fields. The highlight will be an emphasis tag of class gbifHl.</span>
-<span class="sd">            entity_type (str): Optional. Code of a GrSciColl institution or collection.</span>
+<span class="sd">            download_key (str): Required. The key of the download.</span>
+<span class="sd">            sort_by (str): Optional. Field to sort the results by. Available values : COUNTRY_CODE, RECORD_COUNT</span>
+<span class="sd">            sort_order (str): Optional. Sort order. Only taken into account when sortBy is used. Available values : ASC, DESC</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+<span class="sd">            </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionary containing data about collections and institutions.</span>
+<span class="sd">            dict: A dictionary containing country usage within an occurrence download information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="n">country</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;entityType&quot;</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+                <span class="p">(</span><span class="s2">&quot;sortBy&quot;</span><span class="p">,</span> <span class="n">sort_by</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;sortOrder&quot;</span><span class="p">,</span> <span class="n">sort_order</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">download_key</span><span class="si">}</span><span class="s2">/countries&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 </div>
 
-          
+  
 </pre></div>
 
            </div>

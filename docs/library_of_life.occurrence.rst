@@ -12,10 +12,10 @@ library\_of\_life.occurrence.country\_usages module
    :undoc-members:
    :show-inheritance:
 
-library\_of\_life.occurrence.download\_format module
-----------------------------------------------------
+library\_of\_life.occurrence.download\_formats module
+-----------------------------------------------------
 
-.. automodule:: library_of_life.occurrence.download_format
+.. automodule:: library_of_life.occurrence.download_formats
    :members:
    :undoc-members:
    :show-inheritance:
