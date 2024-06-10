@@ -92,9 +92,11 @@ For now the registry module only contains the principal methods, but it will be 
 - `country_usages`
 - `organization_usages`
 
-### Maps (in development)
+### Maps
 
-### Literature (pre-dev)
+- `maps`
+
+### Literature (in development)
 
 ### Validator (pre-dev)
 
