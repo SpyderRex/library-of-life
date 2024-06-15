@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.species.name_search &mdash; library_of_life 0.4.0 documentation</title>
+  <title>library_of_life.species.name_search &mdash; library_of_life 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/documentation_options.js?v=c87aa342"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -76,60 +76,74 @@
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+<span class="kn">from</span> <span class="nn">..gbif_root</span> <span class="kn">import</span> <span class="n">GBIF</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">http_client</span> <span class="k">as</span> <span class="n">hc</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
 
 <div class="viewcode-block" id="NameSearch">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch">[docs]</a>
 <span class="k">class</span> <span class="nc">NameSearch</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with the name search section of the Species API.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: The endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;name_search_cache&quot;</span><span class="p">,</span> 
-                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
-                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
-                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
-                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;name_search_cache&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+        <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;species&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
-        
-        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;OAuth&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
-          
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span>
+                <span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
-            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-                   
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span>
+                <span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="NameSearch.autocomplete_species">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.autocomplete_species">[docs]</a>
-    <span class="k">def</span> <span class="nf">autocomplete_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">constituent_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">is_extinct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">habitat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">threat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">name_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">nomenclaturual_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">autocomplete_species</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">constituent_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_extinct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">habitat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">threat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">nomenclaturual_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns up to 20 name usages by doing prefix matching against the scientific name. Results are ordered by relevance.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            dataset_key (str): Optional. A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c.</span>
 <span class="sd">            constituent_key (str): Optional. The (sub)dataset constituent key as a UUID. Useful to query larger assembled datasets such as the GBIF Backbone or the Catalogue of Life.</span>
@@ -144,53 +158,57 @@
 <span class="sd">            origin (str): Optional. Filters for name usages with a specific origin. Available values : SOURCE, DENORMED_CLASSIFICATION, VERBATIM_PARENT, VERBATIM_ACCEPTED, VERBATIM_BASIONYM, PROPARTE, AUTONYM, IMPLICIT_NAME, MISSING_ACCEPTED, BASIONYM_PLACEHOLDER, EX_AUTHOR_SYNONYM, OTHER.</span>
 <span class="sd">            issue (str): Optional. A specific indexing issue as defined in our https://api.gbif.org/v1/enumeration/basic/NameUsageIssue[NameUsageIssue enum]. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing up to 20 name usages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;constituentKey&quot;</span><span class="p">,</span> <span class="n">constituent_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;higherTaxonKey&quot;</span><span class="p">,</span> <span class="n">higher_taxon_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;isExtinct&quot;</span><span class="p">,</span> <span class="n">is_extinct</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">,</span> <span class="n">habitat</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;threat&quot;</span><span class="p">,</span> <span class="n">threat</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;nameType&quot;</span><span class="p">,</span> <span class="n">name_type</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;nomenclaturalStatus&quot;</span><span class="p">,</span> <span class="n">nomenclaturual_status</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;constituentKey&quot;</span><span class="p">,</span> <span class="n">constituent_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;higherTaxonKey&quot;</span><span class="p">,</span> <span class="n">higher_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;isExtinct&quot;</span><span class="p">,</span> <span class="n">is_extinct</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">,</span> <span class="n">habitat</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;threat&quot;</span><span class="p">,</span> <span class="n">threat</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;nameType&quot;</span><span class="p">,</span> <span class="n">name_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;nomenclaturalStatus&quot;</span><span class="p">,</span> <span class="n">nomenclaturual_status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/suggest&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="NameSearch.search_species">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.search_species">[docs]</a>
-    <span class="k">def</span> <span class="nf">search_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">constituent_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">is_extinct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">habitat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">threat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">name_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">nomenclaturual_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">search_species</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">constituent_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_extinct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">habitat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">threat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">nomenclaturual_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">issue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns results of a full-text search of name usages covering the scientific and vernacular names, the species description, distribution and the entire classification across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.</span>
 <span class="sd">        Args:</span>
@@ -215,48 +233,53 @@
 <span class="sd">            facet_multiselect (bool): Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered.</span>
 <span class="sd">            facet_limit (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
 <span class="sd">            facet_offset (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing species data from search.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;constituentKey&quot;</span><span class="p">,</span> <span class="n">constituent_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;higherTaxonKey&quot;</span><span class="p">,</span> <span class="n">higher_taxon_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;isExtinct&quot;</span><span class="p">,</span> <span class="n">is_extinct</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">,</span> <span class="n">habitat</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;threat&quot;</span><span class="p">,</span> <span class="n">threat</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;nameType&quot;</span><span class="p">,</span> <span class="n">name_type</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;nomenclaturalStatus&quot;</span><span class="p">,</span> <span class="n">nomenclaturual_status</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;constituentKey&quot;</span><span class="p">,</span> <span class="n">constituent_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;higherTaxonKey&quot;</span><span class="p">,</span> <span class="n">higher_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;isExtinct&quot;</span><span class="p">,</span> <span class="n">is_extinct</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">,</span> <span class="n">habitat</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;threat&quot;</span><span class="p">,</span> <span class="n">threat</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;nameType&quot;</span><span class="p">,</span> <span class="n">name_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;nomenclaturalStatus&quot;</span><span class="p">,</span> <span class="n">nomenclaturual_status</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;issue&quot;</span><span class="p">,</span> <span class="n">issue</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/search&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="NameSearch.list_all_name_usages">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.list_all_name_usages">[docs]</a>
-    <span class="k">def</span> <span class="nf">list_all_name_usages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span>
-                            <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">source_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">list_all_name_usages</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">source_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of all name usages across all checklists.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            limit (int): Required. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Required. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
@@ -264,42 +287,48 @@
 <span class="sd">            dataset_key (list): Optional. A UUID of a checklist dataset.</span>
 <span class="sd">            source_id (str): Optional. Filters by the source identifier.</span>
 <span class="sd">            name (str): Optional. A name without authorship, to match exactly.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing a list name usages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> 
-                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;sourceId&quot;</span><span class="p">,</span> <span class="n">source_id</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;sourceId&quot;</span><span class="p">,</span> <span class="n">source_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+            <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+        <span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="NameSearch.fuzzy_name_match">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_search.NameSearch.fuzzy_name_match">[docs]</a>
-    <span class="k">def</span> <span class="nf">fuzzy_name_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">authorship</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">generic_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">generic_epithet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">infraspecific_epithet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">strict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">verbose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">kingdom</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">phylum</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="bp">cls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">family</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">genus</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fuzzy_name_match</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">usage_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">authorship</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rank</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">generic_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">generic_epithet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">infraspecific_epithet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">strict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">kingdom</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">phylum</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">family</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">genus</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns fuzzy matches of scientific names against the GBIF Backbone Taxonomy with the optional classification provided. If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Optional. The usage key to look up. When provided, all other fields are ignored.</span>
 <span class="sd">            name (str): Optional. The scientific name to fuzzy match against. May include the authorship and year.</span>
@@ -316,33 +345,33 @@
 <span class="sd">            cls (str): Optional. Class to match.</span>
 <span class="sd">            family (str): Optional. Family to match.</span>
 <span class="sd">            genus (str): Optional. Genus to match.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing fuzzy matches of scientific names.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;usageKey&quot;</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;authorship&quot;</span><span class="p">,</span> <span class="n">authorship</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;genericName&quot;</span><span class="p">,</span> <span class="n">generic_name</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;genericEpithet&quot;</span><span class="p">,</span> <span class="n">generic_epithet</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;infraspecificEpithet&quot;</span><span class="p">,</span> <span class="n">infraspecific_epithet</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;kingdom&quot;</span><span class="p">,</span> <span class="n">kingdom</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;phylum&quot;</span><span class="p">,</span> <span class="n">phylum</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;family&quot;</span><span class="p">,</span> <span class="n">family</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;genus&quot;</span><span class="p">,</span> <span class="n">genus</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;usageKey&quot;</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;authorship&quot;</span><span class="p">,</span> <span class="n">authorship</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;genericName&quot;</span><span class="p">,</span> <span class="n">generic_name</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;genericEpithet&quot;</span><span class="p">,</span> <span class="n">generic_epithet</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;infraspecificEpithet&quot;</span><span class="p">,</span> <span class="n">infraspecific_epithet</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;kingdom&quot;</span><span class="p">,</span> <span class="n">kingdom</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;phylum&quot;</span><span class="p">,</span> <span class="n">phylum</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="n">order</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;family&quot;</span><span class="p">,</span> <span class="n">family</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;genus&quot;</span><span class="p">,</span> <span class="n">genus</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/match&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 </div>
 
- 
 </pre></div>
 
            </div>

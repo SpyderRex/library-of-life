@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.occurrence.gadm_regions &mdash; library_of_life 0.4.0 documentation</title>
+  <title>library_of_life.occurrence.gadm_regions &mdash; library_of_life 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/documentation_options.js?v=c87aa342"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -75,52 +75,63 @@
 
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+<span class="kn">from</span> <span class="nn">..gbif_root</span> <span class="kn">import</span> <span class="n">GBIF</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">http_client</span> <span class="k">as</span> <span class="n">hc</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
 
 <div class="viewcode-block" id="GADMRegions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions">[docs]</a>
 <span class="k">class</span> <span class="nc">GADMRegions</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with the GADM regions section of the Occurrence API.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;gadm_regions_cache&quot;</span><span class="p">,</span> 
-                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
-                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
-                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
-                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;gadm_regions_cache&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+        <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;geocode/gadm&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
-        
-        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;OAuth&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
-          
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span>
+                <span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
-            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-            
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span>
+                <span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="GADMRegions.get_subregions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.get_subregions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_subregions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gid</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_subregions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gid</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists sub-regions or divisions of a region.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            gid (str): Required. GADM region.</span>
 <span class="sd">            query (str): Optional. Query for (sub)divisions matching a wildcard.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing listed subregions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -128,69 +139,75 @@
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">gid</span><span class="si">}</span><span class="s2">/subdivisions&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="GADMRegions.get_details_for_gadm_region">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.get_details_for_gadm_region">[docs]</a>
     <span class="k">def</span> <span class="nf">get_details_for_gadm_region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gid</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Details for a single GADM region.</span>
-<span class="sd">         </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            gid (str): Required. GADM region.</span>
-<span class="sd">               </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing GADM region details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">gid</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="GADMRegions.search_gadm_regions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.search_gadm_regions">[docs]</a>
-    <span class="k">def</span> <span class="nf">search_gadm_regions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">gadm_level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">gadm_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">search_gadm_regions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gadm_level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gadm_gid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Search for GADM regions. When parameters are used the results are narrowed to results that are subdivisions of gadmGid at level gadmLevel.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            query (str): Optional. Query for (sub)divisions matching a wildcard.</span>
 <span class="sd">            gadm_level (str): Optional. Limit to subdivisions at this level. Example : 2</span>
 <span class="sd">            gadm_gid (str): Optional. Limit to subdivisions of this GADM region. Example : SLV.4_1</span>
 <span class="sd">            limit (int): Optional. Number of items to return.</span>
 <span class="sd">            offset (int): Offset parameter.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing listed subregions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gadmLevel&quot;</span><span class="p">,</span> <span class="n">gadm_level</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gadmGid&quot;</span><span class="p">,</span> <span class="n">gadm_gid</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> 
-                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmLevel&quot;</span><span class="p">,</span> <span class="n">gadm_level</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gadmGid&quot;</span><span class="p">,</span> <span class="n">gadm_gid</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/search&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="GADMRegions.get_3rd_level_gadm_subdivisions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.get_3rd_level_gadm_subdivisions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_3rd_level_gadm_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">level1</span><span class="p">,</span> <span class="n">level2</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_3rd_level_gadm_subdivisions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">level1</span><span class="p">,</span> <span class="n">level2</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists third-level subdivisions of a second-level GADM subdivision.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            level0 (str): Required. Top-level GADM region. Example : DNK</span>
-<span class="sd">            level1 (str): Required. Level 1 GADM region. Example : DNK.1_1 </span>
-<span class="sd">            level2 (str): Required. Level 2 GADM region. Example : DNK.1.1_1  </span>
+<span class="sd">            level1 (str): Required. Level 1 GADM region. Example : DNK.1_1</span>
+<span class="sd">            level2 (str): Required. Level 2 GADM region. Example : DNK.1.1_1</span>
 <span class="sd">            query (str): Optional. Query for (sub)divisions matching a wildcard.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing listed GADM regions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -198,20 +215,22 @@
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/browse/</span><span class="si">{</span><span class="n">level0</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">level1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">level2</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="GADMRegions.get_2nd_level_gadm_subdivisions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.get_2nd_level_gadm_subdivisions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_2nd_level_gadm_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">level1</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_2nd_level_gadm_subdivisions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">level1</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lists second-level subdivisions of a first-level GADM subdivision.  </span>
-<span class="sd">        </span>
+<span class="sd">        Lists second-level subdivisions of a first-level GADM subdivision.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            level0 (str): Required. Top-level GADM region. Example : DNK</span>
-<span class="sd">            level1 (str): Required. Level 1 GADM region. Example : DNK.1_1 </span>
+<span class="sd">            level1 (str): Required. Level 1 GADM region. Example : DNK.1_1</span>
 <span class="sd">            query (str): Optional. Query for (sub)divisions matching a wildcard.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing listed GADM regions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -219,19 +238,19 @@
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/browse/</span><span class="si">{</span><span class="n">level0</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">level1</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="GADMRegions.get_1st_level_gadm_subdivisions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.get_1st_level_gadm_subdivisions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_1st_level_gadm_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_1st_level_gadm_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lists first-level subdivisions of a top-level GADM region.  </span>
-<span class="sd">        </span>
+<span class="sd">        Lists first-level subdivisions of a top-level GADM region.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            level0 (str): Required. Top-level GADM region. Example : DNK</span>
 <span class="sd">            query (str): Optional. Query for (sub)divisions matching a wildcard.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing listed GADM regions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -239,18 +258,18 @@
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/browse/</span><span class="si">{</span><span class="n">level0</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="GADMRegions.get_top_level_gadm_subdivisions">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.gadm_regions.GADMRegions.get_top_level_gadm_subdivisions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_top_level_gadm_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_top_level_gadm_subdivisions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists GADM regions at the highest level.</span>
-<span class="sd">           </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            query (str): Optional. Query for (sub)divisions matching a wildcard.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing listed GADM regions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -258,18 +277,9 @@
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/browse&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 </div>
 
- 
- 
- 
- 
-   
-        
-   
-            
-   
 </pre></div>
 
            </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.occurrence.download_stats &mdash; library_of_life 0.4.0 documentation</title>
+  <title>library_of_life.occurrence.download_stats &mdash; library_of_life 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/documentation_options.js?v=c87aa342"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -75,54 +75,68 @@
 
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+<span class="kn">from</span> <span class="nn">..gbif_root</span> <span class="kn">import</span> <span class="n">GBIF</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">http_client</span> <span class="k">as</span> <span class="n">hc</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
 
 <div class="viewcode-block" id="DownloadStats">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.download_stats.DownloadStats">[docs]</a>
 <span class="k">class</span> <span class="nc">DownloadStats</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with the download statistics section of the Occurrence API.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;download_stats_cache&quot;</span><span class="p">,</span> 
-                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
-                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
-                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
-                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;download_stats_cache&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+        <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;occurrence/download/statistics&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
-        
-        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;OAuth&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
-          
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span>
+                <span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
-            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-            
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span>
+                <span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="DownloadStats.get_summarized_download_stats">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_summarized_download_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">publishing_org_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_summarized_download_stats</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_org_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filters for downloads matching the provided criteria, then provide counts by year, month and dataset of the total number of downloads, and the total number of records included in those downloads.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            from_date (str[datetime]): Optional. The year and month (YYYY-MM) to start from.</span>
 <span class="sd">            to_date (str[datetime]): Optional. The year and month (YYYY-MM) to end at.</span>
@@ -131,152 +145,161 @@
 <span class="sd">            publishing_org_key (str): Optional. The uuid for a publishing organization.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing download statistics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingOrgKey&quot;</span><span class="p">,</span> <span class="n">publishing_org_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingOrgKey&quot;</span><span class="p">,</span> <span class="n">publishing_org_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="DownloadStats.export_summarized_download_stats">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.download_stats.DownloadStats.export_summarized_download_stats">[docs]</a>
-    <span class="k">def</span> <span class="nf">export_summarized_download_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_date</span><span class="p">,</span>
-                                <span class="n">to_date</span><span class="p">,</span>
-                                <span class="n">publishing_country</span><span class="p">,</span>
-                                <span class="n">export_format</span><span class="o">=</span><span class="s2">&quot;TSV&quot;</span><span class="p">,</span>
-                                <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">publishing_org_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">export_summarized_download_stats</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">from_date</span><span class="p">,</span>
+        <span class="n">to_date</span><span class="p">,</span>
+        <span class="n">publishing_country</span><span class="p">,</span>
+        <span class="n">export_format</span><span class="o">=</span><span class="s2">&quot;TSV&quot;</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_org_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filters for downloads matching the provided criteria, then provide counts by year, month and dataset of the total number of downloads, and the total number of records included in those downloads.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            from_date (str[datetime]): Required. The year and month (YYYY-MM) to start from.</span>
 <span class="sd">            to_date (str[datetime]): Required. The year and month (YYYY-MM) to end at.</span>
 <span class="sd">            publishing_country (str): Required. The ISO 3166-2 code for the publishing organization&#39;s country, territory or island. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            dataset_key (str): Optional. The uuid for a dataset.</span>
 <span class="sd">            publishing_org_key (str): Optional. The uuid for a publishing organization.</span>
-<span class="sd">                </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing download statistics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="n">export_format</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingOrgKey&quot;</span><span class="p">,</span> <span class="n">publishing_org_key</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="n">export_format</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingOrgKey&quot;</span><span class="p">,</span> <span class="n">publishing_org_key</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/export&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span></div>
 
-            
+
 <div class="viewcode-block" id="DownloadStats.get_summarized_download_stats_for_user_country">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_for_user_country">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_summarized_download_stats_for_user_country</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">user_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_summarized_download_stats_for_user_country</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">user_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Provides counts of user downloads by month, grouped by the user&#39;s ISO 3166-2 country, territory or island.  </span>
-<span class="sd">        </span>
+<span class="sd">        Provides counts of user downloads by month, grouped by the user&#39;s ISO 3166-2 country, territory or island.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            from_date (str[datetime]): Optional. The year and month (YYYY-MM) to start from.</span>
 <span class="sd">            to_date (str[datetime]): Optional. The year and month (YYYY-MM) to end at.</span>
 <span class="sd">            user_country (str): Optional. The ISO 3166-2 code for the user&#39;s country, territory or island. See this endpoint&#39;s docs for available values.</span>
-<span class="sd">               </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing download statistics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;userCountry&quot;</span><span class="p">,</span> <span class="n">user_country</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;userCountry&quot;</span><span class="p">,</span> <span class="n">user_country</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/downloadsByUserCountry&quot;</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="DownloadStats.get_summarized_download_stats_by_dataset">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_by_dataset">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_summarized_download_stats_by_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">publishing_org_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_summarized_download_stats_by_dataset</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_org_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Summarizes downloads by month, filtered by a publishing organization&#39;s country, territory or island and/or a single dataset.  </span>
-<span class="sd">        </span>
+<span class="sd">        Summarizes downloads by month, filtered by a publishing organization&#39;s country, territory or island and/or a single dataset.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            from_date (str[datetime]): Optional. The year and month (YYYY-MM) to start from.</span>
 <span class="sd">            to_date (str[datetime]): Optional. The year and month (YYYY-MM) to end at.</span>
 <span class="sd">            publishing_country (str): Optional. The ISO 3166-2 code for the publishing organization&#39;s country, territory or island. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            dataset_key (str): Optional. The uuid for a dataset.</span>
 <span class="sd">            publishing_org_key (str): Optional. The uuid for a publishing organization.</span>
-<span class="sd">              </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing download statistics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingOrgKey&quot;</span><span class="p">,</span> <span class="n">publishing_org_key</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingOrgKey&quot;</span><span class="p">,</span> <span class="n">publishing_org_key</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/downloadsByDataset&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="DownloadStats.get_summarized_download_stats_by_source">
 <a class="viewcode-back" href="../../../library_of_life.occurrence.html#library_of_life.occurrence.download_stats.DownloadStats.get_summarized_download_stats_by_source">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_summarized_download_stats_by_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_summarized_download_stats_by_source</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">from_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Summarizes downloaded record totals by source, e.g. www.gbif.org or APIs. </span>
-<span class="sd">        </span>
+<span class="sd">        Summarizes downloaded record totals by source, e.g. www.gbif.org or APIs.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            from_date (str[datetime]): Optional. The year and month (YYYY-MM) to start from.</span>
 <span class="sd">            to_date (str[datetime]): Optional. The year and month (YYYY-MM) to end at.</span>
 <span class="sd">            source (str): Optional. Restrict to a particular source.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing download statistics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;fromDate&quot;</span><span class="p">,</span> <span class="n">from_date</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;toDate&quot;</span><span class="p">,</span> <span class="n">to_date</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)]</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/downloadsBySource&quot;</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 </div>
 
-    
-        
-    
-   
-  
-     
-                                    
-            
 </pre></div>
 
            </div>

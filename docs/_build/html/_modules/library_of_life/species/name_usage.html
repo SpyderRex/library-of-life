@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.species.name_usage &mdash; library_of_life 0.4.0 documentation</title>
+  <title>library_of_life.species.name_usage &mdash; library_of_life 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/documentation_options.js?v=c87aa342"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -76,574 +76,624 @@
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+<span class="kn">from</span> <span class="nn">..gbif_root</span> <span class="kn">import</span> <span class="n">GBIF</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">http_client</span> <span class="k">as</span> <span class="n">hc</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
 
 <div class="viewcode-block" id="NameUsage">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage">[docs]</a>
 <span class="k">class</span> <span class="nc">NameUsage</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with the name usages section of the Species API.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: The endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;name_usage_cache&quot;</span><span class="p">,</span> 
-                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
-                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
-                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
-                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;name_usage_cache&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+        <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;species&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
-        
-        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;OAuth&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
-          
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span>
+                <span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
-            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-            
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span>
+                <span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="NameUsage.get_usage_vernacular_names_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_usage_vernacular_names_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_usage_vernacular_names_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_usage_vernacular_names_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all vernacular names for a name usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing all vernacular names for a name usage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/vernacularNames&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_verbatim_name_usage_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_verbatim_name_usage_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_verbatim_name_usage_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a verbatim name usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing a verbatim name usage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/verbatim&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-           
+
 <div class="viewcode-block" id="NameUsage.get_usage_descriptions_tocs">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_usage_descriptions_tocs">[docs]</a>
     <span class="k">def</span> <span class="nf">get_usage_descriptions_tocs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a table of contents for all descriptions of a name usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing a table of contents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/toc&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_synonyms_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_synonyms_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_synonyms_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_synonyms_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">usage_key</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all vernacular names for a name usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            language (str): Language for vernacular names, given as an ISO 639-1 two-letter code from api&#39;s vocabulary. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing all vernacular names for a name usage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/synonyms&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_species_profiles_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_species_profiles_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_name_usage_species_profiles_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_name_usage_species_profiles_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all species profiles for a name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all species profiles for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing species profiles.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/speciesProfiles&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_related_name_usages_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_related_name_usages_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_related_name_usages_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_related_name_usages_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all related name usages for a name usage.  </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all related name usages for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing related name usages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/related&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_references_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_references_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_references_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_references_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all references for a name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all references for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing references.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/references&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_parent_name_usages_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_parent_name_usages_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_parent_name_usages_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all parent name usages for a name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all parent name usages for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            language (str): Language for vernacular names, given as an ISO 639-1 two-letter code from api&#39;s vocabulary. See this endpoint&#39;s docs for available values.</span>
-<span class="sd">          </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing parent name usages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/parents&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-      
+
 <div class="viewcode-block" id="NameUsage.get_parsed_name_usage_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_parsed_name_usage_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_parsed_name_usage_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the parsed name for a single name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns the parsed name for a single name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing parsed name usage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/name&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_metrics_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_metrics_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_name_usage_metrics_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns metrics for a single name usage.  </span>
-<span class="sd">        </span>
+<span class="sd">        Returns metrics for a single name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing metrics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/metrics&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_media_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_media_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_name_usage_media_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_name_usage_media_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all media for a name usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing media.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/media&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_iucn_red_list_category_for_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_iucn_red_list_category_for_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_iucn_red_list_category_for_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the IUCN Red List Category for a name usage. If the matching IUCN usage does not contain a category, Not Evaluated (NE) is returned. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns the IUCN Red List Category for a name usage. If the matching IUCN usage does not contain a category, Not Evaluated (NE) is returned.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary an IUCN Red List Category.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/iucnRedListCategory&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_identifiers_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_identifiers_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_identifiers_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_identifiers_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all identifiers for a name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all identifiers for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing identifiers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/identifier&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_distributions_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_distributions_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_name_usage_distributions_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_name_usage_distributions_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all distributions for a name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all distributions for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing distributions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/distributions&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_descriptions_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_descriptions_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_name_usage_descriptions_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_name_usage_descriptions_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all descriptions for a name usage. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns all descriptions for a name usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing descriptions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/descriptions&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_recombinations_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_recombinations_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_name_usage_recombinations_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of all (re)combinations of a given basionym, excluding the basionym itself.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            language (str): Language for vernacular names, given as an ISO 639-1 two-letter code from api&#39;s vocabulary. See this endpoint&#39;s docs for available values.</span>
-<span class="sd">          </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list containing name usage recombinations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/combinations&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_all_name_usage_children_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_all_name_usage_children_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_all_name_usage_children_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a brief list of all child Name Usages for a parent Name Usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of child name usagea</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/childrenAll&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_name_usage_children_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_name_usage_children_by_usage_key">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_name_usage_children_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_name_usage_children_by_usage_key</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">usage_key</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a list of child Name Usages for a parent Name Usage.  </span>
-<span class="sd">        </span>
+<span class="sd">        Returns a list of child Name Usages for a parent Name Usage.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            language (str): Language for vernacular names, given as an ISO 639-1 two-letter code from api&#39;s vocabulary. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing child name usages for a name usage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">/children&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-     
+
 <div class="viewcode-block" id="NameUsage.get_single_name_usage_by_usage_key">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_single_name_usage_by_usage_key">[docs]</a>
     <span class="k">def</span> <span class="nf">get_single_name_usage_by_usage_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usage_key</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves a single name usage.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            usage_key (int): Name usage key. Example : 5231190.</span>
 <span class="sd">            language (str): Language for vernacular names, given as an ISO 639-1 two-letter code from api&#39;s vocabulary. See this endpoint&#39;s docs for available values.</span>
-<span class="sd">          </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing a single name usage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">usage_key</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 
-            
+
 <div class="viewcode-block" id="NameUsage.get_root_name_usage_for_dataset">
 <a class="viewcode-back" href="../../../library_of_life.species.html#library_of_life.species.name_usage.NameUsage.get_root_name_usage_for_dataset">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_root_name_usage_for_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span>
-                                   <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_root_name_usage_for_dataset</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns root name usages for a checklist dataset. </span>
-<span class="sd">        </span>
+<span class="sd">        Returns root name usages for a checklist dataset.</span>
+
 <span class="sd">        Args:</span>
-<span class="sd">            dataset_key (int): A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c   </span>
+<span class="sd">            dataset_key (int): A UUID of a checklist dataset. Example : d7dddbf4-2cf0-4f39-9b2a-bb099caae36c</span>
 <span class="sd">            language (str): Language for vernacular names, given as an ISO 639-1 two-letter code from api&#39;s vocabulary. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing root name usages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/root/</span><span class="si">{</span><span class="n">dataset_key</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+                <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+            <span class="p">)</span>
             <span class="n">decoded_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">decoded_response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span></div>
 </div>
 
-            
 </pre></div>
 
            </div>

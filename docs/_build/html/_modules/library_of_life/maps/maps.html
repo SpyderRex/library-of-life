@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.maps.maps &mdash; library_of_life 0.4.0 documentation</title>
+  <title>library_of_life.maps.maps &mdash; library_of_life 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/documentation_options.js?v=c87aa342"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -79,56 +79,70 @@
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">ImageEnhance</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">http_client</span> <span class="k">as</span> <span class="n">hc</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.gbif.org/v2/&quot;</span>
+
 
 <div class="viewcode-block" id="Map">
 <a class="viewcode-back" href="../../../library_of_life.maps.html#library_of_life.maps.maps.Map">[docs]</a>
 <span class="k">class</span> <span class="nc">Map</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with the Maps API.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                 <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;maps_cache&quot;</span><span class="p">,</span> 
-                 <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
-                 <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
-                 <span class="n">save_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                 <span class="n">open_in_browser</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;maps_cache&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+        <span class="n">save_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">open_in_browser</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;map/occurrence&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span> <span class="o">=</span> <span class="n">save_image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="o">=</span> <span class="n">open_in_browser</span>
-                 
+
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
-            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-            
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span>
+                <span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="Map.precalculated_density_tile">
 <a class="viewcode-back" href="../../../library_of_life.maps.html#library_of_life.maps.maps.Map.precalculated_density_tile">[docs]</a>
-    <span class="k">def</span> <span class="nf">precalculated_density_tile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">map_tile_format</span><span class="p">,</span> <span class="n">map_projection</span><span class="p">,</span>
-                                   <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">verbose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">binning_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">hex_per_tile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">square_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">map_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">precalculated_density_tile</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">map_tile_format</span><span class="p">,</span>
+        <span class="n">map_projection</span><span class="p">,</span>
+        <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">binning_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">hex_per_tile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">square_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">map_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves a tile showing occurrence locations in Mapbox Vector Tile format. Tiles contain a single layer occurrence. Features in that layer are either points (default) or polygons (if chosen). Each feature has a total value; that is the number of occurrences at that point or in the polygon. One primary search parameter is permitted, from these: taxonKey, datasetKey, country, networkKey, publishingOrg, publishingCountry. This can be combined with the parameter country, this limits the primary search to occurrences in that country.</span>
-<span class="sd">    </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            z (str): Required. Zoom level.</span>
 <span class="sd">            x (str): Required. Tile map column. 0 is the leftmost column, at the rightmost column x == 2ᶻ – 1, except for EPSG:4326 projection where x == 2ᶻ⁺¹ – 1.</span>
 <span class="sd">            y (str): Required. Tile map row. 0 is the top row, for the bottom row y == 2ᶻ – 1.</span>
-<span class="sd">            map_tile_format (str): Required. Map tile format and resolution. .mvt for a vector tile, @Hx.png for a 256px raster tile (for legacy clients), @1x.png for a 512px raster tile, @2x.png for a 1024px raster tile, @3x.png for a 2048px raster tile, @4x.png for a 4096px raster tile The larger raster tiles are intended for high resolution displays, i.e. 4k monitors and many mobile phones. Available values : .mvt, @Hx.png, @1x.png, @2x.png, @3x.png, @4x.png  </span>
+<span class="sd">            map_tile_format (str): Required. Map tile format and resolution. .mvt for a vector tile, @Hx.png for a 256px raster tile (for legacy clients), @1x.png for a 512px raster tile, @2x.png for a 1024px raster tile, @3x.png for a 2048px raster tile, @4x.png for a 4096px raster tile The larger raster tiles are intended for high resolution displays, i.e. 4k monitors and many mobile phones. Available values : .mvt, @Hx.png, @1x.png, @2x.png, @3x.png, @4x.png</span>
 <span class="sd">            map_projection (str): Required. Map projection. One of EPSG:3857 (Web Mercator), EPSG:4326 (WGS84 plate careé), EPSG:3575 (Arctic LAEA), EPSG:3031 (Antarctic stereographic) See Projections. Available values : EPSG:3857, EPSG:4326, EPSG:3575, EPSG:3031</span>
 <span class="sd">            basis_of_record (str): Optional. Basis of record, as defined in our BasisOfRecord vocabulary. Available values : PRESERVED_SPECIMEN, FOSSIL_SPECIMEN, LIVING_SPECIMEN, OBSERVATION, HUMAN_OBSERVATION, MACHINE_OBSERVATION, MATERIAL_SAMPLE, LITERATURE, MATERIAL_CITATION, OCCURRENCE, UNKNOWN</span>
 <span class="sd">            year (str): Optional. The 4 digit year or year range. A year of 98 will be interpreted as 98 AD..Ranges are written as 1990,2000, 1990, or ,1900.</span>
@@ -143,24 +157,28 @@
 <span class="sd">            publishing_org (str): Optional. The publishing organization&#39;s GBIF key (a UUID).</span>
 <span class="sd">            publishing_country (str): Optional. The 2-letter country code (as per ISO-3166-1) of the owning organization&#39;s country. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            network_key (str): Optional. The network&#39;s GBIF key (a UUID).</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            image, str: Saves an image, opens image in browser, or returns URL to image.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">primary_params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;taxonKey&#39;</span><span class="p">:</span> <span class="n">taxon_key</span><span class="p">,</span>
-            <span class="s1">&#39;datasetKey&#39;</span><span class="p">:</span> <span class="n">dataset_key</span><span class="p">,</span>
-            <span class="s1">&#39;networkKey&#39;</span><span class="p">:</span> <span class="n">network_key</span><span class="p">,</span>
-            <span class="s1">&#39;publishingOrg&#39;</span><span class="p">:</span> <span class="n">publishing_org</span><span class="p">,</span>
-            <span class="s1">&#39;publishingCountry&#39;</span><span class="p">:</span> <span class="n">publishing_country</span>
+            <span class="s2">&quot;taxonKey&quot;</span><span class="p">:</span> <span class="n">taxon_key</span><span class="p">,</span>
+            <span class="s2">&quot;datasetKey&quot;</span><span class="p">:</span> <span class="n">dataset_key</span><span class="p">,</span>
+            <span class="s2">&quot;networkKey&quot;</span><span class="p">:</span> <span class="n">network_key</span><span class="p">,</span>
+            <span class="s2">&quot;publishingOrg&quot;</span><span class="p">:</span> <span class="n">publishing_org</span><span class="p">,</span>
+            <span class="s2">&quot;publishingCountry&quot;</span><span class="p">:</span> <span class="n">publishing_country</span><span class="p">,</span>
         <span class="p">}</span>
-        
+
         <span class="c1"># Check how many primary parameters are provided</span>
-        <span class="n">primary_params_provided</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">primary_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-        
+        <span class="n">primary_params_provided</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">primary_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">]</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">primary_params_provided</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only one primary search parameter is permitted: taxonKey, datasetKey, networkKey, publishingOrg, publishingCountry.&quot;</span><span class="p">)</span>
-        
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Only one primary search parameter is permitted: taxonKey, datasetKey, networkKey, publishingOrg, publishingCountry.&quot;</span>
+            <span class="p">)</span>
+
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;srs&quot;</span><span class="p">,</span> <span class="n">map_projection</span><span class="p">),</span>
@@ -176,14 +194,16 @@
             <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publishing_org</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">)</span>
+            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
         <span class="p">]</span>
-        
+
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/adhoc/</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">y</span><span class="si">}{</span><span class="n">map_tile_format</span><span class="si">}</span><span class="s2">&quot;</span>
-        
+
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -193,13 +213,13 @@
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Request exception occurred: </span><span class="si">{</span><span class="n">req_err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;An unexpected error occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
-        
+
         <span class="n">image</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
         <span class="n">image_url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
-        
+
         <span class="c1"># Process image with Pillow</span>
         <span class="n">pil_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
-        
+
         <span class="c1"># Enhance sharpness</span>
         <span class="n">enhancer</span> <span class="o">=</span> <span class="n">ImageEnhance</span><span class="o">.</span><span class="n">Sharpness</span><span class="p">(</span><span class="n">pil_image</span><span class="p">)</span>
         <span class="n">pil_image</span> <span class="o">=</span> <span class="n">enhancer</span><span class="o">.</span><span class="n">enhance</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># Increase sharpness</span>
@@ -213,36 +233,37 @@
             <span class="n">image_file_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Provide a file name for your image: &quot;</span><span class="p">)</span>
             <span class="n">pil_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">image_file_name</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;Image saved.&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">:</span>
             <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_url</span><span class="p">)</span>  <span class="c1"># This opens the image in the browser</span>
             <span class="k">return</span> <span class="s2">&quot;Opening image in your browser.&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">:</span>
             <span class="n">image_file_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Provide a file name for your image: &quot;</span><span class="p">)</span>
             <span class="n">pil_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">image_file_name</span><span class="p">)</span>
             <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_url</span><span class="p">)</span>  <span class="c1"># This opens the image in the browser</span>
             <span class="k">return</span> <span class="s2">&quot;Image saved. Opening image in your browser.&quot;</span>
-        
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">image_url</span></div>
 
-            
-            
+
 <div class="viewcode-block" id="Map.get_density_tile_map_summary">
 <a class="viewcode-back" href="../../../library_of_life.maps.html#library_of_life.maps.maps.Map.get_density_tile_map_summary">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_density_tile_map_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                   <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_density_tile_map_summary</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A summary of the data available for a density tile query. It accepts the same search parameters as the density tile query.  </span>
-<span class="sd">        </span>
+<span class="sd">        A summary of the data available for a density tile query. It accepts the same search parameters as the density tile query.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            basis_of_record (str): Optional. Basis of record, as defined in our BasisOfRecord vocabulary. Available values : PRESERVED_SPECIMEN, FOSSIL_SPECIMEN, LIVING_SPECIMEN, OBSERVATION, HUMAN_OBSERVATION, MACHINE_OBSERVATION, MATERIAL_SAMPLE, LITERATURE, MATERIAL_CITATION, OCCURRENCE, UNKNOWN</span>
 <span class="sd">            year (str): Optional. The 4 digit year or year range. A year of 98 will be interpreted as 98 AD..Ranges are written as 1990,2000, 1990, or ,1900.</span>
@@ -252,24 +273,28 @@
 <span class="sd">            publishing_org (str): Optional. The publishing organization&#39;s GBIF key (a UUID).</span>
 <span class="sd">            publishing_country (str): Optional. The 2-letter country code (as per ISO-3166-1) of the owning organization&#39;s country. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            network_key (str): Optional. The network&#39;s GBIF key (a UUID).</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing the summary information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">primary_params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;taxonKey&#39;</span><span class="p">:</span> <span class="n">taxon_key</span><span class="p">,</span>
-            <span class="s1">&#39;datasetKey&#39;</span><span class="p">:</span> <span class="n">dataset_key</span><span class="p">,</span>
-            <span class="s1">&#39;networkKey&#39;</span><span class="p">:</span> <span class="n">network_key</span><span class="p">,</span>
-            <span class="s1">&#39;publishingOrg&#39;</span><span class="p">:</span> <span class="n">publishing_org</span><span class="p">,</span>
-            <span class="s1">&#39;publishingCountry&#39;</span><span class="p">:</span> <span class="n">publishing_country</span>
+            <span class="s2">&quot;taxonKey&quot;</span><span class="p">:</span> <span class="n">taxon_key</span><span class="p">,</span>
+            <span class="s2">&quot;datasetKey&quot;</span><span class="p">:</span> <span class="n">dataset_key</span><span class="p">,</span>
+            <span class="s2">&quot;networkKey&quot;</span><span class="p">:</span> <span class="n">network_key</span><span class="p">,</span>
+            <span class="s2">&quot;publishingOrg&quot;</span><span class="p">:</span> <span class="n">publishing_org</span><span class="p">,</span>
+            <span class="s2">&quot;publishingCountry&quot;</span><span class="p">:</span> <span class="n">publishing_country</span><span class="p">,</span>
         <span class="p">}</span>
-        
+
         <span class="c1"># Check how many primary parameters are provided</span>
-        <span class="n">primary_params_provided</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">primary_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-        
+        <span class="n">primary_params_provided</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">primary_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">]</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">primary_params_provided</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only one primary search parameter is permitted: taxonKey, datasetKey, networkKey, publishingOrg, publishingCountry.&quot;</span><span class="p">)</span>
-        
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Only one primary search parameter is permitted: taxonKey, datasetKey, networkKey, publishingOrg, publishingCountry.&quot;</span>
+            <span class="p">)</span>
+
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;basisOfRecord&quot;</span><span class="p">,</span> <span class="n">basis_of_record</span><span class="p">),</span>
@@ -279,39 +304,45 @@
             <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publishing_org</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">)</span>
+            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
         <span class="p">]</span>
-        
+
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/density/capabilities.json&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
-        
+
 <div class="viewcode-block" id="Map.ad_hoc_search_tile">
 <a class="viewcode-back" href="../../../library_of_life.maps.html#library_of_life.maps.maps.Map.ad_hoc_search_tile">[docs]</a>
-    <span class="k">def</span> <span class="nf">ad_hoc_search_tile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">map_tile_format</span><span class="p">,</span> <span class="n">map_projection</span><span class="p">,</span>
-                                   <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">binning_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">hex_per_tile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">square_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">map_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ad_hoc_search_tile</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">map_tile_format</span><span class="p">,</span>
+        <span class="n">map_projection</span><span class="p">,</span>
+        <span class="n">basis_of_record</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">binning_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">hex_per_tile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">square_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">map_style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves a tile showing occurrence locations in Mapbox Vector Tile format. Tiles contain a single layer occurrence. Features in that layer are either points (default) or polygons (if chosen). Each feature has a total value; that is the number of occurrences at that point or in the polygon. One primary search parameter is permitted, from these: taxonKey, datasetKey, country, networkKey, publishingOrg, publishingCountry. This can be combined with the parameter country, this limits the primary search to occurrences in that country.</span>
-<span class="sd">    </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            z (str): Required. Zoom level.</span>
 <span class="sd">            x (str): Required. Tile map column. 0 is the leftmost column, at the rightmost column x == 2ᶻ – 1, except for EPSG:4326 projection where x == 2ᶻ⁺¹ – 1.</span>
 <span class="sd">            y (str): Required. Tile map row. 0 is the top row, for the bottom row y == 2ᶻ – 1.</span>
-<span class="sd">            map_tile_format (str): Required. Map tile format and resolution. .mvt for a vector tile, @Hx.png for a 256px raster tile (for legacy clients), @1x.png for a 512px raster tile, @2x.png for a 1024px raster tile, @3x.png for a 2048px raster tile, @4x.png for a 4096px raster tile The larger raster tiles are intended for high resolution displays, i.e. 4k monitors and many mobile phones. Available values : .mvt, @Hx.png, @1x.png, @2x.png, @3x.png, @4x.png  </span>
+<span class="sd">            map_tile_format (str): Required. Map tile format and resolution. .mvt for a vector tile, @Hx.png for a 256px raster tile (for legacy clients), @1x.png for a 512px raster tile, @2x.png for a 1024px raster tile, @3x.png for a 2048px raster tile, @4x.png for a 4096px raster tile The larger raster tiles are intended for high resolution displays, i.e. 4k monitors and many mobile phones. Available values : .mvt, @Hx.png, @1x.png, @2x.png, @3x.png, @4x.png</span>
 <span class="sd">            map_projection (str): Required. Map projection. One of EPSG:3857 (Web Mercator), EPSG:4326 (WGS84 plate careé), EPSG:3575 (Arctic LAEA), EPSG:3031 (Antarctic stereographic) See Projections. Available values : EPSG:3857, EPSG:4326, EPSG:3575, EPSG:3031</span>
 <span class="sd">            basis_of_record (str): Optional. Basis of record, as defined in our BasisOfRecord vocabulary. Available values : PRESERVED_SPECIMEN, FOSSIL_SPECIMEN, LIVING_SPECIMEN, OBSERVATION, HUMAN_OBSERVATION, MACHINE_OBSERVATION, MATERIAL_SAMPLE, LITERATURE, MATERIAL_CITATION, OCCURRENCE, UNKNOWN</span>
 <span class="sd">            year (str): Optional. The 4 digit year or year range. A year of 98 will be interpreted as 98 AD..Ranges are written as 1990,2000, 1990, or ,1900.</span>
@@ -326,24 +357,28 @@
 <span class="sd">            publishing_org (str): Optional. The publishing organization&#39;s GBIF key (a UUID).</span>
 <span class="sd">            publishing_country (str): Optional. The 2-letter country code (as per ISO-3166-1) of the owning organization&#39;s country. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            network_key (str): Optional. The network&#39;s GBIF key (a UUID).</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            image, str: Saves an image, opens image in browser, or returns URL to image.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">primary_params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;taxonKey&#39;</span><span class="p">:</span> <span class="n">taxon_key</span><span class="p">,</span>
-            <span class="s1">&#39;datasetKey&#39;</span><span class="p">:</span> <span class="n">dataset_key</span><span class="p">,</span>
-            <span class="s1">&#39;networkKey&#39;</span><span class="p">:</span> <span class="n">network_key</span><span class="p">,</span>
-            <span class="s1">&#39;publishingOrg&#39;</span><span class="p">:</span> <span class="n">publishing_org</span><span class="p">,</span>
-            <span class="s1">&#39;publishingCountry&#39;</span><span class="p">:</span> <span class="n">publishing_country</span>
+            <span class="s2">&quot;taxonKey&quot;</span><span class="p">:</span> <span class="n">taxon_key</span><span class="p">,</span>
+            <span class="s2">&quot;datasetKey&quot;</span><span class="p">:</span> <span class="n">dataset_key</span><span class="p">,</span>
+            <span class="s2">&quot;networkKey&quot;</span><span class="p">:</span> <span class="n">network_key</span><span class="p">,</span>
+            <span class="s2">&quot;publishingOrg&quot;</span><span class="p">:</span> <span class="n">publishing_org</span><span class="p">,</span>
+            <span class="s2">&quot;publishingCountry&quot;</span><span class="p">:</span> <span class="n">publishing_country</span><span class="p">,</span>
         <span class="p">}</span>
-        
+
         <span class="c1"># Check how many primary parameters are provided</span>
-        <span class="n">primary_params_provided</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">primary_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-        
+        <span class="n">primary_params_provided</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">primary_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">]</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">primary_params_provided</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only one primary search parameter is permitted: taxonKey, datasetKey, networkKey, publishingOrg, publishingCountry.&quot;</span><span class="p">)</span>
-        
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Only one primary search parameter is permitted: taxonKey, datasetKey, networkKey, publishingOrg, publishingCountry.&quot;</span>
+            <span class="p">)</span>
+
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;srs&quot;</span><span class="p">,</span> <span class="n">map_projection</span><span class="p">),</span>
@@ -359,14 +394,16 @@
             <span class="p">(</span><span class="s2">&quot;datasetKey&quot;</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;publishingOrg&quot;</span><span class="p">,</span> <span class="n">publishing_org</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;publishingCountry&quot;</span><span class="p">,</span> <span class="n">publishing_country</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">)</span>
+            <span class="p">(</span><span class="s2">&quot;networkKey&quot;</span><span class="p">,</span> <span class="n">network_key</span><span class="p">),</span>
         <span class="p">]</span>
-        
+
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/density/</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">y</span><span class="si">}{</span><span class="n">map_tile_format</span><span class="si">}</span><span class="s2">&quot;</span>
-        
+
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+            <span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -376,13 +413,13 @@
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Request exception occurred: </span><span class="si">{</span><span class="n">req_err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;An unexpected error occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
-        
+
         <span class="n">image</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
         <span class="n">image_url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
-        
+
         <span class="c1"># Process image with Pillow</span>
         <span class="n">pil_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
-        
+
         <span class="c1"># Enhance sharpness</span>
         <span class="n">enhancer</span> <span class="o">=</span> <span class="n">ImageEnhance</span><span class="o">.</span><span class="n">Sharpness</span><span class="p">(</span><span class="n">pil_image</span><span class="p">)</span>
         <span class="n">pil_image</span> <span class="o">=</span> <span class="n">enhancer</span><span class="o">.</span><span class="n">enhance</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># Increase sharpness</span>
@@ -396,23 +433,21 @@
             <span class="n">image_file_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Provide a file name for your image: &quot;</span><span class="p">)</span>
             <span class="n">pil_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">image_file_name</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;Image saved.&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">:</span>
             <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_url</span><span class="p">)</span>  <span class="c1"># This opens the image in the browser</span>
             <span class="k">return</span> <span class="s2">&quot;Opening image in your browser.&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">:</span>
             <span class="n">image_file_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Provide a file name for your image: &quot;</span><span class="p">)</span>
             <span class="n">pil_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">image_file_name</span><span class="p">)</span>
             <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_url</span><span class="p">)</span>  <span class="c1"># This opens the image in the browser</span>
             <span class="k">return</span> <span class="s2">&quot;Image saved. Opening image in your browser.&quot;</span>
-        
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_in_browser</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">image_url</span></div>
 </div>
 
-           
-        
 </pre></div>
 
            </div>

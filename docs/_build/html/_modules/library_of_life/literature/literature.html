@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.literature.literature &mdash; library_of_life 0.4.0 documentation</title>
+  <title>library_of_life.literature.literature &mdash; library_of_life 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/documentation_options.js?v=c87aa342"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -75,94 +75,108 @@
 
 <span class="kn">import</span> <span class="nn">requests_cache</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+<span class="kn">from</span> <span class="nn">..gbif_root</span> <span class="kn">import</span> <span class="n">GBIF</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">http_client</span> <span class="k">as</span> <span class="n">hc</span>
 
 <span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
 
 <div class="viewcode-block" id="Literature">
 <a class="viewcode-back" href="../../../library_of_life.literature.html#library_of_life.literature.literature.Literature">[docs]</a>
 <span class="k">class</span> <span class="nc">Literature</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class for interacting with the Literuari API.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        endpoint: endpoint for this section of the API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;literature_cache&quot;</span><span class="p">,</span> 
-                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
-                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
-                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
-                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;literature_cache&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+        <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;literature&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
-        
-        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;OAuth&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
-          
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span>
+                <span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
-            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
-            
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span>
+                <span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="Literature.get_literature_details_by_id">
 <a class="viewcode-back" href="../../../library_of_life.literature.html#library_of_life.literature.literature.Literature.get_literature_details_by_id">[docs]</a>
     <span class="k">def</span> <span class="nf">get_literature_details_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uuid</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve details for a single literature item.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            uuid (str): UUID for the literature item. Example : 83a00190-7038-3970-a7e8-5e5563c40e37</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing the literature details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">uuid</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="Literature.search_literature">
 <a class="viewcode-back" href="../../../library_of_life.literature.html#library_of_life.literature.literature.Literature.search_literature">[docs]</a>
-    <span class="k">def</span> <span class="nf">search_literature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">citation_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">countries_of_coverage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">countries_of_researcher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_download_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_occurrence_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_project_identifier</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_programme_acronym</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">literature_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">open_access</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">peer_review</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">publisher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">publishing_organization_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">relevance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">topics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">search_literature</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">citation_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">countries_of_coverage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">countries_of_researcher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_download_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_occurrence_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_project_identifier</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_programme_acronym</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">literature_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">open_access</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">peer_review</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publisher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_organization_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">relevance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">topics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">highlight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_mincount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_multiselect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">facet_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Full-text and parameterized search across all literature.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            citation_type (list[str]): Optional. The manner in which GBIF is cited in a paper. Make a facet query for available values.</span>
 <span class="sd">            countries_of_coverage (list[str]): Optional. Country or area of focus of study. Country codes are listed in our Country enum. See this endpoint&#39;s docs for available values.</span>
@@ -189,83 +203,87 @@
 <span class="sd">            highlight (bool): Optional. Set highlight=True to highlight terms matching the query when in full-text search fields. The highlight will be an emphasis tag of class gbifH1 e.g. /search?q=plant&amp;hl=true. Full-text search fields include: title, keyword, country, publishing country, publishing organization title, hosting organization title, and description. One additional full text field is searched which includes information from metadata documents, but the text of this field is not returned in the response. Example : true</span>
 <span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the maximum threshold, which is 300 for this service. Sensible defaults are used so this may be omitted.</span>
 <span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. This service has a maximum offset of 100,000.</span>
-<span class="sd">            facet (str): Optional. A facet name used to retrieve the most frequent values for a field. Facets are allowed for all search parameters except geometry and geoDistance. Note terms not available for searching are not available for faceting.     </span>
+<span class="sd">            facet (str): Optional. A facet name used to retrieve the most frequent values for a field. Facets are allowed for all search parameters except geometry and geoDistance. Note terms not available for searching are not available for faceting.</span>
 <span class="sd">            facet_mincount (int): Optional. Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}, e.g. [/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000](https://api.gbif.org/v1/occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=1000000].</span>
 <span class="sd">            facet_multiselect (bool): Optional. Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered, e.g. /search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=HUMAN_OBSERVATION&amp;facetMultiselect=true still shows Basis of Record values &#39;PRESERVED_SPECIMEN&#39; and so on, even though Basis of Record is being filtered.</span>
 <span class="sd">            facet_limit (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
 <span class="sd">            facet_offset (int): Optional. Facet parameters allow paging requests using the parameters facetOffset and facetLimit.</span>
 <span class="sd">            query (str): Optional. Simple full-text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dictionary containing the literature items.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;citationType&quot;</span><span class="p">,</span> <span class="n">citation_type</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;countriesOfCoverage&quot;</span><span class="p">,</span> <span class="n">countries_of_coverage</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;countriesOfResearcher&quot;</span><span class="p">,</span> <span class="n">countries_of_researcher</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifDatasetKey&quot;</span><span class="p">,</span> <span class="n">gbif_dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifDownloadKey&quot;</span><span class="p">,</span> <span class="n">gbif_download_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifHigherTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_higher_taxon_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifNetworkKey&quot;</span><span class="p">,</span> <span class="n">gbif_network_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifOccurrenceKey&quot;</span><span class="p">,</span> <span class="n">gbif_occurrence_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifProjectIdentifier&quot;</span><span class="p">,</span> <span class="n">gbif_project_identifier</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifProgrammeAcronym&quot;</span><span class="p">,</span> <span class="n">gbif_programme_acronym</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_taxon_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;literatureType&quot;</span><span class="p">,</span> <span class="n">literature_type</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;openAccess&quot;</span><span class="p">,</span> <span class="n">open_access</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;peerReview&quot;</span><span class="p">,</span> <span class="n">peer_review</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publisher&quot;</span><span class="p">,</span> <span class="n">publisher</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingOrganizationKey&quot;</span><span class="p">,</span> <span class="n">publishing_organization_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;relevance&quot;</span><span class="p">,</span> <span class="n">relevance</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span> <span class="n">topics</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">year</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">language</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;citationType&quot;</span><span class="p">,</span> <span class="n">citation_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;countriesOfCoverage&quot;</span><span class="p">,</span> <span class="n">countries_of_coverage</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;countriesOfResearcher&quot;</span><span class="p">,</span> <span class="n">countries_of_researcher</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifDatasetKey&quot;</span><span class="p">,</span> <span class="n">gbif_dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifDownloadKey&quot;</span><span class="p">,</span> <span class="n">gbif_download_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifHigherTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_higher_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifNetworkKey&quot;</span><span class="p">,</span> <span class="n">gbif_network_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifOccurrenceKey&quot;</span><span class="p">,</span> <span class="n">gbif_occurrence_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifProjectIdentifier&quot;</span><span class="p">,</span> <span class="n">gbif_project_identifier</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifProgrammeAcronym&quot;</span><span class="p">,</span> <span class="n">gbif_programme_acronym</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;literatureType&quot;</span><span class="p">,</span> <span class="n">literature_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;openAccess&quot;</span><span class="p">,</span> <span class="n">open_access</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;peerReview&quot;</span><span class="p">,</span> <span class="n">peer_review</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publisher&quot;</span><span class="p">,</span> <span class="n">publisher</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingOrganizationKey&quot;</span><span class="p">,</span> <span class="n">publishing_organization_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;relevance&quot;</span><span class="p">,</span> <span class="n">relevance</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span> <span class="n">topics</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">year</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">language</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;hl&quot;</span><span class="p">,</span> <span class="n">highlight</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span> <span class="n">facet</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMincount&quot;</span><span class="p">,</span> <span class="n">facet_mincount</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetMultiselect&quot;</span><span class="p">,</span> <span class="n">facet_multiselect</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetLimit&quot;</span><span class="p">,</span> <span class="n">facet_limit</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;facetOffset&quot;</span><span class="p">,</span> <span class="n">facet_offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/search&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="Literature.export_literature_search">
 <a class="viewcode-back" href="../../../library_of_life.literature.html#library_of_life.literature.literature.Literature.export_literature_search">[docs]</a>
-    <span class="k">def</span> <span class="nf">export_literature_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">export_format</span><span class="o">=</span><span class="s2">&quot;TSV&quot;</span><span class="p">,</span> 
-                          <span class="n">citation_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">countries_of_coverage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">countries_of_researcher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_download_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_occurrence_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_project_identifier</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_programme_acronym</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">gbif_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">literature_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">open_access</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">peer_review</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">publisher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">publishing_organization_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">relevance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">topics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">export_literature_search</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">export_format</span><span class="o">=</span><span class="s2">&quot;TSV&quot;</span><span class="p">,</span>
+        <span class="n">citation_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">countries_of_coverage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">countries_of_researcher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">doi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_dataset_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_download_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_higher_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_network_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_occurrence_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_project_identifier</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_programme_acronym</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gbif_taxon_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">literature_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">open_access</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">peer_review</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publisher</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">publishing_organization_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">relevance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">topics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Exports the result of a literature search.</span>
-<span class="sd">         </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            export_format (str): The format for the search results export. Defaults to TSV. Available values : CSV, TSV.</span>
 <span class="sd">            citation_type (list[str]): Optional. The manner in which GBIF is cited in a paper. Make a facet query for available values.</span>
@@ -291,61 +309,44 @@
 <span class="sd">            year (int): Optional. Year of publication. This can be a single range such as 2019,2021, or can be repeated to search multiple years.</span>
 <span class="sd">            language (str): Optional. Language of publication. Language codes are listed in our Language enum. See this endpoint&#39;s docs for available values.</span>
 <span class="sd">            query (str): Optional. Simple full-text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The export search results in TSV or CSV format.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="n">export_format</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;citationType&quot;</span><span class="p">,</span> <span class="n">citation_type</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;countriesOfCoverage&quot;</span><span class="p">,</span> <span class="n">countries_of_coverage</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;countriesOfResearcher&quot;</span><span class="p">,</span> <span class="n">countries_of_researcher</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifDatasetKey&quot;</span><span class="p">,</span> <span class="n">gbif_dataset_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifDownloadKey&quot;</span><span class="p">,</span> <span class="n">gbif_download_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifHigherTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_higher_taxon_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifNetworkKey&quot;</span><span class="p">,</span> <span class="n">gbif_network_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifOccurrenceKey&quot;</span><span class="p">,</span> <span class="n">gbif_occurrence_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifProjectIdentifier&quot;</span><span class="p">,</span> <span class="n">gbif_project_identifier</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifProgrammeAcronym&quot;</span><span class="p">,</span> <span class="n">gbif_programme_acronym</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;gbifTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_taxon_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;literatureType&quot;</span><span class="p">,</span> <span class="n">literature_type</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;openAccess&quot;</span><span class="p">,</span> <span class="n">open_access</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;peerReview&quot;</span><span class="p">,</span> <span class="n">peer_review</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publisher&quot;</span><span class="p">,</span> <span class="n">publisher</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;publishingOrganizationKey&quot;</span><span class="p">,</span> <span class="n">publishing_organization_key</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;relevance&quot;</span><span class="p">,</span> <span class="n">relevance</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span> <span class="n">topics</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">year</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">language</span><span class="p">),</span>
-                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
+            <span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="n">export_format</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;citationType&quot;</span><span class="p">,</span> <span class="n">citation_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;countriesOfCoverage&quot;</span><span class="p">,</span> <span class="n">countries_of_coverage</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;countriesOfResearcher&quot;</span><span class="p">,</span> <span class="n">countries_of_researcher</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;doi&quot;</span><span class="p">,</span> <span class="n">doi</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifDatasetKey&quot;</span><span class="p">,</span> <span class="n">gbif_dataset_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifDownloadKey&quot;</span><span class="p">,</span> <span class="n">gbif_download_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifHigherTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_higher_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifNetworkKey&quot;</span><span class="p">,</span> <span class="n">gbif_network_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifOccurrenceKey&quot;</span><span class="p">,</span> <span class="n">gbif_occurrence_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifProjectIdentifier&quot;</span><span class="p">,</span> <span class="n">gbif_project_identifier</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifProgrammeAcronym&quot;</span><span class="p">,</span> <span class="n">gbif_programme_acronym</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;gbifTaxonKey&quot;</span><span class="p">,</span> <span class="n">gbif_taxon_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;literatureType&quot;</span><span class="p">,</span> <span class="n">literature_type</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;openAccess&quot;</span><span class="p">,</span> <span class="n">open_access</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;peerReview&quot;</span><span class="p">,</span> <span class="n">peer_review</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publisher&quot;</span><span class="p">,</span> <span class="n">publisher</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;publishingOrganizationKey&quot;</span><span class="p">,</span> <span class="n">publishing_organization_key</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;relevance&quot;</span><span class="p">,</span> <span class="n">relevance</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span> <span class="n">topics</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">year</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">language</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">),</span>
+        <span class="p">]</span>
         <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="s2">&quot;/export&quot;</span>
-        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_for_content_with_params</span><span class="p">(</span>
+            <span class="n">base_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
 </div>
 
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
 </pre></div>
 
            </div>
