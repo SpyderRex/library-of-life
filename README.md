@@ -94,13 +94,26 @@ For now the registry module only contains the principal methods, but it will be 
 
 ### Maps
 
+#### Submodules
+
 - `maps`
 
-### Literature (in development)
+### Literature
+
+#### Submodules
+
+- `literature`
 
 ### Validator (pre-dev)
 
-### Vocabulary (pre-dev)
+### Vocabulary
+
+#### Submodules
+
+- `vocabularies`
+- `concepts`
+- `tags`
+- `languages`
 
 ## Caching
 

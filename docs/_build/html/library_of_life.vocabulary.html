@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>library_of_life.vocabulary package &mdash; library_of_life 0.3.0 documentation</title>
+  <title>library_of_life.vocabulary package &mdash; library_of_life 0.4.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=e259d695"></script>
+        <script src="_static/documentation_options.js?v=6c02275b"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -95,6 +95,1263 @@
              
   <section id="library-of-life-vocabulary-package">
 <h1>library_of_life.vocabulary package<a class="headerlink" href="#library-of-life-vocabulary-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-library_of_life.vocabulary.concepts">
+<span id="library-of-life-vocabulary-concepts-module"></span><h2>library_of_life.vocabulary.concepts module<a class="headerlink" href="#module-library_of_life.vocabulary.concepts" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.vocabulary.concepts.</span></span><span class="sig-name descname"><span class="pre">Concepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'concepts_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the concepts section of the Vocabulary API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.add_alternative_label_to_concept">
+<span class="sig-name descname"><span class="pre">add_alternative_label_to_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.add_alternative_label_to_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.add_alternative_label_to_concept" title="Link to this definition"></a></dt>
+<dd><p>Creates an alternative label and adds it to an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body containing new label. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned alternative label if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.add_definition_to_concept">
+<span class="sig-name descname"><span class="pre">add_definition_to_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.add_definition_to_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.add_definition_to_concept" title="Link to this definition"></a></dt>
+<dd><p>Creates a definition and adds it to an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body containing new definition. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned definition if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.add_hidden_label_to_concept">
+<span class="sig-name descname"><span class="pre">add_hidden_label_to_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.add_hidden_label_to_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.add_hidden_label_to_concept" title="Link to this definition"></a></dt>
+<dd><p>Creates a hidden label and adds it to an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body containing new label. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned hidden label if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.add_label_to_concept">
+<span class="sig-name descname"><span class="pre">add_label_to_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.add_label_to_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.add_label_to_concept" title="Link to this definition"></a></dt>
+<dd><p>Creates a label and adds it to an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body containing new definition. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned label if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.create_new_concept">
+<span class="sig-name descname"><span class="pre">create_new_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.create_new_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.create_new_concept" title="Link to this definition"></a></dt>
+<dd><p>Creates a new concept. Note definitions, labels, alternative labels, hidden labels and tags must be added in subsequent requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The request body JSON object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned concept if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.delete_alternative_label_from_concept">
+<span class="sig-name descname"><span class="pre">delete_alternative_label_from_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.delete_alternative_label_from_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.delete_alternative_label_from_concept" title="Link to this definition"></a></dt>
+<dd><p>Deletes an alternative label from an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the label.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.delete_concept_definition">
+<span class="sig-name descname"><span class="pre">delete_concept_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.delete_concept_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.delete_concept_definition" title="Link to this definition"></a></dt>
+<dd><p>Deletes a definition from an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the definition.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.delete_hidden_label_from_concept">
+<span class="sig-name descname"><span class="pre">delete_hidden_label_from_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.delete_hidden_label_from_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.delete_hidden_label_from_concept" title="Link to this definition"></a></dt>
+<dd><p>Deletes a hidden label from an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the label.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.delete_label_from_concept">
+<span class="sig-name descname"><span class="pre">delete_label_from_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.delete_label_from_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.delete_label_from_concept" title="Link to this definition"></a></dt>
+<dd><p>Deletes a label from an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the label.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.deprecate_existing_concept">
+<span class="sig-name descname"><span class="pre">deprecate_existing_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.deprecate_existing_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.deprecate_existing_concept" title="Link to this definition"></a></dt>
+<dd><p>Deprecates the existing concept. Optionally, a replacement concept can be specified and the replacement must belong to the same vocabulary. Note that if the concept has children they have to be either deprecated or reassigned to the replacement if it’s specified. If they should be deprecated it has to be specified explicitly in the parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json object response body.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.get_concept_definition">
+<span class="sig-name descname"><span class="pre">get_concept_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.get_concept_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.get_concept_definition" title="Link to this definition"></a></dt>
+<dd><p>Gets the definition of the concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the definition.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing concept definition.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.get_details_of_concept">
+<span class="sig-name descname"><span class="pre">get_details_of_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_children</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.get_details_of_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.get_details_of_concept" title="Link to this definition"></a></dt>
+<dd><p>Details of a single concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>include_parents</strong> (<em>bool</em>) – Optional.</p></li>
+<li><p><strong>include_children</strong> (<em>bool</em>) – Optional</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the concept details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.get_details_of_concept_from_vocabulary_latest_release">
+<span class="sig-name descname"><span class="pre">get_details_of_concept_from_vocabulary_latest_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_children</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.get_details_of_concept_from_vocabulary_latest_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.get_details_of_concept_from_vocabulary_latest_release" title="Link to this definition"></a></dt>
+<dd><p>Details of a single concept from the latest release of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>include_parents</strong> (<em>bool</em>) – Optional.</p></li>
+<li><p><strong>include_children</strong> (<em>bool</em>) – Optional.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the concept details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.link_tag_to_concepts">
+<span class="sig-name descname"><span class="pre">link_tag_to_concepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.link_tag_to_concepts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.link_tag_to_concepts" title="Link to this definition"></a></dt>
+<dd><p>Links a tag to an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json object response body.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of link.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_alternative_concept_labels">
+<span class="sig-name descname"><span class="pre">list_all_alternative_concept_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_alternative_concept_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_alternative_concept_labels" title="Link to this definition"></a></dt>
+<dd><p>Lists all alternative labels of the concept.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>vocabulary_name (str): The name of the vocabulary.
+name (str): The name of the concept.
+language (str): Languages to filter by.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the alternative concept labels.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary">
+<span class="sig-name descname"><span class="pre">list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Lists all alternative labels of the concept from the latest release of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Languages to filter by. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the alternative labels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_concept_definitions">
+<span class="sig-name descname"><span class="pre">list_all_concept_definitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_concept_definitions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_concept_definitions" title="Link to this definition"></a></dt>
+<dd><p>Lists all definitions of the concept.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>vocabulary_name (str): The name of the vocabulary.
+name (str): The name of the concept.
+language (str): Languages to filter by.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the concept definitions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_concept_hidden_labels">
+<span class="sig-name descname"><span class="pre">list_all_concept_hidden_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_concept_hidden_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_concept_hidden_labels" title="Link to this definition"></a></dt>
+<dd><p>Lists all hidden labels of the concept.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>vocabulary_name (str): The name of the vocabulary.
+name (str): The name of the concept.
+language (str): Languages to filter by.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the hidden labels.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_concept_labels">
+<span class="sig-name descname"><span class="pre">list_all_concept_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_concept_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_concept_labels" title="Link to this definition"></a></dt>
+<dd><p>Lists all labels of the concept.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>vocabulary_name (str): The name of the vocabulary.
+name (str): The name of the vocabulary.
+language (str): Languages to filter by.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the concept labels.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_concept_tags">
+<span class="sig-name descname"><span class="pre">list_all_concept_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_concept_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_concept_tags" title="Link to this definition"></a></dt>
+<dd><p>Lists all tags of the concept.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>vocabulary_name (str): The name of the vocabulary.
+name (str): The name of the concept.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the concept tags.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_concepts_from_latest_vocabulary_release">
+<span class="sig-name descname"><span class="pre">list_all_concepts_from_latest_vocabulary_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_concepts_from_latest_vocabulary_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_concepts_from_latest_vocabulary_release" title="Link to this definition"></a></dt>
+<dd><p>Lists all concepts from the latest release of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) – The parameters to filter by. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a list of concepts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary">
+<span class="sig-name descname"><span class="pre">list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Lists all hidden labels of the concept from the latest release of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the hidden labels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_labels_of_concept_from_latest_release_of_vocabulary">
+<span class="sig-name descname"><span class="pre">list_all_labels_of_concept_from_latest_release_of_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_labels_of_concept_from_latest_release_of_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_labels_of_concept_from_latest_release_of_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Lists all labels of the concept from the latest release of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Languages to filter by. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the concept labels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_all_vocabulary_concepts">
+<span class="sig-name descname"><span class="pre">list_all_vocabulary_concepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_all_vocabulary_concepts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_all_vocabulary_concepts" title="Link to this definition"></a></dt>
+<dd><p>Lists all concepts of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – Required. The name of the vocabulary.</p></li>
+<li><p><strong>tags</strong> (<em>str</em>) – Optional. The tags of the concept.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the listed concepts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.list_definition_of_concept_from_latest_release_of_vocabulary">
+<span class="sig-name descname"><span class="pre">list_definition_of_concept_from_latest_release_of_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.list_definition_of_concept_from_latest_release_of_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.list_definition_of_concept_from_latest_release_of_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Lists all definitions of the concept from the latest release of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Languages to filter by. See this endpoint’s docs for available values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the concept definitions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.restore_deprecated_concept">
+<span class="sig-name descname"><span class="pre">restore_deprecated_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restore_deprecated_children</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.restore_deprecated_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.restore_deprecated_concept" title="Link to this definition"></a></dt>
+<dd><p>Restores the deprecated concept. Its vocabulary cannot be deprecated. If the concept used to have a parent and now it’s deprecated it will be replaced with its replacement if exists. Optionally, it can also be specified to restore all the deprecated children of the concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>restore_deprecated_children</strong> (<em>bool</em>) – Set to true to restore deprecated concepts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.suggest_concepts">
+<span class="sig-name descname"><span class="pre">suggest_concepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.suggest_concepts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.suggest_concepts" title="Link to this definition"></a></dt>
+<dd><p>Search that returns up to 20 matching concepts. Results are ordered by relevance. The response is smaller than a concept search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>locale</strong> (<em>str</em>) – Required. Locale to filter by. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the concept suggestions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.suggest_concepts_from_latest_vocabulary_release">
+<span class="sig-name descname"><span class="pre">suggest_concepts_from_latest_vocabulary_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.suggest_concepts_from_latest_vocabulary_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.suggest_concepts_from_latest_vocabulary_release" title="Link to this definition"></a></dt>
+<dd><p>Search that returns up to 20 matching concepts from the latest release of the vocabulary. Results are ordered by relevance. The response is smaller than a concept search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>locale</strong> (<em>str</em>) – The locale. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing suggestions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.unlink_tag_from_concept">
+<span class="sig-name descname"><span class="pre">unlink_tag_from_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.unlink_tag_from_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.unlink_tag_from_concept" title="Link to this definition"></a></dt>
+<dd><p>Unlinks a tag from an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>tag_name</strong> (<em>str</em>) – The name of the tag.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of untag.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.update_concept_definition">
+<span class="sig-name descname"><span class="pre">update_concept_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.update_concept_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.update_concept_definition" title="Link to this definition"></a></dt>
+<dd><p>Updates a definition that belongs to an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the definition.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json object response body.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.concepts.Concepts.update_existing_concept">
+<span class="sig-name descname"><span class="pre">update_existing_concept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabulary_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/concepts.html#Concepts.update_existing_concept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.concepts.Concepts.update_existing_concept" title="Link to this definition"></a></dt>
+<dd><p>Updates the existing concept. Note definitions, labels, alternative labels, hidden labels and tags are not changed with this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabulary_name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The JSON object request body containing the updated information.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.vocabulary.languages">
+<span id="library-of-life-vocabulary-languages-module"></span><h2>library_of_life.vocabulary.languages module<a class="headerlink" href="#module-library_of_life.vocabulary.languages" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.languages.Languages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.vocabulary.languages.</span></span><span class="sig-name descname"><span class="pre">Languages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'languages_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/languages.html#Languages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.languages.Languages" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the vocabulary languages section of the Vocabulary API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.languages.Languages.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.vocabulary.languages.Languages.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.languages.Languages.list_all_languages">
+<span class="sig-name descname"><span class="pre">list_all_languages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/languages.html#Languages.list_all_languages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.languages.Languages.list_all_languages" title="Link to this definition"></a></dt>
+<dd><p>Lists all current languages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a list of languages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.vocabulary.tags">
+<span id="library-of-life-vocabulary-tags-module"></span><h2>library_of_life.vocabulary.tags module<a class="headerlink" href="#module-library_of_life.vocabulary.tags" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.vocabulary.tags.</span></span><span class="sig-name descname"><span class="pre">Tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tags_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/tags.html#Tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the tags section of the Vocabulary API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags.create_new_tag">
+<span class="sig-name descname"><span class="pre">create_new_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/tags.html#Tags.create_new_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags.create_new_tag" title="Link to this definition"></a></dt>
+<dd><p>Creates a new tag. The default color is white.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure and returned tag if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags.delete_existing_tag">
+<span class="sig-name descname"><span class="pre">delete_existing_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/tags.html#Tags.delete_existing_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags.delete_existing_tag" title="Link to this definition"></a></dt>
+<dd><p>Deletes a definition from an existing concept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the concept.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags.get_details_of_single_tag">
+<span class="sig-name descname"><span class="pre">get_details_of_single_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/tags.html#Tags.get_details_of_single_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags.get_details_of_single_tag" title="Link to this definition"></a></dt>
+<dd><p>Details of a single tag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the tag.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the tag details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags.list_all_tags">
+<span class="sig-name descname"><span class="pre">list_all_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/tags.html#Tags.list_all_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags.list_all_tags" title="Link to this definition"></a></dt>
+<dd><p>Lists all current tags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing a list of tags.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.tags.Tags.update_existing_tag">
+<span class="sig-name descname"><span class="pre">update_existing_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/tags.html#Tags.update_existing_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.tags.Tags.update_existing_tag" title="Link to this definition"></a></dt>
+<dd><p>Updates the existing tag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the tag.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The JSON object request body containing the updated information.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-library_of_life.vocabulary.vocabularies">
+<span id="library-of-life-vocabulary-vocabularies-module"></span><h2>library_of_life.vocabulary.vocabularies module<a class="headerlink" href="#module-library_of_life.vocabulary.vocabularies" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">library_of_life.vocabulary.vocabularies.</span></span><span class="sig-name descname"><span class="pre">Vocabularies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_caching</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vocabularies_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'basic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for interacting with the vocabularies section of the Vocabulary API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.endpoint" title="Link to this definition"></a></dt>
+<dd><p>endpoint for this section of the API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.add_definition_to_vocabulary">
+<span class="sig-name descname"><span class="pre">add_definition_to_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.add_definition_to_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.add_definition_to_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Creates a definition and adds it to an existing vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body containing new definition. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned vocabulary if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.add_label_to_vocabulary">
+<span class="sig-name descname"><span class="pre">add_label_to_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.add_label_to_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.add_label_to_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Creates a label and adds it to an existing vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json response body containing new label. See this endpoint’s docs for schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned vocabulary if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.create_new_vocabulary">
+<span class="sig-name descname"><span class="pre">create_new_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.create_new_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.create_new_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Creates a new vocabulary. Note definitions and labels must be added in subsequent requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The user’s password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The request body JSON object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary or string containing an error message or returned vocabulary if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.delete_label_from_vocabulary">
+<span class="sig-name descname"><span class="pre">delete_label_from_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.delete_label_from_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.delete_label_from_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Deletes a label from an existing vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the label.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.delete_vocabulary_definition">
+<span class="sig-name descname"><span class="pre">delete_vocabulary_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.delete_vocabulary_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.delete_vocabulary_definition" title="Link to this definition"></a></dt>
+<dd><p>Deletes a definition from an existing vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the definition.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of delete.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.deprecate_existing_vocabulary">
+<span class="sig-name descname"><span class="pre">deprecate_existing_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.deprecate_existing_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.deprecate_existing_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Deprecates the existing vocabulary. Optionally, a replacement vocabulary can be specified. Note that if the vocabulary has concepts they will be deprecated too and that has to be specified explicitly in the parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json object response body.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.export_single_vocabulary_release">
+<span class="sig-name descname"><span class="pre">export_single_vocabulary_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.export_single_vocabulary_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.export_single_vocabulary_release" title="Link to this definition"></a></dt>
+<dd><p>Details of the exported release to see its content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – The version to filter by. To get the latest one you can specify ‘latest’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the vocabulary information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.export_vocabulary">
+<span class="sig-name descname"><span class="pre">export_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.export_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.export_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Exports a vocabulary in JSON format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the exported vocabulary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.get_details_of_vocabulary">
+<span class="sig-name descname"><span class="pre">get_details_of_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.get_details_of_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.get_details_of_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Details of a single vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the vocabulary details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.get_single_vocabulary_release">
+<span class="sig-name descname"><span class="pre">get_single_vocabulary_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.get_single_vocabulary_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.get_single_vocabulary_release" title="Link to this definition"></a></dt>
+<dd><p>Details of a single vocabulary release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – The version to filter by. To get the latest one you can specify ‘latest’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the vocabulary information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.get_vocabulary_definition">
+<span class="sig-name descname"><span class="pre">get_vocabulary_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.get_vocabulary_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.get_vocabulary_definition" title="Link to this definition"></a></dt>
+<dd><p>Gets the definition of the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the definition.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing vocabulary definition.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.list_all_vocabularies">
+<span class="sig-name descname"><span class="pre">list_all_vocabularies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deprecated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_unreleased_changes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.list_all_vocabularies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.list_all_vocabularies" title="Link to this definition"></a></dt>
+<dd><p>Lists all current vocabularies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Optional. The name of the vocabulary.</p></li>
+<li><p><strong>namespace</strong> (<em>str</em>) – Optional. The namespace of the vocabulary.</p></li>
+<li><p><strong>deprecated</strong> (<em>bool</em>) – Optional. Is the vocabulary deprecated?</p></li>
+<li><p><strong>vocab_key</strong> (<em>int</em>) – Optional. The key of the vocabulary.</p></li>
+<li><p><strong>has_unreleased_changes</strong> (<em>bool</em>) – Optional. Has the vocabulary changes that haven’t been released yet?</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the vocabulary search results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.list_all_vocabulary_labels">
+<span class="sig-name descname"><span class="pre">list_all_vocabulary_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.list_all_vocabulary_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.list_all_vocabulary_labels" title="Link to this definition"></a></dt>
+<dd><p>Lists all labels of the vocabulary.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>name (str): The name of the vocabulary.
+language (str): Languages to filter by.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the vocabulary labels.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.list_definitions_for_vocabulary">
+<span class="sig-name descname"><span class="pre">list_definitions_for_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.list_definitions_for_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.list_definitions_for_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Lists all definitions of the vocabulary.</p>
+<dl class="simple">
+<dt>Arg:</dt><dd><p>name (str): The name of the vocabulary.
+language (str): Languages to filter by.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the vocabulary definitions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.list_vocabulary_releases">
+<span class="sig-name descname"><span class="pre">list_vocabulary_releases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.list_vocabulary_releases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.list_vocabulary_releases" title="Link to this definition"></a></dt>
+<dd><p>Search that returns up to 20 matching vocabularies. Results are ordered by relevance. The response is smaller than a vocabulary search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – Optional. The version to filter by. To get the latest one you can specify ‘latest’.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the vocabulary release information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.restore_deprecated_vocabulary">
+<span class="sig-name descname"><span class="pre">restore_deprecated_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restore_deprecated_concepts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.restore_deprecated_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.restore_deprecated_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Restores the deprecated vocabulary. Optionally, its deprecated concepts can be restored too if it is specified in the parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>restore_deprecated_concepts</strong> (<em>bool</em>) – Set to true to restore deprecated concepts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.suggest_vocabularies">
+<span class="sig-name descname"><span class="pre">suggest_vocabularies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.suggest_vocabularies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.suggest_vocabularies" title="Link to this definition"></a></dt>
+<dd><p>Search that returns up to 20 matching vocabularies. Results are ordered by relevance. The response is smaller than a vocabulary search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>locale</strong> (<em>str</em>) – Required. Locale to filter by. See this endpoint’s docs for available values.</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the vocabulary suggestions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.update_existing_vocabulary">
+<span class="sig-name descname"><span class="pre">update_existing_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.update_existing_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.update_existing_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Updates the existing vocabulary. Note definitions and labels are not changed with this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The JSON object request body containing the updated information.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="library_of_life.vocabulary.vocabularies.Vocabularies.update_vocabulary_definition">
+<span class="sig-name descname"><span class="pre">update_vocabulary_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/library_of_life/vocabulary/vocabularies.html#Vocabularies.update_vocabulary_definition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#library_of_life.vocabulary.vocabularies.Vocabularies.update_vocabulary_definition" title="Link to this definition"></a></dt>
+<dd><p>Updates a definition that belongs to an existing vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the vocabulary.</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – The key of the definition.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password.</p></li>
+<li><p><strong>payload</strong> (<em>dict</em>) – The json object response body.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message of success or failure of update.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string, dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-library_of_life.vocabulary">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-library_of_life.vocabulary" title="Link to this heading"></a></h2>
 </section>

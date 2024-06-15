@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library_of_life.vocabulary.concepts &mdash; library_of_life 0.4.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6c02275b"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            library_of_life
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">library_of_life</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">library_of_life</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">library_of_life.vocabulary.concepts</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for library_of_life.vocabulary.concepts</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">import</span> <span class="nn">requests_cache</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">gbif_root</span> <span class="kn">import</span> <span class="nn">GBIF</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="n">utils</span> <span class="kn">import</span> <span class="nn">http_client</span> <span class="k">as</span> <span class="nn">hc</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="n">GBIF</span><span class="p">()</span><span class="o">.</span><span class="n">base_url</span>
+
+<div class="viewcode-block" id="Concepts">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts">[docs]</a>
+<span class="k">class</span> <span class="nc">Concepts</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for interacting with the concepts section of the Vocabulary API.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        endpoint: endpoint for this section of the API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_caching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                <span class="n">cache_name</span><span class="o">=</span><span class="s2">&quot;concepts_cache&quot;</span><span class="p">,</span> 
+                <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> 
+                <span class="n">expire_after</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+                <span class="n">auth_type</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+                <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">client_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">token_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;vocabularies&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">=</span> <span class="n">auth_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span>
+        
+        <span class="k">if</span> <span class="n">auth_type</span> <span class="o">==</span> <span class="s1">&#39;OAuth&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Client ID, client secret, and token URL must be provided for OAuth authentication.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_oauth_headers</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">,</span> <span class="n">token_url</span><span class="p">)</span>
+          
+        <span class="k">if</span> <span class="n">use_caching</span><span class="p">:</span>
+            <span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">expire_after</span><span class="p">)</span>
+            
+<div class="viewcode-block" id="Concepts.list_all_vocabulary_concepts">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_vocabulary_concepts">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_vocabulary_concepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all concepts of the vocabulary.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): Required. The name of the vocabulary.</span>
+<span class="sd">            tags (str): Optional. The tags of the concept.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the listed concepts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.create_new_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.create_new_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_new_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new concept. Note definitions, labels, alternative labels, hidden labels and tags must be added in subsequent requests.</span>
+<span class="sd">          </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The user&#39;s password.</span>
+<span class="sd">            payload (dict): The request body JSON object.</span>
+<span class="sd">              </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict, str: Dictionary or string containing an error message or returned concept if successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.get_details_of_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.get_details_of_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_details_of_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+                               <span class="n">include_parents</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                               <span class="n">include_children</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Details of a single concept.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            include_parents (bool): Optional.</span>
+<span class="sd">            include_children (bool): Optional</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the concept details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;includeParents&quot;</span><span class="p">,</span> <span class="n">include_parents</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;includeChildren&quot;</span><span class="p">,</span> <span class="n">include_children</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.update_existing_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.update_existing_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_existing_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the existing concept. Note definitions, labels, alternative labels, hidden labels and tags are not changed with this method.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            payload (dict): The JSON object request body containing the updated information.</span>
+<span class="sd">             </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of update.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.suggest_concepts">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.suggest_concepts">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_concepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">locale</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns up to 20 matching concepts. Results are ordered by relevance. The response is smaller than a concept search.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            locale (str): Required. Locale to filter by. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the concept suggestions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/suggest&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.deprecate_existing_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.deprecate_existing_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">deprecate_existing_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deprecates the existing concept. Optionally, a replacement concept can be specified and the replacement must belong to the same vocabulary. Note that if the concept has children they have to be either deprecated or reassigned to the replacement if it&#39;s specified. If they should be deprecated it has to be specified explicitly in the parameters. </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            payload (dict): The json object response body.</span>
+<span class="sd">           </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of update.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/deprecate&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.restore_deprecated_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.restore_deprecated_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">restore_deprecated_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">restore_deprecated_children</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restores the deprecated concept. Its vocabulary cannot be deprecated. If the concept used to have a parent and now it&#39;s deprecated it will be replaced with its replacement if exists. Optionally, it can also be specified to restore all the deprecated children of the concept. </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            restore_deprecated_children (bool): Set to true to restore deprecated concepts.</span>
+<span class="sd">           </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of update.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;restoreDeprecatedChildren&quot;</span><span class="p">,</span> <span class="n">restore_deprecated_children</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/deprecate&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.list_all_concept_definitions">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_concept_definitions">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_concept_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all definitions of the concept.</span>
+<span class="sd">         </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            language (str): Languages to filter by.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing the concept definitions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/definition&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1">#Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="Concepts.add_definition_to_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.add_definition_to_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_definition_to_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a definition and adds it to an existing concept.</span>
+<span class="sd">         </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            payload (dict): The json response body containing new definition. See this endpoint&#39;s docs for schema.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict, str: Dictionary or string containing an error message or returned definition if successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/definition&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.get_concept_definition">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.get_concept_definition">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_concept_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the definition of the concept.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            key (int): The key of the definition.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing concept definition.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/definition/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.update_concept_definition">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.update_concept_definition">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_concept_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates a definition that belongs to an existing concept.</span>
+<span class="sd">           </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            key (int): The key of the definition.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            payload (dict): The json object response body.</span>
+<span class="sd">           </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of update.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/definition/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.delete_concept_definition">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.delete_concept_definition">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_concept_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes a definition from an existing concept.</span>
+<span class="sd">            </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            key (int): The key of the definition.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of delete.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/definition/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.list_all_concept_tags">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_concept_tags">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_concept_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all tags of the concept.</span>
+<span class="sd">         </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing the concept tags.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/tags&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">)</span></div>
+
+        
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.link_tag_to_concepts">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.link_tag_to_concepts">[docs]</a>
+    <span class="k">def</span> <span class="nf">link_tag_to_concepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Links a tag to an existing concept.</span>
+<span class="sd">            </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            payload (dict): The json object response body.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/tags&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">put_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.unlink_tag_from_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.unlink_tag_from_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">unlink_tag_from_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tag_name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unlinks a tag from an existing concept.</span>
+<span class="sd">          </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            tag_name (str): The name of the tag.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">             </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of untag.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/tags/</span><span class="si">{</span><span class="n">tag_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.list_all_concept_labels">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_concept_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_concept_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all labels of the concept.</span>
+<span class="sd">        </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the vocabulary.</span>
+<span class="sd">            language (str): Languages to filter by.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing the concept labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/label&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1">#Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="Concepts.add_label_to_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.add_label_to_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_label_to_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a label and adds it to an existing concept.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The user&#39;s password.</span>
+<span class="sd">            payload (dict): The json response body containing new definition. See this endpoint&#39;s docs for schema.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict, str: Dictionary or string containing an error message or returned label if successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/label&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.delete_label_from_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.delete_label_from_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_label_from_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes a label from an existing concept.</span>
+<span class="sd">             </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            key (int): The key of the label.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of delete.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/label/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.list_all_alternative_concept_labels">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_alternative_concept_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_alternative_concept_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all alternative labels of the concept.</span>
+<span class="sd">        </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            language (str): Languages to filter by.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing the alternative concept labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/alternativeLabels&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1">#Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="Concepts.add_alternative_label_to_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.add_alternative_label_to_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_alternative_label_to_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an alternative label and adds it to an existing concept.</span>
+<span class="sd">           </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The user&#39;s password.</span>
+<span class="sd">            payload (dict): The json response body containing new label. See this endpoint&#39;s docs for schema.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict, str: Dictionary or string containing an error message or returned alternative label if successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/alternativeLabels&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.delete_alternative_label_from_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.delete_alternative_label_from_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_alternative_label_from_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes an alternative label from an existing concept.</span>
+<span class="sd">             </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            key (int): The key of the label.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of delete.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/alternativeLabels/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.list_all_concept_hidden_labels">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_concept_hidden_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_concept_hidden_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all hidden labels of the concept.</span>
+<span class="sd">        </span>
+<span class="sd">        Arg:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            language (str): Languages to filter by.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing the hidden labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/hiddenLabels&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+    <span class="c1">#Requires authentication. User must have an account with GBIF.</span>
+<div class="viewcode-block" id="Concepts.add_hidden_label_to_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.add_hidden_label_to_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_hidden_label_to_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a hidden label and adds it to an existing concept.</span>
+<span class="sd">           </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The user&#39;s password.</span>
+<span class="sd">            payload (dict): The json response body containing new label. See this endpoint&#39;s docs for schema.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict, str: Dictionary or string containing an error message or returned hidden label if successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/hiddenLabels&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">post_with_auth_and_json</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+    <span class="c1"># Requires authentication. User must have an account with GBIF with the proper credentials.</span>
+<div class="viewcode-block" id="Concepts.delete_hidden_label_from_concept">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.delete_hidden_label_from_concept">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_hidden_label_from_concept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes a hidden label from an existing concept.</span>
+<span class="sd">             </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            key (int): The key of the label.</span>
+<span class="sd">            username (str): The username.</span>
+<span class="sd">            password (str): The password.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            string, dict: A message of success or failure of delete.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/hiddenLabels/</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_type</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span>
+                
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#OAuth</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_headers</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">delete_with_auth</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;400&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;Bad request: the JSON is invalid or the request is not well-formed.&quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;422&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s2">&quot;The request is syntactically correct but the fields are invalid (required fields not set, duplicated keys, inconsistent keys, etc.)&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">response</span></div>
+
+                
+<div class="viewcode-block" id="Concepts.list_all_concepts_from_latest_vocabulary_release">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_concepts_from_latest_vocabulary_release">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_concepts_from_latest_vocabulary_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all concepts from the latest release of the vocabulary.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            params (dict): The parameters to filter by. See this endpoint&#39;s docs for schema.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing a list of concepts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Concepts.suggest_concepts_from_latest_vocabulary_release">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.suggest_concepts_from_latest_vocabulary_release">[docs]</a>
+    <span class="k">def</span> <span class="nf">suggest_concepts_from_latest_vocabulary_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">locale</span><span class="p">,</span>
+                                                        <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search that returns up to 20 matching concepts from the latest release of the vocabulary. Results are ordered by relevance. The response is smaller than a concept search.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            locale (str): The locale. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            query (str): Optional. Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing suggestions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease/suggest&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Concepts.get_details_of_concept_from_vocabulary_latest_release">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.get_details_of_concept_from_vocabulary_latest_release">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_details_of_concept_from_vocabulary_latest_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+                                                              <span class="n">include_parents</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                              <span class="n">include_children</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Details of a single concept from the latest release of the vocabulary.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            include_parents (bool): Optional.</span>
+<span class="sd">            include_children (bool): Optional.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the concept details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;includeParents&quot;</span><span class="p">,</span> <span class="n">include_parents</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;includeChildren&quot;</span><span class="p">,</span> <span class="n">include_children</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Concepts.list_definition_of_concept_from_latest_release_of_vocabulary">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_definition_of_concept_from_latest_release_of_vocabulary">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_definition_of_concept_from_latest_release_of_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all definitions of the concept from the latest release of the vocabulary.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            language (str): Languages to filter by. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the concept definitions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/definition&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Concepts.list_all_labels_of_concept_from_latest_release_of_vocabulary">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_labels_of_concept_from_latest_release_of_vocabulary">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_labels_of_concept_from_latest_release_of_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all labels of the concept from the latest release of the vocabulary.</span>
+<span class="sd">         </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            language (str): Languages to filter by. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the concept labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">language</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/label&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Concepts.list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_alternative_labels_of_concept_from_latest_release_of_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span>
+                                                                                  <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                                  <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all alternative labels of the concept from the latest release of the vocabulary.</span>
+<span class="sd">          </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            language (str): Languages to filter by. See this endpoint&#39;s docs for available values.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the alternative labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;lang&quot;</span><span class="p">,</span> <span class="n">language</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/alterntiveLabels&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="Concepts.list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary">
+<a class="viewcode-back" href="../../../library_of_life.vocabulary.html#library_of_life.vocabulary.concepts.Concepts.list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_all_hidden_labels_of_concept_from_latest_release_of_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+                                                                                  <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                                  <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists all hidden labels of the concept from the latest release of the vocabulary.</span>
+<span class="sd">          </span>
+<span class="sd">        Args:</span>
+<span class="sd">            vocabulary_name (str): The name of the vocabulary.</span>
+<span class="sd">            name (str): The name of the concept.</span>
+<span class="sd">            limit (int): Optional. Controls the number of results in the page. Using too high a value will be overwritten with the default maximum threshold, depending on the service. Sensible defaults are used so this may be omitted.</span>
+<span class="sd">            offset (int): Optional. Determines the offset for the search results. A limit of 20 and offset of 40 will get the third page of 20 results. Some services have a maximum offset.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the hidden labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">)]</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">vocabulary_name</span><span class="si">}</span><span class="s2">/concepts/latestRelease/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/hiddenLabels&quot;</span>
+        <span class="k">return</span> <span class="n">hc</span><span class="o">.</span><span class="n">get_with_params</span><span class="p">(</span><span class="n">base_url</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="o">+</span><span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>            </div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Spyder Rex.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
