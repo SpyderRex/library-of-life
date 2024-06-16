@@ -13,7 +13,6 @@ Subpackages
    library_of_life.registry
    library_of_life.species
    library_of_life.utils
-   library_of_life.validator
    library_of_life.vocabulary
 
 Submodules

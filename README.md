@@ -11,7 +11,6 @@
   - [Occurrence](#occurrences)
   - [Maps](#maps)
   - [Literature](#literature)
-  - [Validator](#validator)
   - [Vocabulary](#vocabulary)
 - [Caching](#caching)
 - [Authentication](#authentication)
@@ -103,8 +102,6 @@ For now the registry module only contains the principal methods, but it will be 
 #### Submodules
 
 - `literature`
-
-### Validator (pre-dev)
 
 ### Vocabulary
 
